@@ -1,16 +1,7 @@
 from flask import Flask, render_template, jsonify
-from pymongo import MongoClient
 
 app = Flask(__name__)
-client = MongoClient('localhost', 27017)
-db = client.dbmbtiparty
-collist = db.list_collection_names()
-if not ("users" in collist):
-    db_users = db.create_collection("users")
-if not ("parties" in collist):
-    db_parties = db.create_collection("parties")
-if not ("mbti" in collist):
-    db_mbti = db.create_collection("mbti")
+# db-setup
 
 @app.route('/')
 def index():
