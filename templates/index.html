@@ -2,19 +2,52 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/index.css">
     <title>MBTI PARTY | 나의 MBTI에 맞는 파티 찾기</title>
 </head>
 <body>
-    <div class="top-bar">
-        <ul class="right-top-menu"></ul>
-    </div>
-    <div class="inner">
-        <div class="banner"></div>
-        <div class="party-list">
-            <div class="register-btn"></div>
-            <div class="sort-menu"></div>
-            <div class="list"></div>
-        </div>
+    <div class="body__container">
+        <nav class="section section--nav navbar navbar-expand-lg navbar-light bg-light">
+            <div class="inner">
+                <a class="navbar-brand float--left" href="/">MBTI</a>
+                <div class="navbar-menu-group collapse navbar-collapse float--right">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a href="/login">로그인</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/register">회원가입</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <section class="section section--list">
+            <div class="inner">
+                <div class="btn-group">
+                    <button class="register-btn btn-primary">파티 만들기</button>
+                </div>
+
+                <div class="sort-menu-group float--right">
+                    <ul>
+                        <li class="sort-menu__regdt">
+                            <a href="#">생성 순</a>
+                        </li>
+                        <li class="sort-meni__available">
+                            <a href="#">입장 가능 순</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="list"></div>
+
+            </div>
+        </section>
     </div>
 </body>
 </html>
