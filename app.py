@@ -48,7 +48,7 @@ def login():
 
 @app.route('/build_party')
 def build_party():
-    return render_template('build_party.html')
+    return render_template('buildParty.html')
 
 
 if __name__ == '__main__':
