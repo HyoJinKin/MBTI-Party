@@ -1,5 +1,6 @@
 from flask import Flask, render_template, jsonify, request
 from pymongo import MongoClient
+import random # 테스트용 id random 생성
 
 app = Flask(__name__)
 client = MongoClient('localhost', 27017)
@@ -21,8 +22,8 @@ def index():
 @app.route('/api/party_list', methods=['GET'])
 def show_all():
     test_doc = {
-        "id": 1,
-        "name": "테스터 모집",
+        "id": random.choice(range(1, 10000)),
+        "name": "테스트",
         "description": "테스트로 넣어본 데이터입니다",
         "favorite_mbti": "INFJ,INTJ,INTP"
     }
@@ -33,7 +34,13 @@ def show_all():
 
 @app.route('/detail')
 def detail():
-    return render_template('detail.html')
+    id = int(request.args.get("id"))
+    detail = db.parties.find_one({'id': id})
+    name = detail['name']
+    desc = detail['description']
+    favorite_mbti = detail['favorite_mbti']
+
+    return render_template('detail.html', id=id, name=name, desc=desc, favorite_mbti=favorite_mbti)
 
 
 @app.route('/register')
