@@ -1,10 +1,28 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/0aeb562407.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../static/detail.css">
+    <script src="../static/index.js"></script>
+    <title>MBTI PARTY | 나의 MBTI에 맞는 파티 찾기</title>
 </head>
 <body>
-
+    <div class="body__container">
+        <section>
+            <div class="inner">
+                <div class="party-box">
+                    <p class="title">{{name}}</p>
+                    <p>{{desc}}</p>
+                    <p>{{favorite_mbti}}</p>
+                    <button class="btn-primary">참여하기</button>
+                </div>
+            </div>
+        </section>
+    </div>
 </body>
 </html>
