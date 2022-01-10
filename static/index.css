@@ -52,3 +52,14 @@ nav .navbar-menu-group li:last-child {
     height: 50px;
     border-radius: 5px;
 }
+.section--list .sort-menu-group ul {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+}
+.section--list .sort-menu-group li {
+    padding-right: 20px;
+}
+.section--list .sort-menu-group li:last-child {
+    padding-right: 0px;
+}
