@@ -25,6 +25,7 @@ def show_all():
         "id": random.choice(range(1, 10000)),
         "name": "테스트",
         "description": "테스트로 넣어본 데이터입니다",
+        "max_member_num": 5,
         "favorite_mbti": "INFJ,INTJ,INTP"
     }
     db.parties.insert_one(test_doc)
@@ -55,7 +56,7 @@ def login():
 
 @app.route('/build_party')
 def build_party():
-    return render_template('buildParty.html')
+    return render_template('build_party.html')
 
 
 if __name__ == '__main__':
