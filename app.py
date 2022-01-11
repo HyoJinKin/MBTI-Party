@@ -144,17 +144,25 @@ def api_login():
             'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=2)
         }
 
-        token = jwt.encode(payload, SECRET_KEY, algorithm='HS256').decode('utf-8')
+        token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
 
         # 만든 토큰을 준다.
         return jsonify({'result': 'success', 'token': token})
     else:
-        return
+        return jsonify({'msg': '로그인 실패'})
 
 
 @app.route('/build_party')
 def build_party():
-    user_mbti = db.users.find_one({'id': 'asdasd@naver.com'}, {'_id': False})
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_id = db.users.find_one({'id': payload["id"]})
+        print(user_id["id"])
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect('/')
+
+    user_mbti = db.users.find_one({'id': user_id["id"]}, {'_id': False})
     if user_mbti is not None:
         return render_template('build_party.html', user_mbti=user_mbti['MBTI'])
     else:
@@ -170,11 +178,17 @@ def reg_party():
     title_receive = request.form['title_give']
     description_receive = request.form['description_give']
     max_member_num_receive = request.form['max_member_num_give']
-    # 임시
-    user_id = "zzzsd"
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_id = db.users.find_one({'id': payload["id"]}, {'_id': False})
+        print(user_id["id"])
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        flash("다시 로그인 해주세요!")
+        return redirect('/')
 
     doc = {
-        'id': user_id,
+        'id': user_id["id"],
         'purpose': purpose_receive,
         'mbti': mbti_receive,
         'title': title_receive,
