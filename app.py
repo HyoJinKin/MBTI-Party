@@ -152,23 +152,28 @@ def api_login():
         return jsonify({'msg': '로그인 실패'})
 
 
-@app.route('/build_party')
-def build_party():
-    token_receive = request.cookies.get('mytoken')
+def get_token(tokenName):
+    token_receive = request.cookies.get(tokenName)
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        user_id = db.users.find_one({'id': payload["id"]})
-        print(user_id["id"])
+        return payload
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        flash("다시 로그인 해주세요!")
         return redirect('/')
 
-    user_mbti = db.users.find_one({'id': user_id["id"]}, {'_id': False})
+
+@app.route('/build_party')
+def build_party():
+    user_id = get_token('mytoken')['id']
+    print(user_id)
+    user_mbti = db.users.find_one({'id': user_id}, {'_id': False})
     if user_mbti is not None:
         return render_template('build_party.html', user_mbti=user_mbti['MBTI'])
     else:
         # 비로그인으러 접근 경우 리다이렉트 후 alert
         flash("로그인이 필요합니다!")
         return redirect('/')
+
 
 
 @app.route('/build_party', methods=['POST'])
@@ -178,17 +183,10 @@ def reg_party():
     title_receive = request.form['title_give']
     description_receive = request.form['description_give']
     max_member_num_receive = request.form['max_member_num_give']
-    token_receive = request.cookies.get('mytoken')
-    try:
-        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        user_id = db.users.find_one({'id': payload["id"]}, {'_id': False})
-        print(user_id["id"])
-    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
-        flash("다시 로그인 해주세요!")
-        return redirect('/')
-
+    user_id = get_token('mytoken')['id']
+    print(user_id)
     doc = {
-        'id': user_id["id"],
+        'id': user_id,
         'purpose': purpose_receive,
         'mbti': mbti_receive,
         'title': title_receive,
