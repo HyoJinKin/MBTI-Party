@@ -1,5 +1,6 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, request
 from pymongo import MongoClient
+import random # 테스트용 삭제 예정
 
 app = Flask(__name__)
 client = MongoClient('localhost', 27017)
@@ -16,9 +17,26 @@ if not ("mbti" in collist):
 def index():
     return render_template('index.html')
 
+@app.route('/api/party_list', methods=['GET'])
+def show_all():
+    test_doc = {
+        "id": random.choice(range(1, 10000)),
+        "name": "테스트",
+        "description": "테스트로 넣어본 데이터입니다",
+        "favorite_mbti": "INFJ,INTJ,INTP"
+    }
+    db.parties.insert_one(test_doc)
+    parties = list(db.parties.find({}, {'_id': False}))
+    return jsonify({'parties': parties})
+
 @app.route('/detail')
 def detail():
-    return render_template('detail.html')
+    id = int(request.args.get("id"))
+    detail = db.parties.find_one({'id': id})
+    name = detail['name']
+    desc = detail['description']
+    favorite_mbti = detail['favorite_mbti']
+    return render_template('detail.html', id=id, name=name, desc=desc, favorite_mbti=favorite_mbti)
 
 @app.route('/register')
 def register():
