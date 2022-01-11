@@ -39,9 +39,8 @@ function is_password(asValue) {
 }
 
 
-
-function is_password_thesame(){
-alert('test')
+function is_password_thesame() {
+    alert('test')
 }
 
 pOrF = false;
@@ -51,13 +50,13 @@ function check_dup() {
     console.log(username)
     if (username == "") {
         alert("아이디를 입력해주세요.")
-        pOrF = false;
+        $("#ID").removeClass('is-success').addClass('is-fail');
         $("#ID").focus()
         return;
     }
     if (!is_nickname(username)) {
         alert("아이디의 형식을 확인해주세요. 영문과 숫자, 일부 특수문자(._-) 사용 가능. 2-10자 길이")
-        pOrF = false;
+        $("#ID").removeClass('is-success').addClass('is-fail');
         $("#ID").focus()
         return;
     }
@@ -68,7 +67,6 @@ function check_dup() {
 function checkID() {
     let id = $('#ID').val();
     let emailAddress = $('#ID-Address option:selected').val();
-    ;
     $.ajax({
         type: "POST",
         url: "/register/checkid",
@@ -78,12 +76,11 @@ function checkID() {
             let exists = response['exists']
             if (exists == true) {
                 alert('중복되는 아이디입니다. 다시 시도해주세요.')
-                $
-                pOrF = false;
+                $("#ID").removeClass('is-success').addClass('is-fail')
             }
             if (exists == false) {
                 alert('사용 가능한 아이디입니다.')
-                pOrF = true;
+                $("#ID").removeClass('is-fail').addClass('is-success')
             }
         }
     })
@@ -91,7 +88,13 @@ function checkID() {
 }
 
 function idCheckFirst() {
-    // if
-    registerUser();
+    if ($('#ID').hasClass('is-success')) {
+        registerUser();
+    }
+    else{
+        alert('먼저 아이디 사용 가능 여부를 확인해주세요.')
+        return;
+    }
+
 }
 
