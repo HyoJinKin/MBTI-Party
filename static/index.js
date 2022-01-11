@@ -1,5 +1,6 @@
 $(document).ready(function () {
     showAllParties();
+    switchLogout();
 });
 
 function showAllParties() {
@@ -28,4 +29,8 @@ function showAllParties() {
             }
         }
     });
+}
+
+function switchLogout() {
+
 }

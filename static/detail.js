@@ -28,12 +28,23 @@ function showPartyInfo() {
                             <div class="card-body">
                                 <h5 class="member-entry__role card-title">${role}</h5>
                                 <p class="member-entry__id card-text">${user_id}</p>
-                                <a href="#" class="btn btn-primary" ${user_id=='' ? '' : 'style="display: none"'}>참여하기</a>
+                                <button onclick="joinParty(party_id,user_id,role)" class="btn btn-primary" ${user_id=='' ? '' : 'style="display: none"'}>참여하기</button>
                             </div> 
                         </div>
                       `
         $('#member-entries').append(joined_html)
     }
+}
+
+function joinParty(partyId, userId, role) {
+    $.ajax({
+        type: 'POST',
+        url: 'api/join_party',
+        data: {party_id_request: partyId, user_id_request: userId, role_request: role},
+        success: function(response) {
+            window.location.reload()
+        }
+    });
 }
 
 function getEmptyEntryNum() {
@@ -49,13 +60,3 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max-min) + min);
 }
 
-// function joinParty(partyId, userId, role) {
-//     $.ajax({
-//         type: 'POST',
-//         url: 'api/join_party',
-//         data: {party_id_request: partyId, user_id_request: userId, role_request: role},
-//         success: function(response) {
-//             window.location.reload()
-//         }
-//     });
-// }

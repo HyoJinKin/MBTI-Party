@@ -77,12 +77,15 @@ def join_party():
     else:
         member_ids_query.append("," + user_id)
 
+    member_roles_query = db.parties.find_one({"id":party_id})['member_roles']
+    if member_roles_query == "":
+        member_roles_query.append(user_id+","+user_role)
+    else:
+        member_roles_query.append(";"+user_id+","+user_role)
+
     db.parties.find_one_and_update(
         {"id": party_id},
-        {"$set": {"member_ids": member_ids_query,
-                  "member_roles": {
-                      user_role: user_id
-                  }}}
+        {"$set": {"member_ids": member_ids_query,"member_roles": member_roles_query}}
     )
 
 
