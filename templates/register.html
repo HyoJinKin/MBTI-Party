@@ -34,8 +34,7 @@
 
     <!--    Css파일을 사용하기 위함-->
     <!--    <link rel="stylesheet" href="../index.css">-->
-    <link rel="stylesheet" href="../static/common.css">
-    <link rel="stylesheet" href="../static/register.css">
+    <link rel="stylesheet" href="{{url_for('static', filename='register.css')}}">
     <!--    <link rel="stylesheet" href="../static/register.css">-->
 
     <script>
@@ -47,37 +46,8 @@
             // }
         }
 
-        function checkID() {
-            let id = $('#ID').val();
-            $.ajax({
-                type: "GET",
-                url: "/register",
-                data: {id_give: id},
-                success: function (response) {
-                    console.log(response)
-                    // let result = response['checkID']
-                    // console.log(result)
-                    // if (result == False)
-                    //     alert('중복되는 아이디입니다. 다시 시도해주세요.')
-                    // else
-                    //     alert('사용 가능한 아이디입니다.')
-                }
-            })
-            // window.location.reload();
-        }
 
         function registerUser() {
-            console.log('hamsu')
-            let userinfo = {
-                'name': $('#name').val(),
-                'regisNum': $('#regisNum').val(),
-                'id': $('#ID').val(),
-                'password': $('#password').val()
-                // 'img': $('#img').val(),
-                // 'MBTI':,
-
-            }
-            console.log(userinfo)
             $.ajax({
                 type: "POST",
                 url: "/register",
@@ -85,8 +55,8 @@
                     name_give: $('#name').val(),
                     regisNum_give: $('#regisNum').val(),
                     id_give: $('#ID').val(),
-                    password_give: $('#password').val()
-
+                    password_give: $('#password').val(),
+                    MBTI_give: $('#MBTI').val()
 
                 },
                 success: function (response) {
@@ -97,109 +67,140 @@
             // window.location.reload();
         }
 
+        function is_nickname(asValue) {
+            var regExp = /^(?=.*[a-zA-Z])[-a-zA-Z0-9_.]{2,10}$/;
+            return regExp.test(asValue);
+        }
 
+        function is_password(asValue) {
+            var regExp = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%^&*]{8,20}$/;
+            return regExp.test(asValue);
+        }
+
+        pOrF = false;
+
+        function check_dup() {
+            let username = $("#ID").val()
+            console.log(username)
+            if (username == "") {
+                alert("아이디를 입력해주세요.")
+                pOrF = false;
+                $("#ID").focus()
+                return;
+            }
+            if (!is_nickname(username)) {
+                alert("아이디의 형식을 확인해주세요. 영문과 숫자, 일부 특수문자(._-) 사용 가능. 2-10자 길이")
+                pOrF = false;
+                $("#ID").focus()
+                return;
+            }
+
+            checkID();
+        }
+
+        function checkID() {
+            let id = $('#ID').val();
+            $.ajax({
+                type: "POST",
+                url: "/register/checkid",
+                data: {id_give: id},
+                success: function (response) {
+                    console.log(response)
+                    let exists = response['exists']
+                    if (exists == true) {
+                        alert('중복되는 아이디입니다. 다시 시도해주세요.')
+                        pOrF = false;
+                    }
+                    if (exists == false) {
+                        alert('사용 가능한 아이디입니다.')
+                        pOrF = true;
+                    }
+                }
+            })
+            // window.location.reload();
+        }
+
+        function idCheckFirst() {
+            // let pOrF = $('#ID').className;
+            // if (pOrF == false) {
+            //     alert('ID 사용 가능 여부 체크를 먼저해주세요.')
+            //     return;
+            // }
+            // if (pOrF == true) {
+            //     registerUser();
+            // }
+            registerUser();
+        }
     </script>
 </head>
 <body>
 <div class="content">
-
-    <nav class="section section--nav navbar navbar-expand-lg navbar-light bg-light">
-        <div class="inner">
-            <a class="navbar-brand float--left" href="/">MBTI</a>
-            <div class="navbar-menu-group collapse navbar-collapse float--right">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a href="/login">로그인</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/register">회원가입</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <section class="section section--join-form">
-        <div class="inner info">
-            <div id="header">
-                <h1>회원가입</h1>
-            </div>
-            <div class="name">
-                <span>이름 :</span>
-                <input type="text" id="name" placeholder="예)홍길동">
-            </div>
-
-            <div class="regiNum">
-                <span>주민등록번호 :</span>
-                <input type="text" id="regisNum" placeholder="예)111111- 1111111">
-            </div>
-
-            <div class="ID">
-                <span> 아이디 : </span>
-                <input type="text" id="ID" placeholder="예)abcd@naver.com">
-                <button onclick="checkID()"> 중복확인</button>
-                <select name="" id="ID-Address" aria-label="이메일주소">
-                    <option value="">선택해주세요</option>
-                    <option value="@naver.com">
-                        @naver.com
-                    </option>
-                    <option value="@hotmail.com">
-                        @hotmail.com
-                    </option>
-                    <option value="@yahoo.co.kr">
-                        @yahoo.co.kr
-                    </option>
-                    <option value="@hanmail.net">
-                        @hanmail.net
-                    </option>
-                    <option value="@gmail.com">
-                        @gmail.com
-                    </option>
-                    <option id="EmailInput" value="직접입력" onclick="insertEmailInput()">
-                        직접 입력
-                    </option>
-                </select>
-            </div>
-
-            <div class="Password">
-                <span>비밀번호 : </span>
-                <input type="password" id="password" placeholder="예)8자리 이상">
-            </div>
-
-            <div class="Img">
-                <span>이미지 : </span>
-                <input type="text" id="img" placeholder="예)profile.jpg">
-                <button>업로드</button>
-            </div>
-
-            <div class="MBTI">
-                <span>MBTI : </span>
-                <div>
-                    <input type="radio" id="ENTJ" name="drone" value="ENTJ"
-                           checked>
-                    <label>ENTJ</label>
-                </div>
-
-                <div>
-                    <input type="radio" id="ENTP" name="drone" value="ENTP">
-                    <label>ENTP</label>
-                </div>
-
-                <!--<div>-->
-                <!--  <input type="radio" id="louie" name="drone" value="louie">-->
-                <!--  <label for="louie">Louie</label>-->
-                <!--</div>-->
-
-            </div>
-
-            <button onclick="registerUser()">회원가입</button>
-        </div>
-    </section>
-
+    <div id="header">
+        <h1>회원가입</h1>
+    </div>
 
     <div class="info">
 
+        <div class="name">
+            <span>이름 :</span>
+            <input type="text" id="name" placeholder="예)홍길동">
+        </div>
 
+        <div class="regiNum">
+            <span>주민등록번호 :</span>
+            <input type="text" id="regisNum" placeholder="예)111111- 1111111">
+        </div>
+
+        <div class="ID">
+            <span> 아이디 : </span>
+            <input type="text" id="ID" placeholder="예)abcd@naver.com">
+            <button onclick="check_dup()"> 아이디 사용 가능 확인</button>
+            <select name="" id="ID-Address" aria-label="이메일주소">
+                <option value="">선택해주세요</option>
+                <option value="@naver.com">
+                    @naver.com
+                </option>
+                <option value="@hotmail.com">
+                    @hotmail.com
+                </option>
+                <option value="@yahoo.co.kr">
+                    @yahoo.co.kr
+                </option>
+                <option value="@hanmail.net">
+                    @hanmail.net
+                </option>
+                <option value="@gmail.com">
+                    @gmail.com
+                </option>
+                <option id="EmailInput" value="직접입력" onclick="insertEmailInput()">
+                    직접 입력
+                </option>
+            </select>
+        </div>
+
+        <div class="Password">
+            <span>비밀번호 : </span>
+            <input type="password" id="password" placeholder="예)8자리 이상">
+        </div>
+
+        <div class="Img">
+            <span>이미지 : </span>
+            <input type="text" id="img" placeholder="예)profile.jpg">
+            <button>업로드</button>
+        </div>
+
+        <div class="MBTI">
+            <span>MBTI : </span>
+            <input type="text" id="MBTI" placeholder="예) ENTJ">
+
+            <!--<div>-->
+            <!--  <input type="radio" id="louie" name="drone" value="louie">-->
+            <!--  <label for="louie">Louie</label>-->
+            <!--</div>-->
+
+        </div>
+
+        <button onclick="idCheckFirst()">회원가입</button>
     </div>
 
 </div>
