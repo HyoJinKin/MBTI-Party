@@ -1,10 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!--    한국어가 깨지지 않게 하기 위함-->
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500&amp;display=swap">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+          integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+
+    <!--    JavaScript-->
+    <script src="assets/js/jquery-3.3.1.min.js"></script>
+    <script src="assets/js/jquery-migrate-3.0.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+
+    <!--    Css파일을 사용하기 위함-->
+    <link rel="stylesheet" href="../static/index.css">
+    <link rel="stylesheet" href="../static/register.css">
+
+    <script>
+        function insertEmailInput() {
+            // selectedValue = $('ID-Address').val();
+            // if (selectedValue == "직접 입력") {
+            let temp_html = `<input type="text" id="emailInputBox" placeholder="예) asdtyu@empas.com">`;
+            $('.ID').append(temp_html);
+            // }
+        }
+
+    </script>
+    <link rel="stylesheet" href="register.css">
 </head>
 <body>
+<div class="content">
+    <div id="header">
+        <h1>회원가입</h1>
+    </div>
 
+    <div class="info">
+
+        <div class="name">
+            <span>이름 :</span>
+            <input type="text" id="name" placeholder="예)홍길동">
+        </div>
+
+        <div class="regiNum">
+            <span>주민등록번호 :</span>
+            <input type="text" id="regiNum" placeholder="예)111111- 1111111">
+        </div>
+
+        <div class="ID">
+            <span>아이디 : </span>
+            <input type="text" id="ID" placeholder="예)abcd@naver.com">
+            <select name="" id="ID-Address" aria-label="이메일주소">
+                <option value="">선택해주세요</option>
+                <option value="@naver.com">
+                    @naver.com
+                </option>
+                <option value="@hotmail.com">
+                    @hotmail.com
+                </option>
+                <option value="@yahoo.co.kr">
+                    @yahoo.co.kr
+                </option>
+                <option value="@hanmail.net">
+                    @hanmail.net
+                </option>
+                <option value="@gmail.com">
+                    @gmail.com
+                </option>
+                <option id="EmailInput" value="직접입력" onclick="insertEmailInput()">
+                    직접 입력
+                </option>
+            </select>
+        </div>
+
+        <div class="Password">
+            <span>비밀번호 : </span>
+            <input type="text" id="Password" placeholder="예)8자리 이상">
+        </div>
+
+        <div class="Img">
+            <span>이미지 : </span>
+            <input type="text" id="Img" placeholder="예)profile.jpg">
+            <button>업로드</button>
+        </div>
+
+        <div class="MBTI">
+            <span>MBTI : </span>
+            <div>
+                <input type="radio" id="ENTJ" name="drone" value="ENTJ"
+                       checked>
+                <label>ENTJ</label>
+            </div>
+
+            <div>
+                <input type="radio" id="ENTP" name="drone" value="ENTP">
+                <label>ENTP</label>
+            </div>
+
+            <!--<div>-->
+            <!--  <input type="radio" id="louie" name="drone" value="louie">-->
+            <!--  <label for="louie">Louie</label>-->
+            <!--</div>-->
+
+        </div>
+
+        <button>회원가입</button>
+    </div>
+
+</div>
 </body>
 </html>

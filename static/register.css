@@ -1,0 +1,36 @@
+.content {
+    text-align: center;
+    margin-top: 50px;
+    box-sizing: border-box;
+}
+
+.info {
+    /*border: 1px solid black;*/
+    padding: 10px;
+}
+
+.info div {
+    margin: 40px;
+    text-align: left;
+    margin-left: 20vw;
+}
+
+.info div span {
+    text-align: left;
+}
+
+.info div input, .info div select {
+    display: block;
+    margin-left: 20px;
+    border-radius: 10px;
+    text-align: left;
+}
+
+.Img button {
+    border-radius: 10px;
+    margin-left: 20px;
+}
+
+.info button {
+    border-radius: 10px;
+}
