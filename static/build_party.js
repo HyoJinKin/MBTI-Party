@@ -1,10 +1,7 @@
 $(document).ready(function () {
-    showReview();
-
     for(let i = 1; i <= 100; i++){
         $("#max_member_num").append('<option value="' +i+ '">'+i+'</option>');
     }
-
 });
 
 let mbtis = "";
@@ -14,6 +11,7 @@ function select_mbti(mbti, options) {
     options.forEach(function (e){
         (e != "" && e != "0") ? optionArray.push(e) : false;
     });
+    console.log(optionArray.length);
     let result = (mbti === "0") ? true : false;
     if(result) {
         mbtis = "";
@@ -46,6 +44,6 @@ function makeParty() {
                                 alert(response["msg"]);
                                 window.location.reload();
                             }
-                        })
+                        });
 }
 

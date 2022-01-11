@@ -88,6 +88,27 @@ def login():
 def build_party():
     return render_template('build_party.html')
 
+@app.route('/build_party', methods=['POST'])
+def reg_party():
+    purpose_receive = request.form['purpose_give']
+    mbti_receive = request.form['mbti_give']
+    title_receive = request.form['title_give']
+    description_receive = request.form['description_give']
+    max_member_num_receive = request.form['max_member_num_give']
+    #임시
+    user_id = "zzzsd"
+
+    doc = {
+        'id': user_id,
+        'purpose': purpose_receive,
+        'mbti': mbti_receive,
+        'title': title_receive,
+        'description': description_receive,
+        'max_member_num': max_member_num_receive
+    }
+
+    db.parties.insert_one(doc)
+    return jsonify({'msg': '생성 완료!!'})
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5001, debug=True)
