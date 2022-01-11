@@ -32,106 +32,11 @@
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"></script>
 
-    <!--    Css파일을 사용하기 위함-->
-    <!--    <link rel="stylesheet" href="../index.css">-->
+    <!--    Css, js 파일을 사용하기 위함-->
     <link rel="stylesheet" href="{{url_for('static', filename='register.css')}}">
-    <!--    <link rel="stylesheet" href="../static/register.css">-->
-
-    <script>
-        function insertEmailInput() {
-            // selectedValue = $('ID-Address').val();
-            // if (selectedValue == "직접 입력") {
-            let temp_html = `<input type="text" id="emailInputBox" placeholder="예) asdtyu@empas.com">`;
-            $('.ID').append(temp_html);
-            // }
-        }
+    <script src="../static/register.js"></script>
 
 
-        function registerUser() {
-            $.ajax({
-                type: "POST",
-                url: "/register",
-                data: {
-                    name_give: $('#name').val(),
-                    regisNum_give: $('#regisNum').val(),
-                    id_give: $('#ID').val(),
-                    password_give: $('#password').val(),
-                    MBTI_give: $('#MBTI').val()
-
-                },
-                success: function (response) {
-                    alert(response['msg'])
-
-                }
-            })
-            // window.location.reload();
-        }
-
-        function is_nickname(asValue) {
-            var regExp = /^(?=.*[a-zA-Z])[-a-zA-Z0-9_.]{2,10}$/;
-            return regExp.test(asValue);
-        }
-
-        function is_password(asValue) {
-            var regExp = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%^&*]{8,20}$/;
-            return regExp.test(asValue);
-        }
-
-        pOrF = false;
-
-        function check_dup() {
-            let username = $("#ID").val()
-            console.log(username)
-            if (username == "") {
-                alert("아이디를 입력해주세요.")
-                pOrF = false;
-                $("#ID").focus()
-                return;
-            }
-            if (!is_nickname(username)) {
-                alert("아이디의 형식을 확인해주세요. 영문과 숫자, 일부 특수문자(._-) 사용 가능. 2-10자 길이")
-                pOrF = false;
-                $("#ID").focus()
-                return;
-            }
-
-            checkID();
-        }
-
-        function checkID() {
-            let id = $('#ID').val();
-            $.ajax({
-                type: "POST",
-                url: "/register/checkid",
-                data: {id_give: id},
-                success: function (response) {
-                    console.log(response['msg'])
-                    let exists = response['exists']
-                    if (exists == true) {
-                        alert('중복되는 아이디입니다. 다시 시도해주세요.')
-                        pOrF = false;
-                    }
-                    if (exists == false) {
-                        alert('사용 가능한 아이디입니다.')
-                        pOrF = true;
-                    }
-                }
-            })
-            // window.location.reload();
-        }
-
-        function idCheckFirst() {
-            // let pOrF = $('#ID').className;
-            // if (pOrF == false) {
-            //     alert('ID 사용 가능 여부 체크를 먼저해주세요.')
-            //     return;
-            // }
-            // if (pOrF == true) {
-            //     registerUser();
-            // }
-            registerUser();
-        }
-    </script>
 </head>
 <body>
 <div class="content">
@@ -154,9 +59,7 @@
         <div class="ID">
             <span> 아이디 : </span>
             <input type="text" id="ID" placeholder="예)abcd@naver.com">
-            <button onclick="check_dup()"> 아이디 사용 가능 확인</button>
             <select name="" id="ID-Address" aria-label="이메일주소">
-                <option value="">선택해주세요</option>
                 <option value="@naver.com">
                     @naver.com
                 </option>
@@ -172,10 +75,8 @@
                 <option value="@gmail.com">
                     @gmail.com
                 </option>
-                <option id="EmailInput" value="직접입력" onclick="insertEmailInput()">
-                    직접 입력
-                </option>
             </select>
+            <button onclick="check_dup()"> 아이디 사용 가능 확인</button>
         </div>
 
         <div class="Password">
@@ -183,11 +84,16 @@
             <input type="password" id="password" placeholder="예)8자리 이상">
         </div>
 
-        <div class="Img">
-            <span>이미지 : </span>
-            <input type="text" id="img" placeholder="예)profile.jpg">
-            <button>업로드</button>
+        <div class="Password">
+            <span>비밀번호 : </span>
+            <input onchange="is_password_thesame()" type="password" id="passwordCheck" placeholder="예)8자리 이상">
         </div>
+
+<!--        <div class="Img">-->
+<!--            <span>이미지 : </span>-->
+<!--            <input type="text" id="img" placeholder="예)profile.jpg">-->
+<!--            <button>업로드</button>-->
+<!--        </div>-->
 
         <div class="MBTI">
             <span>MBTI : </span>
