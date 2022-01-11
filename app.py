@@ -1,6 +1,12 @@
 from flask import Flask, render_template, jsonify, request, redirect, flash, url_for
 from pymongo import MongoClient
 import random  # 테스트용 id random 생성
+import jwt
+import datetime
+import hashlib
+import init_mbti_db
+
+SECRET_KEY = 'MBTI'
 
 app = Flask(__name__)
 app.secret_key = "mf";
@@ -13,20 +19,11 @@ if not ("parties" in collist):
     db.create_collection("parties")
 if not ("mbti" in collist):
     db.create_collection("mbti")
-
-import jwt
-
-import datetime
-
-import hashlib
-
-SECRET_KEY = 'MBTI'
-
+    db.mbti.insert_many(init_mbti_db.mbti_docs)
 
 @app.route('/')
 def index():
     return render_template('index.html')
-
 
 @app.route('/api/party_list', methods=['GET'])
 def show_all():
@@ -77,15 +74,15 @@ def join_party():
     else:
         member_ids_query.append("," + user_id)
 
-    member_roles_query = db.parties.find_one({"id":party_id})['member_roles']
+    member_roles_query = db.parties.find_one({"id": party_id})['member_roles']
     if member_roles_query == "":
-        member_roles_query.append(user_id+","+user_role)
+        member_roles_query.append(user_id + "," + user_role)
     else:
-        member_roles_query.append(";"+user_id+","+user_role)
+        member_roles_query.append(";" + user_id + "," + user_role)
 
     db.parties.find_one_and_update(
         {"id": party_id},
-        {"$set": {"member_ids": member_ids_query,"member_roles": member_roles_query}}
+        {"$set": {"member_ids": member_ids_query, "member_roles": member_roles_query}}
     )
 
 
@@ -187,7 +184,6 @@ def reg_party():
 
     db.parties.insert_one(doc)
     return jsonify({'msg': '생성 완료!!'})
-
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5001, debug=True)
