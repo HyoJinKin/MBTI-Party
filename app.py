@@ -32,11 +32,11 @@ def show_all():
         "id": random.choice(range(1, 10000)),
         "name": "테스트",
         "description": "테스트로 넣어본 데이터입니다",
-        "max_member_num": 5,
+        "max_member_num": 6,
         "favorite_mbti": "INFJ,INTJ,INTP",
         "master_id": "master@aaa.com",
-        "member_ids": "master@aaa.com",
-        "member_roles": "aaa,;bbb,master@aaa.com;ccc,;ddd,;eee,"
+        "member_ids": "master@aaa.com,id1@bbb.com,id2@ccc.com",
+        "member_roles": "aaa,;bbb,master@aaa.com;ccc,id1@bbb.com;ddd,;eee,;fff,id2@ccc.com"
     }
     db.parties.insert_one(test_party_doc)
     parties = list(db.parties.find({}, {'_id': False}))
@@ -99,16 +99,13 @@ def registerUser():
     regisNum = request.form['regisNum_give']
     id = request.form['id_give']
     password = request.form['password_give']
-    # hash 기능으로 pw를 암호화한다.
-    pw_hash = hashlib.sha256(password.encode('utf-8')).hexdigest()
-
     # img = userinfo_receive['img']
     MBTI = request.form['MBTI_give']
     doc = {
         'name': name,
         'regisNum': regisNum,
         'id': id,
-        'password': pw_hash,
+        'password': password,
         # 'img': img,
         'MBTI': MBTI
     }
@@ -120,30 +117,30 @@ def registerUser():
 @app.route('/login')
 def login():
     return render_template('login.html')
-
-@app.route('/api/login', methods=['POST'])
-def api_login():
-    id_receive = request.form['id_give']
-    pw_receive = request.form['pw_give']
-
-    # hash 기능으로 pw를 암호화한다.
-    pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest()
-
-    # id, 암호화된 pw 가지고 있는 유저 찾기.
-    result = db.users.find_one({'id':id_receive, 'pw':pw_hash})
-    # 찾으면 JWT 토큰 발급.
-    if result is not None:
-        payload = {
-            'id': id_receive,
-            'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=2)
-        }
-
-        token = jwt.encode(payload, SECRET_KEY, algorithm='HS256').decode('utf-8')
-
-        # 만든 토큰을 준다.
-        return jsonify({'result':'success', 'token':token})
-    else:
-        return jsonify({'result': 'fail', 'msg':'아이디 / 비밀번호가 일치하지 않습니다.'})
+#
+# @app.route('/api/login', method=['POST'])
+# def api_login():
+#     id_receive = request.form['id_give']
+#     pw_receive = request.form['pw_give']
+#
+#     # hash 기능으로 pw를 암호화한다.
+#     pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest()
+#
+#     # id, 암호화된 pw 가지고 있는 유저 찾기.
+#     result = db.users.find_one({'id':id_receive, 'pw':pw_hash})
+#     # 찾으면 JWT 토큰 발급.
+#     if result is not None:
+#         payload = {
+#             'id': id_receive,
+#             'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=2)
+#         }
+#
+#         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256').decode('utf-8')
+#
+#         # 만든 토큰을 준다.
+#         return jsonify({'result':'success', 'token':token})
+#     else:
+#         return jsonify({'result': 'fail', 'msg':'아이디 / 비밀번호가 일치하지 않습니다.'})
 
 
 
