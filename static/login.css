@@ -1,28 +1,32 @@
 .title {
     margin-bottom: 50px;
 }
+.login-box {
+    display: flex;
+}
 .login-form {
     width: 50%;
 }
 .login-form input {
-    width: 100%;
+    width: 80%;
     margin-bottom: 30px;
     border: none;
     border-radius: 0px;
     border-bottom: 1px solid #000;
 }
 .login-form button {
-    width: 100%;
+    width: 80%;
+    margin-bottom: 20px;
 }
-.login-image-box {
-    background-image: url("assets/images/icons/login.png");
+.login-image {
+    width: 50%;
+    box-sizing: border-box;
+    background-image: url("../static/assets/images/icons/login.png");
     background-size: cover;
-    background-position: center;
 }
 .login-menu-group {
-    position: absolute;
-    top: 0; left: 0;
-    margin: 0 auto;
+    width: 80;
+    position: relative;
 }
 .login-menu-group ul{
     display: flex;

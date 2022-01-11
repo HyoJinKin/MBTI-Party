@@ -4,6 +4,10 @@
     color: #000;
 }
 
+a {
+    text-decoration: none;
+}
+
 /* float */
 .float--left {
     float: left;

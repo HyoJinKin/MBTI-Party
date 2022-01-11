@@ -79,41 +79,41 @@
 
     <section class="section section--login-form">
         <div class="inner">
-            <div class="title">
-                <h1>MBTI PARTY</h1>
-                <h4>여러분들과 궁합이 맞는 사람들과 이야기 해보세요</h4>
+            <div class="login-box">
+                <div class="login-form">
+                    <div class="title">
+                        <h1>MBTI PARTY</h1>
+                        <h4>MBTI 궁합이 맞는 친구들을 찾아보세요</h4>
+                    </div>
+
+                    <p>
+                        아이디
+                        <input type="text" class="form-control" id="id">
+                    </p>
+                    <p>
+                        비밀번호
+                        <input type="password" class="form-control" id="password">
+                    </p>
+                    <button type="button" onclick="login()" class="btn btn-primary">로그인</button>
+                    <div class="login-menu-group">
+                        <ul>
+                            <li>
+                                <a href="#">비밀번호 찾기</a>
+                            </li>
+                            <li>
+                                <a href="#">아이디 찾기</a>
+                            </li>
+                            <li>
+                                <a href="/register">회원가입</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="login-image"></div>
             </div>
 
-            <div class="login-form float--left">
-                <p>
-                    아이디
-                    <input type="text" class="form-control" id="id">
-                </p>
-                <p>
-                    비밀번호
-                    <input type="password" class="form-control" id="password">
-                </p>
-                <button type="button" onclick="login()" class="btn btn-primary">로그인</button>
-            </div>
 
-            <div class="login-image float--right">
-                <div class="login-image-box"></div>
-            </div>
-
-
-            <div class="login-menu-group">
-                <ul>
-                    <li>
-                        <a class="find_text">비밀번호 찾기</a>
-                    </li>
-                    <li>
-                        <a class="find_text">아이디 찾기</a>
-                    </li>
-                    <li>
-                        <a href="/register" class="find_text">회원가입</a>
-                    </li>
-                </ul>
-            </div>
         </div>
     </section>
 </div>

@@ -134,10 +134,9 @@ def api_login():
 
     # hash 기능으로 pw를 암호화한다.
     pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest()
-    print(pw_hash)
+
     # id, 암호화된 pw 가지고 있는 유저 찾기.
-    result = db.users.find_one({'id': id_receive, 'password': pw_hash})
-    print(result)
+    result = db.users.find_one({'id': id_receive, 'pw': pw_hash})
     # 찾으면 JWT 토큰 발급.
     if result is not None:
         payload = {
@@ -145,12 +144,12 @@ def api_login():
             'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=2)
         }
 
-        token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
+        token = jwt.encode(payload, SECRET_KEY, algorithm='HS256').decode('utf-8')
 
         # 만든 토큰을 준다.
         return jsonify({'result': 'success', 'token': token})
     else:
-        return jsonify({'msg': '로그인에 실패'})
+        return
 
 
 @app.route('/build_party')
@@ -159,6 +158,7 @@ def build_party():
     if user_mbti is not None:
         return render_template('build_party.html', user_mbti=user_mbti['MBTI'])
     else:
+        # 비로그인으러 접근 경우 리다이렉트 후 alert
         flash("로그인이 필요합니다!")
         return redirect('/')
 
