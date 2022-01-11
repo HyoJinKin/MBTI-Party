@@ -99,13 +99,16 @@ def registerUser():
     regisNum = request.form['regisNum_give']
     id = request.form['id_give']
     password = request.form['password_give']
+    # hash 기능으로 pw를 암호화한다.
+    pw_hash = hashlib.sha256(password.encode('utf-8')).hexdigest()
+
     # img = userinfo_receive['img']
     MBTI = request.form['MBTI_give']
     doc = {
         'name': name,
         'regisNum': regisNum,
         'id': id,
-        'password': password,
+        'password': pw_hash,
         # 'img': img,
         'MBTI': MBTI
     }
@@ -118,7 +121,7 @@ def registerUser():
 def login():
     return render_template('login.html')
 
-@app.route('/api/login', method=['POST'])
+@app.route('/api/login', methods=['POST'])
 def api_login():
     id_receive = request.form['id_give']
     pw_receive = request.form['pw_give']
