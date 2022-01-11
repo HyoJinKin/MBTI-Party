@@ -1,97 +1,119 @@
 <!DOCTYPE html>
 <html lang="ko">
 
-    <head>
-        <!-- Webpage Title -->
-        <title>모두의 책리뷰 | 스파르타코딩클럽</title>
+<head>
+    <!-- Webpage Title -->
+    <title>모두의 책리뷰 | 스파르타코딩클럽</title>
 
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-              integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-              crossorigin="anonymous">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
 
-        <!-- JS -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-                integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-                crossorigin="anonymous"></script>
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
 
-        <!-- 구글폰트 -->
-        <link href="https://fonts.googleapis.com/css?family=Do+Hyeon&display=swap" rel="stylesheet">
+    <!-- 구글폰트 -->
+    <link href="https://fonts.googleapis.com/css?family=Do+Hyeon&display=swap" rel="stylesheet">
 
-        <script src="../static/build_party.js"></script>
-        <link rel="stylesheet" href="../static/build_party.css"/>
-    </head>
+    <script src="../static/common.js"></script>
+    <script src="../static/build_party.js"></script>
+    <link rel="stylesheet" href="../static/common.css"/>
+    <link rel="stylesheet" href="../static/build_party.css"/>
+</head>
 
-    <body>
-        <div class="container">
-            <div class="info">
-                <h1>만드실 파티에 대해 간략하게 설명해주세요.</h1>
-                <p>원하는 MBTI를 선택해 자신과 잘 맞는 파티원을 모집해 보세요!</p>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">파티 목적</span>
-                        <select name="purpose" class="select">
-                            <option value="">선택해주세요.</option>
-                            <option value="01">스터디</option>
-                            <option value="02">잡답</option>
-                            <option value="03">토론</option>
-                            <option value="04">게임</option>
-                            <option value="05">기타</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">원하는 MBTI</span>
-                        <select name="purpose" class="select">
-                            <option value="">선택해주세요.</option>
-                            <option value="01">스터디</option>
-                            <option value="02">잡답</option>
-                            <option value="03">토론</option>
-                            <option value="04">게임</option>
-                            <option value="05">기타</option>
-                        </select>
-                        <span class="mbti_info">나()와 잘 맞는 MBTI 유형: qwee, sdsd ... <a href="#" style="color: deepskyblue" onclick="$('#layer').show();">더 알아보기!</a></span>
-                    </div>
-                </div>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">파티 제목</span>
-                    </div>
-                    <input type="text" class="form-control" id="title">
-                </div>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">원하는 MBTI</span>
-                    </div>
-                    <input type="text" class="form-control" id="mbti">
-                </div>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">파티 설명</span>
-                    </div>
-                    <textarea class="form-control" id="summary"
-                              cols="30"
-                              rows="5" placeholder="140자까지 입력할 수 있습니다."></textarea>
-                </div>
-                <div class="button">
-                    <button onclick="makeReview()" type="button" class="btn btn-primary">파티 만들기</button>
-                </div>
+<body>
+<div class="body__container">
+    <nav class="section section--nav navbar navbar-expand-lg navbar-light bg-light">
+        <div class="inner">
+            <a class="navbar-brand float--left" href="/">MBTI</a>
+            <div class="navbar-menu-group collapse navbar-collapse float--right">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a href="/login">로그인</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/register">회원가입</a>
+                    </li>
+                </ul>
             </div>
         </div>
-        <div id="layer" style="display: none;">
-            <div class="bg" onclick="$('#layer').hide();"></div>
-            <div class="layer">
-                <div class="inner_layer">
-                    <img src="https://images.ctfassets.net/ut8ny7d4czxh/1gdcD5vHxyVMB3tLxaaX46/857296015430c98aec65460267b65782/img__5_.jpg?w=944&q=100" alt="mbti 이미지">
+    </nav>
+
+    <section class="section section--info">
+        <div class="inner">
+            <h1>만드실 파티에 대해 간략하게 설명해주세요.</h1>
+            <p>원하는 MBTI를 선택해 자신과 잘 맞는 파티원을 모집해 보세요!</p>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">파티 목적</span>
+                    <select name="purpose" class="select">
+                        <option value="">선택해주세요.</option>
+                        <option value="01">스터디</option>
+                        <option value="02">잡답</option>
+                        <option value="03">토론</option>
+                        <option value="04">게임</option>
+                        <option value="05">기타</option>
+                    </select>
                 </div>
             </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">원하는 MBTI</span>
+                    <select name="purpose" class="select">
+                        <option value="">선택해주세요.</option>
+                        <option value="01">내가 원하는대로 선택</option>
+                        <option value="02">특정 유형만</option>
+                        <option value="03">토론</option>
+                        <option value="04">게임</option>
+                        <option value="05">기타</option>
+                    </select>
+                    <span class="mbti_info">나()와 잘 맞는 MBTI 유형: qwee, sdsd ... <a href="#" style="color: deepskyblue"
+                                                                                 onclick="$('#layer').show();">더 알아보기!</a></span>
+                </div>
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">파티 제목</span>
+                </div>
+                <input type="text" class="form-control" id="title">
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">원하는 MBTI</span>
+                </div>
+                <input type="text" class="form-control" id="mbti">
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">파티 설명</span>
+                </div>
+                <textarea class="form-control" id="summary"
+                          cols="30"
+                          rows="5" placeholder="140자까지 입력할 수 있습니다."></textarea>
+            </div>
+            <div class="button">
+                <button onclick="makeReview()" type="button" class="btn btn-primary">파티 만들기</button>
+            </div>
         </div>
-    </body>
+    </section>
+</div>
+<div id="layer" style="display: none;">
+    <div class="bg" onclick="$('#layer').hide();"></div>
+    <div class="layer">
+        <div class="inner_layer">
+            <img src="https://images.ctfassets.net/ut8ny7d4czxh/1gdcD5vHxyVMB3tLxaaX46/857296015430c98aec65460267b65782/img__5_.jpg?w=944&q=100"
+                 alt="mbti 이미지">
+        </div>
+    </div>
+</div>
+</body>
 
 </html>
