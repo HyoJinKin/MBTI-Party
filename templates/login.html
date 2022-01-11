@@ -12,11 +12,36 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
             crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 
     <link rel="stylesheet" href="../static/common.css">
     <link rel="stylesheet" href="../static/login.css">
     <script src="../static/common.js"></script>
     <script src="../static/login.js"></script>
+
+    <script>
+        {% if msg %}
+            alert("{{ msg }}")
+        {% endif %}
+
+        function login() {
+            $.ajax({
+                type: "POST",
+                url: "/api/login",
+                data: {id_give: $('#id').val(), pw_give: $('#password').val()},
+                success: function (response) {
+                    if (response['result'] == 'success') {
+                        $.cookie('mytoken', response['token'])
+                        alert('로그인 완료!')
+                        window.location.href = '/'
+                    } else {
+                        alert(response['msg'])
+                    }
+                }
+            })
+        }
+    </script>
 </head>
 <body>
 <div class="body__container">
@@ -47,7 +72,7 @@
             <div class="middle hansan">
                 <p>아이디<input style="width: 300px;" type="text" class="form-control" id="id"></p>
                 <p>비밀번호<input style="width: 300px;" type="password" class="form-control" id="password"></p>
-                <button type="button" onclick="location.href='/'" class="btn btn-secondary">로그인</button>
+                <button type="button" onclick="login()" class="btn btn-secondary">로그인</button>
             </div>
             <hr>
             <div class="bottom">

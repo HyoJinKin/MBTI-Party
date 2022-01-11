@@ -23,6 +23,8 @@ if not ("parties" in collist):
 if not ("mbti" in collist):
     db.create_collection("mbti")
 
+SECRET_KEY = 'MBTI'
+
 
 @app.route('/')
 def index():
@@ -128,7 +130,9 @@ def registerUser():
 
 @app.route('/login')
 def login():
-    return render_template('login.html')
+    msg = request.args.get('msg')
+    return render_template('login.html', msg=msg)
+
 @app.route('/api/login', methods=['POST'])
 def api_login():
     id_receive = request.form['id_give']
@@ -151,6 +155,11 @@ def api_login():
             'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=2)
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256').decode('utf-8')
+
+        # token을 준다.
+        return jsonify({'result': 'success', 'token': token})
+    else :
+        return jsonify({'result': 'fail', 'msg': '아이디 / 비밀번호가 일치하지 않습니다.'})
 
 @app.route('/build_party')
 def build_party():
