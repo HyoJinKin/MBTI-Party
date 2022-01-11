@@ -34,8 +34,14 @@
                 <p>원하는 MBTI를 선택해 자신과 잘 맞는 파티원을 모집해 보세요!</p>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
+                        <span class="input-group-text">인원수</span>
+                        <select name="max_member_num" id="max_member_num" class="select"></select>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
                         <span class="input-group-text">파티 목적</span>
-                        <select name="purpose" class="select">
+                        <select name="purpose" id="select_purpose" class="select">
                             <option value="">선택해주세요.</option>
                             <option value="01">스터디</option>
                             <option value="02">잡답</option>
@@ -48,16 +54,34 @@
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text">원하는 MBTI</span>
-                        <select name="purpose" class="select">
-                            <option value="">선택해주세요.</option>
-                            <option value="01">스터디</option>
-                            <option value="02">잡답</option>
-                            <option value="03">토론</option>
-                            <option value="04">게임</option>
-                            <option value="05">기타</option>
+                        <select name="mbti" id="select_mbti" class="select" onchange="select_mbti($(this).val(), $(this).find('option').map(function() {return $(this).val();}).get())">
+                            <option value="">선택해주세요. (다중 선택 가능)</option>
+                            <option value="0">모두 선택</option>
+                            <option value="ISTJ">ISTJ</option>
+                            <option value="ISFJ">ISFJ</option>
+                            <option value="INFJ">INFJ</option>
+                            <option value="INTP">INTP</option>
+                            <option value="ISTP">ISTP</option>
+                            <option value="ISFP">ISFP</option>
+                            <option value="INFP">INFP</option>
+                            <option value="INTP">INTP</option>
+                            <option value="ESTP">ESTP</option>
+                            <option value="ESFP">ESFP</option>
+                            <option value="ENFP">ENFP</option>
+                            <option value="ENTP">ENTP</option>
+                            <option value="ESTJ">ESTJ</option>
+                            <option value="ESFJ">ESFJ</option>
+                            <option value="ENFJ">ENFJ</option>
+                            <option value="ENTJ">ENTJ</option>
                         </select>
                         <span class="mbti_info">나()와 잘 맞는 MBTI 유형: qwee, sdsd ... <a href="#" style="color: deepskyblue" onclick="$('#layer').show();">더 알아보기!</a></span>
                     </div>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">원하는 MBTI</span>
+                    </div>
+                    <span id="mbti_list" class="form-control"></span>
                 </div>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
@@ -67,20 +91,14 @@
                 </div>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">원하는 MBTI</span>
-                    </div>
-                    <input type="text" class="form-control" id="mbti">
-                </div>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
                         <span class="input-group-text">파티 설명</span>
                     </div>
-                    <textarea class="form-control" id="summary"
+                    <textarea class="form-control" id="description"
                               cols="30"
                               rows="5" placeholder="140자까지 입력할 수 있습니다."></textarea>
                 </div>
                 <div class="button">
-                    <button onclick="makeReview()" type="button" class="btn btn-primary">파티 만들기</button>
+                    <button onclick="makeParty()" type="button" class="btn btn-primary">파티 만들기</button>
                 </div>
             </div>
         </div>
