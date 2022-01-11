@@ -13,15 +13,48 @@
     padding: 1px 5px;
     border-radius: 5px;
 }
-.party-info {
+.party-box {
     width: 100%;
+}
+.info .title {
+    font-size: 32px;
+    font-weight: bold;
+}
+.info .info__left, .party-box .info__right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.info .info__right {
+    align-items: center;
+}
+.info .party-size {
+    font-size: 52px;
+    font-style: italic;
 }
 #member-entries {
     display: flex;
     width: 100%;
+    margin-top: 50px;
 }
 #member-entries .member-entry {
     display: flex;
     flex-direction: column;
+    width: 300px;
+    box-sizing: border-box;
+    text-align: center;
+    align-items: center;
+    border: none;
+}
+.member-entry img {
+    height: 150px;
+}
+.member-entry .member-entry__image {
     width: 100px;
+    height: 100px;
+    border-radius: 50px;
+}
+.member-entry .member-entry__role,
+.member-entry .member-entry__id {
+    height: 20px;
 }

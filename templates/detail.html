@@ -35,19 +35,18 @@
     <section class="section section--detail">
         <div class="inner">
             <div class="party-box">
-                <div class="title">{{name}}</div>
-                <div class="party-info">
-                    <div class="float--left">
+                <div class="info">
+                    <div class="info__left float--left">
+                        <p class="title">{{name}}</p>
                         <p>{{master_id}}</p>
                         <p>{{desc}}</p>
-                        <p>{{max_member_num}}명 모집</p>
-                        <div id="favorite-mbti-entries"></div>
                     </div>
-
-                    <div id="member-entries" class="member-entries float--right"></div>
+                    <div class="info__right float--right">
+                        <div id="party-size" class="party-size"></div>
+                        <div id="favorite-mbti-entries float--right"></div>
+                    </div>
                 </div>
-
-                <button id="submit-btn" class="btn-primary">참여하기</button>
+                <div id="member-entries" class="member-entries float--right"></div>
 
                 <input type="hidden" id="party-id" value={{id}}>
                 <input type="hidden" id="favorite_mbti" value={{favorite_mbti}}>
