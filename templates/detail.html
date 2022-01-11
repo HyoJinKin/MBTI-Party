@@ -7,42 +7,56 @@
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/0aeb562407.js" crossorigin="anonymous"></script>
-
     <link rel="stylesheet" href="../static/common.css">
     <link rel="stylesheet" href="../static/detail.css">
-    <script src="../static/index.js"></script>
+    <script defer src="../static/detail.js"></script>
     <title>MBTI PARTY | 나의 MBTI에 맞는 파티 찾기</title>
 </head>
 <body>
-    <div class="body__container">
+<div class="body__container">
 
-        <nav class="section section--nav navbar navbar-expand-lg navbar-light bg-light">
-            <div class="inner">
-                <a class="navbar-brand float--left" href="/">MBTI</a>
-                <div class="navbar-menu-group collapse navbar-collapse float--right">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                            <a href="/login">로그인</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/register">회원가입</a>
-                        </li>
-                    </ul>
-                </div>
+    <nav class="section section--nav navbar navbar-expand-lg navbar-light bg-light">
+        <div class="inner">
+            <a class="navbar-brand float--left" href="/">MBTI</a>
+            <div class="navbar-menu-group collapse navbar-collapse float--right">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a href="/login">로그인</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/register">회원가입</a>
+                    </li>
+                </ul>
             </div>
-        </nav>
+        </div>
+    </nav>
 
 
-        <section>
-            <div class="inner">
-                <div class="party-box">
-                    <p class="title">{{name}}</p>
-                    <p>{{desc}}</p>
-                    <p>{{favorite_mbti}}</p>
-                    <button class="btn-primary">참여하기</button>
+    <section class="section section--detail">
+        <div class="inner">
+            <div class="party-box">
+                <div class="title">{{name}}</div>
+                <div class="party-info">
+                    <div class="float--left">
+                        <p>{{master_id}}</p>
+                        <p>{{desc}}</p>
+                        <p>{{max_member_num}}명 모집</p>
+                        <div id="favorite-mbti-entries"></div>
+                    </div>
+
+                    <div id="member-entries" class="member-entries float--right"></div>
                 </div>
+
+                <button id="submit-btn" class="btn-primary">참여하기</button>
+
+                <input type="hidden" id="party-id" value={{id}}>
+                <input type="hidden" id="favorite_mbti" value={{favorite_mbti}}>
+                <input type="hidden" id="max-member-num" value={{max_member_num}}>
+                <input type="hidden" id="member-ids" value={{member_ids}}>
+                <input type="hidden" id="member-roles" value={{member_roles}}>
             </div>
-        </section>
-    </div>
+        </div>
+    </section>
+</div>
 </body>
 </html>
