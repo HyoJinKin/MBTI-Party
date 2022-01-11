@@ -31,16 +31,7 @@ def show_all():
         "member_ids": "",
         "member_roles": "aaa:,bbb,ccc,ddd,eee"
     }
-
-    test_user_id = "test_user"+random.choice(range(1,10000))+"@aaa.com"
-
-    test_user_doc = {
-        "id": test_user_id,
-        "nickname": "test_user",
-        "mbti": "INFJ"
-    }
     db.parties.insert_one(test_party_doc)
-    db.users.insert_one(test_user_doc)
     parties = list(db.parties.find({}, {'_id': False}))
     return jsonify({'parties': parties})
 
@@ -71,13 +62,13 @@ def join_party():
     user_role = request.form['role_request']
 
     member_ids_query = db.parties.find_one({"id":party_id})['members_ids']
-    if member_ids_query is "":
+    if member_ids_query == "":
         member_ids_query.append(user_id)
     else:
         member_ids_query.append("," + user_id)
 
     member_roles_query = db.parties.find_one({"id":party_id})['member_roles']
-    if member_roles_query is "":
+    if member_roles_query == "":
         member_roles_query.append(user_role)
     else:
         member_roles_query.append("," + user_role)
