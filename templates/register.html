@@ -33,81 +33,105 @@
             crossorigin="anonymous"></script>
 
     <!--    Css, js 파일을 사용하기 위함-->
-    <link rel="stylesheet" href="{{url_for('static', filename='register.css')}}">
+    <link rel="stylesheet" href="../static/common.css">
+    <link rel="stylesheet" href="../static/register.css">
     <script src="../static/register.js"></script>
-
-
 </head>
 <body>
+
+<div class="body__container">
+    <nav class="section section--nav navbar navbar-expand-lg navbar-light bg-light">
+        <div class="inner">
+            <a class="navbar-brand float--left" href="/">MBTI</a>
+            <div class="navbar-menu-group collapse navbar-collapse float--right">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a href="/login">로그인</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/register">회원가입</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="section section--join-form">
+        <div class="inner">
+            <div id="header">
+                <h1>회원가입</h1>
+            </div>
+
+            <div class="info">
+
+                <div class="name">
+                    <span>이름 :</span>
+                    <input type="text" id="name" placeholder="예)홍길동">
+                </div>
+
+                <div class="regiNum">
+                    <span>주민등록번호 :</span>
+                    <input type="text" id="regisNum" placeholder="예)111111- 1111111">
+                </div>
+
+                <div class="ID">
+                    <span> 아이디 : </span>
+                    <input type="text" id="ID" placeholder="예)abcd@naver.com">
+                    <select name="" id="ID-Address" aria-label="이메일주소">
+                        <option value="@naver.com">
+                            @naver.com
+                        </option>
+                        <option value="@hotmail.com">
+                            @hotmail.com
+                        </option>
+                        <option value="@yahoo.co.kr">
+                            @yahoo.co.kr
+                        </option>
+                        <option value="@hanmail.net">
+                            @hanmail.net
+                        </option>
+                        <option value="@gmail.com">
+                            @gmail.com
+                        </option>
+                    </select>
+                    <button onclick="check_dup()"> 아이디 사용 가능 확인</button>
+                </div>
+
+                <div class="Password">
+                    <span>비밀번호 : </span>
+                    <input type="password" id="password" placeholder="예)8자리 이상">
+                </div>
+
+                <div class="Password">
+                    <span>비밀번호 : </span>
+                    <input onchange="is_password_thesame()" type="password" id="passwordCheck" placeholder="예)8자리 이상">
+                </div>
+
+                <!--        <div class="Img">-->
+                <!--            <span>이미지 : </span>-->
+                <!--            <input type="text" id="img" placeholder="예)profile.jpg">-->
+                <!--            <button>업로드</button>-->
+                <!--        </div>-->
+
+                <div class="MBTI">
+                    <span>MBTI : </span>
+                    <input type="text" id="MBTI" placeholder="예) ENTJ">
+
+                    <!--<div>-->
+                    <!--  <input type="radio" id="louie" name="drone" value="louie">-->
+                    <!--  <label for="louie">Louie</label>-->
+                    <!--</div>-->
+
+                </div>
+
+                <button onclick="idCheckFirst()">회원가입</button>
+            </div>
+        </div>
+    </section>
+</div>
+
 <div class="content">
-    <div id="header">
-        <h1>회원가입</h1>
-    </div>
 
-    <div class="info">
-
-        <div class="name">
-            <span>이름 :</span>
-            <input type="text" id="name" placeholder="예)홍길동">
-        </div>
-
-        <div class="regiNum">
-            <span>주민등록번호 :</span>
-            <input type="text" id="regisNum" placeholder="예)111111- 1111111">
-        </div>
-
-        <div class="ID">
-            <span> 아이디 : </span>
-            <input type="text" id="ID" placeholder="예)abcd@naver.com">
-            <select name="" id="ID-Address" aria-label="이메일주소">
-                <option value="@naver.com">
-                    @naver.com
-                </option>
-                <option value="@hotmail.com">
-                    @hotmail.com
-                </option>
-                <option value="@yahoo.co.kr">
-                    @yahoo.co.kr
-                </option>
-                <option value="@hanmail.net">
-                    @hanmail.net
-                </option>
-                <option value="@gmail.com">
-                    @gmail.com
-                </option>
-            </select>
-            <button onclick="check_dup()"> 아이디 사용 가능 확인</button>
-        </div>
-
-        <div class="Password">
-            <span>비밀번호 : </span>
-            <input type="password" id="password" placeholder="예)8자리 이상">
-        </div>
-
-        <div class="Password">
-            <span>비밀번호 : </span>
-            <input onchange="is_password_thesame()" type="password" id="passwordCheck" placeholder="예)8자리 이상">
-        </div>
-
-<!--        <div class="Img">-->
-<!--            <span>이미지 : </span>-->
-<!--            <input type="text" id="img" placeholder="예)profile.jpg">-->
-<!--            <button>업로드</button>-->
-<!--        </div>-->
-
-        <div class="MBTI">
-            <span>MBTI : </span>
-            <input type="text" id="MBTI" placeholder="예) ENTJ">
-
-            <!--<div>-->
-            <!--  <input type="radio" id="louie" name="drone" value="louie">-->
-            <!--  <label for="louie">Louie</label>-->
-            <!--</div>-->
-
-        </div>
-
-        <button onclick="idCheckFirst()">회원가입</button>
-    </div>
 
 </div>
 </body>
