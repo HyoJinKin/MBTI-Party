@@ -2,6 +2,16 @@ from flask import Flask, render_template, jsonify, request, url_for
 from pymongo import MongoClient
 import random  # 테스트용 id random 생성
 
+# JWT 패키지 사용 ( 설치한 패키지 이름 : PyJWT )
+import jwt
+
+# 데이터 저장소에 password가 알아보지 못하게 암호화해서 저장하기 위해,
+# hashlib 모듈을 씀.
+import hashlib
+
+# 토큰에 만료시간을 주기위해, datetime 모듈을 씀.
+import datetime
+
 app = Flask(__name__)
 client = MongoClient('localhost', 27017)
 db = client.dbmbti
@@ -119,12 +129,36 @@ def registerUser():
 @app.route('/login')
 def login():
     return render_template('login.html')
+@app.route('/api/login', methods=['POST'])
+def api_login():
+    id_receive = request.form['id_give']
+    pw_receive = request.form['pw_give']
 
+    # pw를 hash를 통해 암호화를 한다.
+    pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest()
+
+    # id, 암호화된 pw를 가지고 유저를 찾는다.
+    result = db.users.find_one({'id': id_receive, 'pw': pw_hash})
+
+    # 찾았을 시, JWT 토큰을 만들어 발급.
+    if result is not None:
+        # JWT 토큰에는, payload와 시크릿키가 필요.
+        # 시크릿키가 있어야 토큰을 디코딩(=풀기) 해서 payload 값을 볼 수 있다.
+        # 아래에선 id와 exp를 담았다. 즉, JWT 토큰을 풀면 유저ID 값을 알 수 있다.
+        # exp에는 만료시간을 넣어준다. 만료시간이 지나면, 시크릿키로 토큰을 풀 때 만료되었다고 에러가 남.
+        payload = {
+            'id': id_receive,
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=2)
+        }
+        token = jwt.encode(payload, SECRET_KEY, algorithm='HS256').decode('utf-8')
 
 @app.route('/build_party')
 def build_party():
     return render_template('build_party.html')
 
+@app.route('/information_check')
+def information_check():
+    return render_template('information_check.html')
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5001, debug=True)
