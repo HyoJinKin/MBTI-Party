@@ -1,41 +1,58 @@
-.section--join-form {
+.join-box {
+    display: flex;
+}
+.join-form {
+    width: 50%;
+    font-size: 14px;
+}
+.join-form input {
+    width: 80%;
+    height: 25px;
+    margin-bottom: 30px;
+    border: none;
+    border-radius: 0px;
+    border-bottom: 1px solid #000;
+}
+.join-form .id-form {
+    display: flex;
+    align-items: flex-start;
+}
+.join-form .id-input {
+    width: 35%;
 
 }
-.header{
-    margin: 40px;
-    text-align: left;
-    margin-left: 20vw;
-}
-.info {
-    /*border: 1px solid black;*/
-    padding: 10px;
+.join-form .id-select {
+    width: 25%;
+    height: 25px;
+    border: none;
+    border-bottom: 1px solid #000;
 }
 
-.info div {
-    margin: 40px;
-    text-align: left;
-    margin-left: 20vw;
+.join-form .id-btn {
+    font-size: 12px;
+    width: 20%;
+    height: 25px;
+    text-align: center;
 }
 
-.info div span {
-    text-align: left;
+.join-form button {
+    width: 80%;
+    margin-bottom: 20px;
 }
-
-.info div input, .info div select, .info div button {
-    display: block;
-    margin-left: 20px;
-    border-radius: 10px;
-    text-align: left;
+.join-image {
+    width: 50%;
+    box-sizing: border-box;
+    background-image: url("../static/assets/images/icons/join.png");
+    background-repeat: no-repeat;
 }
-
-.Img button {
-    border-radius: 10px;
-    margin-left: 20px;
+.join-menu-group {
+    width: 80;
+    position: relative;
 }
-
-.info button {
-    border-radius: 10px;
-    margin: 40px;
-    text-align: left;
-    margin-left: 20vw;
+.join-menu-group ul{
+    display: flex;
+    list-style: none;
+}
+.join-menu-group li {
+    padding-right: 20px;
 }

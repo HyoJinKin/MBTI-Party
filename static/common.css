@@ -32,6 +32,12 @@ a {
     box-sizing: border-box;
     padding: 30px 30px;
 }
+.section .title {
+    margin-bottom: 50px;
+}
+.section .title .sub-title {
+    color: #696969;
+}
 
 /* nav */
 nav .navbar-menu-group li {
