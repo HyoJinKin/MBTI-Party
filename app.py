@@ -21,14 +21,24 @@ def index():
 
 @app.route('/api/party_list', methods=['GET'])
 def show_all():
-    test_doc = {
+    test_party_doc = {
         "id": random.choice(range(1, 10000)),
         "name": "테스트",
         "description": "테스트로 넣어본 데이터입니다",
         "max_member_num": 5,
-        "favorite_mbti": "INFJ,INTJ,INTP"
+        "favorite_mbti": "INFJ,INTJ,INTP",
+        "max_member_num": 5,
+        "masterId": "master@aaa.com",
+        "memberIds": "",
+        "memberRoles": "aaa:,bbb,ccc,ddd,eee"
     }
-    db.parties.insert_one(test_doc)
+    test_user_doc = {
+        "id": "test_user@aaa.com",
+        "nickname": "test_user",
+        "mbti": "INFJ"
+    }
+    db.parties.insert_one(test_party_doc)
+    db.users.insert_one(test_user_doc)
     parties = list(db.parties.find({}, {'_id': False}))
     return jsonify({'parties': parties})
 
@@ -41,7 +51,39 @@ def detail():
     desc = detail['description']
     favorite_mbti = detail['favorite_mbti']
 
-    return render_template('detail.html', id=id, name=name, desc=desc, favorite_mbti=favorite_mbti)
+    max_member_num = detail['max_member_num']
+    master_id = detail['master_id']
+    member_ids = detail['member_ids']
+    member_roles = detail['member_roles']
+    return render_template(
+        'detail.html',
+        id=id, name=name, desc=desc, favorite_mbti=favorite_mbti,
+        max_member_num=max_member_num,
+        master_id=master_id, member_ids=member_ids, member_roles=member_roles
+    )
+
+@app.route('/api/join_party')
+def join_party():
+    party_id = request.form['party_id_request']
+    user_id = request.form['user_id_request']
+    user_role = request.form['role_request']
+
+    member_ids_query = db.parties.find_one({"id":party_id})['members_ids']
+    if member_ids_query is "":
+        member_ids_query.append(user_id)
+    else:
+        member_ids_query.append("," + user_id)
+
+    member_roles_query = db.parties.find_one({"id":party_id})['member_roles']
+    if member_roles_query is "":
+        member_roles_query.append(user_role)
+    else:
+        member_roles_query.append("," + user_role)
+
+    db.parties.find_one_and_update(
+        {"id": party_id},
+        {"$set": {"memberIds": member_ids_query, "memberRoles": member_roles_query}},
+    )
 
 
 @app.route('/register')
