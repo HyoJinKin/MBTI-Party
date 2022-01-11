@@ -13,6 +13,13 @@ if not ("parties" in collist):
 if not ("mbti" in collist):
     db.create_collection("mbti")
 
+import jwt
+
+import datetime
+
+import hashlib
+
+SECRET_KEY = 'MBTI'
 
 @app.route('/')
 def index():
@@ -82,6 +89,31 @@ def registerUser():
 @app.route('/login')
 def login():
     return render_template('login.html')
+
+@app.route('/api/login', method=['POST'])
+def api_login():
+    id_receive = request.form['id_give']
+    pw_receive = request.form['pw_give']
+
+    # hash 기능으로 pw를 암호화한다.
+    pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest()
+
+    # id, 암호화된 pw 가지고 있는 유저 찾기.
+    result = db.users.find_one({'id':id_receive, 'pw':pw_hash})
+    # 찾으면 JWT 토큰 발급.
+    if result is not None:
+        payload = {
+            'id': id_receive,
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=2)
+        }
+
+        token = jwt.encode(payload, SECRET_KEY, algorithm='HS256').decode('utf-8')
+
+        # 만든 토큰을 준다.
+        return jsonify({'result':'success', 'token':token})
+    else:
+        return jsonify({'result': 'fail', 'msg':'아이디 / 비밀번호가 일치하지 않습니다.'})
+
 
 
 @app.route('/build_party')

@@ -26,17 +26,33 @@
         {% endif %}
 
         function login() {
+            let id = $('#id').val();
+            let password = $('#password').val();
             $.ajax({
                 type: "POST",
                 url: "/api/login",
-                data: {id_give: $('#id').val(), pw_give: $('#password').val()},
+                data: {id_give: id, pw_give: password},
                 success: function (response) {
                     if (response['result'] == 'success') {
                         $.cookie('mytoken', response['token'])
-                        alert('로그인 완료!')
-                        window.location.href = '/'
-                    } else {
-                        alert(response['msg'])
+                        alert('로그인 완료!');
+                        window.location.href = '/';
+                    }
+                    else if (!id) {
+                        alert('아이디를 입력해주세요');
+                        window.location.reload();
+                    }
+                    else if (!(id.includes('@'))) {
+                        alert('이메일형식으로 입력해주세요');
+                        window.location.reload();
+                    }
+                    else if (!password) {
+                        alert('비밀번호를 입력해주세요');
+                        window.location.reload();
+                    }
+                    else {
+                        alert(response['msg']);
+                        window.location.reload();
                     }
                 }
             })
