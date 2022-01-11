@@ -45,37 +45,17 @@
 
             padding-top: 80px;
         }
-
-        .middle {
-            width: 600px;
-            font-size: 25px;
-            padding-top: 15px;
-            padding-left: 150px;
-        }
-
-        .btn {
-            width: 80px;
-            height: 30px;
-            font-size: 15px;
-            margin: 40px auto auto 110px;
-            display: block;
-            padding-bottom: 25px;
-        }
-
-        .find_text {
-            display: inline-block;
-            text-decoration: none;
-        }
-
-        .bottom {
-            margin: auto auto auto 110px;
-        }
-
-        ul li {
-            list-style-type: none;
+        .middle_left {
+            width: 40%;
+            height: 200px;
             float: left;
-            outline: 2px none;
-            margin: auto auto auto 10px;
+            background: green;
+            margin-top: 50px;
+            border-radius: 10px;
+        }
+        .middle_right {
+            margin-left: 42%;
+            height: 200px;
         }
     </style>
 
@@ -85,27 +65,15 @@
 <div class="wrap">
     <div class="title jua">
         <h1>MBTI PARTY</h1>
+        <p></p>
         <h4>( 여러분들과 궁합이 맞는 사람들과 이야기 해보세요. )</h4>
     </div>
+    <div style="width: 100%;">
+        <div class="middle_left">
 
-    <div class="middle hansan">
-        <p>아이디<input style="width: 300px;" type="text" class="form-control" id="id"></p>
-        <p>비밀번호<input style="width: 300px;" type="password" class="form-control" id="password"></p>
-        <button type="button" onclick="location.href='/'" class="btn btn-secondary">로그인</button>
-    </div>
-    <hr>
-    <div class="bottom">
-        <ul>
-            <li>
-                <a style="color: black;" class="find_text">비밀번호 찾기</a>
-            </li>
-            <li>
-                <a style="color: black;" class="find_text">아이디 찾기</a>
-            </li>
-            <li>
-                <a style="color: black;" href="/join" class="find_text">회원가입</a>
-            </li>
-        </ul>
+        </div>
+        <div class="middle_right">
+        </div>
     </div>
 </div>
 </body>
