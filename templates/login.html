@@ -21,6 +21,11 @@
     <script src="../static/login.js"></script>
 
     <script>
+        function enterkey() {
+            if (window.event.keyCode == 13) {
+                login();
+            }
+        }
 
         function login() {
             let id = $('#id').val();
@@ -82,11 +87,11 @@
 
                     <p>
                         아이디
-                        <input type="text" class="form-control" id="id">
+                        <input onkeyup="enterkey()" type="text" class="form-control" id="id">
                     </p>
                     <p>
                         비밀번호
-                        <input type="password" class="form-control" id="password">
+                        <input onkeyup="enterkey()" type="password" class="form-control" id="password">
                     </p>
                     <button type="button" onclick="login()" class="btn btn-primary">로그인</button>
                     <div class="login-menu-group">
