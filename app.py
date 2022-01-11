@@ -27,13 +27,15 @@ def show_all():
         "description": "테스트로 넣어본 데이터입니다",
         "max_member_num": 5,
         "favorite_mbti": "INFJ,INTJ,INTP",
-        "max_member_num": 5,
-        "masterId": "master@aaa.com",
-        "memberIds": "",
-        "memberRoles": "aaa:,bbb,ccc,ddd,eee"
+        "master_id": "master@aaa.com",
+        "member_ids": "",
+        "member_roles": "aaa:,bbb,ccc,ddd,eee"
     }
+
+    test_user_id = "test_user"+random.choice(range(1,10000))+"@aaa.com"
+
     test_user_doc = {
-        "id": "test_user@aaa.com",
+        "id": test_user_id,
         "nickname": "test_user",
         "mbti": "INFJ"
     }
