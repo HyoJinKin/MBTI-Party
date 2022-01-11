@@ -1,0 +1,38 @@
+.body__container {
+    width: 100%;
+    font-size: 16px;
+    color: #000;
+}
+
+/* float */
+.float--left {
+    float: left;
+}
+.float--right {
+    float: right;
+}
+.clearfix {
+    content: "";
+    clear: both;
+    display: block;
+}
+
+/* section */
+.section {
+    position: relative;
+}
+.section .inner {
+    width: 980px;
+    margin: 0 auto;
+    position: relative;
+    box-sizing: border-box;
+    padding: 30px 30px;
+}
+
+/* nav */
+nav .navbar-menu-group li {
+    padding-right: 10px;
+}
+nav .navbar-menu-group li:last-child {
+    padding-right: 0px;
+}
