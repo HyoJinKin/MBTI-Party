@@ -1,46 +1,27 @@
-.body__container {
+#submit-btn {
     width: 100%;
-    font-size: 16px;
-    color: #000;
+    border-radius: 4px;
 }
 
-/* float */
-.float--left {
-    float: left;
-}
-.float--right {
-    float: right;
-}
-.clearfix {
-    content: "";
-    clear: both;
-    display: block;
+#favorite-mbti-entries {
+    display: inline-flex;
 }
 
-/* section */
-section {
-    position: relative;
+#favorite-mbti-entries .mbti-text {
+    background: cornflowerblue;
+    margin-right: 5px;
+    padding: 1px 5px;
+    border-radius: 5px;
 }
-section .inner {
-    position: fixed;
-    top: 0; left: 0;
+.party-info {
     width: 100%;
-    height: 100%;
+}
+#member-entries {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 100%;
 }
-
-.party-box {
-    width: 300px;
+#member-entries .member-entry {
     display: flex;
     flex-direction: column;
-}
-.party-box .title {
-    font-size: 48px;
-    font-style: italic;
-}
-.party-box button {
-    width: 100%;
-    justify-content: center;
+    width: 100px;
 }
