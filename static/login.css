@@ -1,63 +1,33 @@
-.jua {
-    font-family: 'Jua', sans-serif;
-}
-
-.hansan {
-    font-family: 'Black Han Sans', sans-serif;
-}
-
-.wrap {
-    width: 600px;
-    margin: 50px auto auto auto;
-}
-
 .title {
-    background-color: green;
-    font-size: 25px;
-
-    width: 600px;
-    height: 270px;
-
-    color: white;
-    text-align: center;
-
-    background-image: url("https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2F20150926_49%2Fthepooh23_1443249773302HgNjP_JPEG%2FlargeYYYJ2OGV.jpg&type=sc960_832");
+    margin-bottom: 50px;
+}
+.login-form {
+    width: 50%;
+}
+.login-form input {
+    width: 100%;
+    margin-bottom: 30px;
+    border: none;
+    border-radius: 0px;
+    border-bottom: 1px solid #000;
+}
+.login-form button {
+    width: 100%;
+}
+.login-image-box {
+    background-image: url("assets/images/icons/login.png");
     background-size: cover;
     background-position: center;
-
-    border-radius: 10px;
-
-    padding-top: 80px;
 }
-
-.middle {
-    width: 600px;
-    font-size: 25px;
-    padding-top: 15px;
-    padding-left: 150px;
+.login-menu-group {
+    position: absolute;
+    top: 0; left: 0;
+    margin: 0 auto;
 }
-
-.btn {
-    width: 80px;
-    height: 30px;
-    font-size: 15px;
-    margin: 40px auto auto 110px;
-    display: block;
-    padding-bottom: 25px;
+.login-menu-group ul{
+    display: flex;
+    list-style: none;
 }
-
-.find_text {
-    display: inline-block;
-    text-decoration: none;
-}
-
-.bottom {
-    margin: auto auto auto 110px;
-}
-
-ul li {
-    list-style-type: none;
-    float: left;
-    outline: 2px none;
-    margin: auto auto auto 10px;
+.login-menu-group li {
+    padding-right: 20px;
 }

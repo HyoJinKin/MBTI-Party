@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>나만의 버킷리스트 로그인페이지</title>
+    <title>MBTI PARTY | 나의 MBTI에 맞는 파티 찾기</title>
     <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Jua&family=Single+Day&family=Stylish&display=swap"
           rel="stylesheet">
     <!-- CSS only -->
@@ -21,9 +21,12 @@
     <script src="../static/login.js"></script>
 
     <script>
-        {% if msg %}
-            alert("{{ msg }}")
-        {% endif %}
+        {%
+            if msg %}
+        alert("{{ msg }}")
+        {%
+            endif %
+        }
 
         function login() {
             let id = $('#id').val();
@@ -37,20 +40,16 @@
                         $.cookie('mytoken', response['token'])
                         alert('로그인 완료!');
                         window.location.href = '/';
-                    }
-                    else if (!id) {
+                    } else if (!id) {
                         alert('아이디를 입력해주세요');
                         window.location.reload();
-                    }
-                    else if (!(id.includes('@'))) {
+                    } else if (!(id.includes('@'))) {
                         alert('이메일형식으로 입력해주세요');
                         window.location.reload();
-                    }
-                    else if (!password) {
+                    } else if (!password) {
                         alert('비밀번호를 입력해주세요');
                         window.location.reload();
-                    }
-                    else {
+                    } else {
                         alert(response['msg']);
                         window.location.reload();
                     }
@@ -80,27 +79,38 @@
 
     <section class="section section--login-form">
         <div class="inner">
-            <div class="title jua">
+            <div class="title">
                 <h1>MBTI PARTY</h1>
-                <h4>( 여러분들과 궁합이 맞는 사람들과 이야기 해보세요. )</h4>
+                <h4>여러분들과 궁합이 맞는 사람들과 이야기 해보세요</h4>
             </div>
 
-            <div class="middle hansan">
-                <p>아이디<input style="width: 300px;" type="text" class="form-control" id="id"></p>
-                <p>비밀번호<input style="width: 300px;" type="password" class="form-control" id="password"></p>
-                <button type="button" onclick="login()" class="btn btn-secondary">로그인</button>
+            <div class="login-form float--left">
+                <p>
+                    아이디
+                    <input type="text" class="form-control" id="id">
+                </p>
+                <p>
+                    비밀번호
+                    <input type="password" class="form-control" id="password">
+                </p>
+                <button type="button" onclick="login()" class="btn btn-primary">로그인</button>
             </div>
-            <hr>
-            <div class="bottom">
+
+            <div class="login-image float--right">
+                <div class="login-image-box"></div>
+            </div>
+
+
+            <div class="login-menu-group">
                 <ul>
                     <li>
-                        <a style="color: black;" class="find_text">비밀번호 찾기</a>
+                        <a class="find_text">비밀번호 찾기</a>
                     </li>
                     <li>
-                        <a style="color: black;" class="find_text">아이디 찾기</a>
+                        <a class="find_text">아이디 찾기</a>
                     </li>
                     <li>
-                        <a style="color: black;" href="/register" class="find_text">회원가입</a>
+                        <a href="/register" class="find_text">회원가입</a>
                     </li>
                 </ul>
             </div>
