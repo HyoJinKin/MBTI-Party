@@ -1,8 +1,9 @@
-from flask import Flask, render_template, jsonify, request, url_for
+from flask import Flask, render_template, jsonify, request, redirect, flash, url_for
 from pymongo import MongoClient
 import random  # 테스트용 id random 생성
 
 app = Flask(__name__)
+app.secret_key = "mf";
 client = MongoClient('localhost', 27017)
 db = client.dbmbti
 collist = db.list_collection_names()
@@ -21,6 +22,7 @@ import hashlib
 
 SECRET_KEY = 'MBTI'
 
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -32,11 +34,11 @@ def show_all():
         "id": random.choice(range(1, 10000)),
         "name": "테스트",
         "description": "테스트로 넣어본 데이터입니다",
-        "max_member_num": 6,
+        "max_member_num": 5,
         "favorite_mbti": "INFJ,INTJ,INTP",
         "master_id": "master@aaa.com",
-        "member_ids": "master@aaa.com,id1@bbb.com,id2@ccc.com",
-        "member_roles": "aaa,;bbb,master@aaa.com;ccc,id1@bbb.com;ddd,;eee,;fff,id2@ccc.com"
+        "member_ids": "master@aaa.com",
+        "member_roles": "aaa,;bbb,master@aaa.com;ccc,;ddd,;eee,"
     }
     db.parties.insert_one(test_party_doc)
     parties = list(db.parties.find({}, {'_id': False}))
@@ -62,13 +64,14 @@ def detail():
         master_id=master_id, member_ids=member_ids, member_roles=member_roles
     )
 
+
 @app.route('/api/join_party')
 def join_party():
     party_id = request.form['party_id_request']
     user_id = request.form['user_id_request']
     user_role = request.form['role_request']
 
-    member_ids_query = db.parties.find_one({"id":party_id})['members_ids']
+    member_ids_query = db.parties.find({"id": party_id})['members_ids']
     if member_ids_query == "":
         member_ids_query.append(user_id)
     else:
@@ -82,6 +85,7 @@ def join_party():
                   }}}
     )
 
+
 @app.route('/register')
 def register():
     return render_template('register.html')
@@ -93,19 +97,23 @@ def check_dup():
     exists = bool(db.users.find_one({"id": id_receive}))
     return jsonify({'result': 'success', 'exists': exists})
 
+
 @app.route('/register', methods=['POST'])
 def registerUser():
     name = request.form['name_give']
     regisNum = request.form['regisNum_give']
     id = request.form['id_give']
     password = request.form['password_give']
+    # hash 기능으로 pw를 암호화한다.
+    pw_hash = hashlib.sha256(password.encode('utf-8')).hexdigest()
+
     # img = userinfo_receive['img']
     MBTI = request.form['MBTI_give']
     doc = {
         'name': name,
         'regisNum': regisNum,
         'id': id,
-        'password': password,
+        'password': pw_hash,
         # 'img': img,
         'MBTI': MBTI
     }
@@ -118,7 +126,8 @@ def registerUser():
 def login():
     return render_template('login.html')
 
-@app.route('/api/login', method=['POST'])
+
+@app.route('/api/login', methods=['POST'])
 def api_login():
     id_receive = request.form['id_give']
     pw_receive = request.form['pw_give']
@@ -127,7 +136,7 @@ def api_login():
     pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest()
 
     # id, 암호화된 pw 가지고 있는 유저 찾기.
-    result = db.users.find_one({'id':id_receive, 'pw':pw_hash})
+    result = db.users.find_one({'id': id_receive, 'pw': pw_hash})
     # 찾으면 JWT 토큰 발급.
     if result is not None:
         payload = {
@@ -138,15 +147,21 @@ def api_login():
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256').decode('utf-8')
 
         # 만든 토큰을 준다.
-        return jsonify({'result':'success', 'token':token})
+        return jsonify({'result': 'success', 'token': token})
     else:
-        return jsonify({'result': 'fail', 'msg':'아이디 / 비밀번호가 일치하지 않습니다.'})
-
+        return
 
 
 @app.route('/build_party')
 def build_party():
-    return render_template('build_party.html')
+    user_mbti = db.users.find_one({'id': 'asdasd@naver.com'}, {'_id': False})
+    if user_mbti is not None:
+        return render_template('build_party.html', user_mbti=user_mbti['MBTI'])
+    else:
+        # 비로그인으러 접근 경우 리다이렉트 후 alert
+        flash("로그인이 필요합니다!")
+        return redirect('/')
+
 
 @app.route('/build_party', methods=['POST'])
 def reg_party():
@@ -155,7 +170,7 @@ def reg_party():
     title_receive = request.form['title_give']
     description_receive = request.form['description_give']
     max_member_num_receive = request.form['max_member_num_give']
-    #임시
+    # 임시
     user_id = "zzzsd"
 
     doc = {
@@ -169,6 +184,7 @@ def reg_party():
 
     db.parties.insert_one(doc)
     return jsonify({'msg': '생성 완료!!'})
+
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5001, debug=True)

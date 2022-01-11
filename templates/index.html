@@ -12,6 +12,13 @@
     <script src="../static/common.js"></script>
     <script src="../static/index.js"></script>
     <title>MBTI PARTY | 나의 MBTI에 맞는 파티 찾기</title>
+    {%with messages = get_flashed_messages()%}
+        {%if messages %}
+            <script type="text/javascript">
+                alert("{{messages[0]}}");
+            </script>
+        {%endif%}
+    {%endwith%}
 </head>
 <body>
     <div class="body__container">

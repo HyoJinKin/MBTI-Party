@@ -42,7 +42,7 @@ function makeParty() {
                             data: {purpose_give: purpose, mbti_give : mbti, title_give: title, description_give : description, max_member_num_give : max_member_num},
                             success: function (response) {
                                 alert(response["msg"]);
-                                window.location.reload();
+                                window.location.href="/";
                             }
                         });
 }
