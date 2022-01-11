@@ -1,6 +1,6 @@
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, render_template, jsonify, request, url_for
 from pymongo import MongoClient
-import random # 테스트용 id random 생성
+import random  # 테스트용 id random 생성
 
 app = Flask(__name__)
 client = MongoClient('localhost', 27017)
@@ -47,6 +47,38 @@ def detail():
 @app.route('/register')
 def register():
     return render_template('register.html')
+
+
+@app.route('/register', methods=['GET'])
+def userIDcheck():
+    id_receive = request.form['id_give']
+    checkResult = db.users.find_one({'id':id_receive})['id'].toString()
+
+    return jsonify({'msg': checkResult})
+    # if len(checkResult) >0 :
+    #     checkResult = False
+    # return jsonify({'checkID': checkResult})
+
+
+@app.route('/register', methods=['POST'])
+def registerUser():
+    name = request.form['name_give']
+    regisNum = request.form['regisNum_give']
+    id = request.form['id_give']
+    password = request.form['password_give']
+    # img = userinfo_receive['img']
+    # MBTI = userinfo_receive['MBTI']
+    doc = {
+        'name': name,
+        'regisNum': regisNum,
+        'id': id,
+        'password': password
+        # 'img': img,
+        # 'MBTI': MBTI
+    }
+    db.users.insert_one(doc)
+
+    return jsonify({'msg': '회원가입이 완료되었습니다.'})
 
 
 @app.route('/login')

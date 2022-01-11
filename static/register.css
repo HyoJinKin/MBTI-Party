@@ -19,7 +19,7 @@
     text-align: left;
 }
 
-.info div input, .info div select {
+.info div input, .info div select, .info div button {
     display: block;
     margin-left: 20px;
     border-radius: 10px;
