@@ -152,7 +152,7 @@ function registerUser() {
                 confirmButtonText: "예"
             }).then((result) => {
                 if (result.isConfirmed)
-                    window.location.reload();
+                    window.location.href = '/login'
             });
 
         }
