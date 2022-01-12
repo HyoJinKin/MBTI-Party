@@ -13,7 +13,7 @@
     border-radius: 0px;
     border-bottom: 1px solid #000;
 }
-.join-form .id-form {
+.join-form .id-form{
     display: flex;
     align-items: flex-start;
 }
@@ -21,7 +21,7 @@
     width: 35%;
 
 }
-.join-form .id-select {
+.join-form .id-select{
     width: 25%;
     height: 25px;
     border: none;
@@ -62,4 +62,28 @@
 
 .fasred{
     color:red;
+}
+#regisNum-help
+{
+    color : red;
+}
+#password-help
+{
+    color : red;
+}
+#MBTI-help
+{
+    color : red;
+}
+.fasIdGreen{
+    color : green;
+}
+.fasIdRed{
+    color : red;
+}
+.fasPwRed{
+    color:red;
+}
+.fasPwGreen{
+    color:green;
 }

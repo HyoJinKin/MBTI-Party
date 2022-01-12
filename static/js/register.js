@@ -22,10 +22,10 @@ function registerUser() {
         },
         success: function (response) {
             alert(response['msg'])
-
+            window.location.reload();
         }
     })
-    // window.location.reload();
+
 }
 
 function is_nickname(asValue) {
@@ -33,12 +33,33 @@ function is_nickname(asValue) {
     return regExp.test(asValue);
 }
 
-function is_password(asValue) {
+function is_password() {
+    let asValue = $('#password').val();
     var regExp = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%^&*]{8,20}$/;
-    return regExp.test(asValue);
+    if (!regExp.test(asValue)   ) {
+        $('#password-help').text('비밀번호의 형식을 확인해주세요. 영문과 숫자, 일부 특수문자(!@#$%^&*) 사용 가능. 8-10자 길이')
+        $('#pwNumCheck').removeClass('fasPwGreen').addClass('fasPwRed');
+    }
+    else{
+        $('#password-help').text('');
+        $('#pwNumCheck').removeClass('fasPwRed').addClass('fasPwGreen');
+    }
 }
-
-
+function regisNumCheck(){
+    let asValue = $('#regisNum').val();
+    var regExp = /^(?:[0-9]{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[1,2][0-9]|3[0,1]))-[1-4][0-9]{6}$/;
+    if (!regExp.test(asValue)   ) {
+        $('#regisNum-help').text('주민등록번호 형식을 확인해주세요.');
+        $('#regisNumCheck').removeClass('fasIdGreen').addClass('fasIdRed');
+    }
+    else{
+        $('#regisNum-help').text('');
+        $('#regisNumCheck').removeClass('fasIdRed').addClass('fasIdGreen');
+    }
+}
+// function initCheck(){
+//     $('#regisNumCheck').removeClass('fasIdGreen').addClass('fasIdRed');
+// }
 function is_password_thesame() {
     let pwd1 = $('#password').val();
     let pwd2 = $('#passwordCheck').val();
@@ -52,7 +73,6 @@ function is_password_thesame() {
 
 function check_dup() {
     let username = $("#ID").val();
-    console.log(username)
     if (username == "") {
         alert("아이디를 입력해주세요.")
         $("#ID").removeClass('is-success').addClass('is-fail');
@@ -89,7 +109,6 @@ function checkID() {
             }
         }
     })
-    // window.location.reload();
 }
 
 function idCheckFirst() {
