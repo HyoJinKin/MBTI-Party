@@ -35,8 +35,11 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"></script>
+
+    <!--Alert 기능 변경을 위함-->
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
     <script>
         // 엔터 키를 누를 시 동작!
         function enterkey() {
@@ -44,6 +47,7 @@
                 id_check();
             }
         }
+
         function id_check() {
             $.ajax({
                 type: "POST",
@@ -60,9 +64,18 @@
                         for (let i = 0; i < emails.length; i++) {
                             let name = emails[i]['name']
                             let id_email = emails[i]['id']
-                            alert(name + '님의 아이디는 ' + id_email + ' 입니다.')
+                            // alert(name + '님의 아이디는 ' + id_email + ' 입니다.')
+                            Swal.fire({
+                                icon: 'success',
+                                title: '아이디찾기 완료',
+                                text: name + '님의 아이디는 ' + id_email + ' 입니다.',
+                                confirmButtonText: "예"
+                            }).then((result) => {
+                                if (result.isConfirmed)
+                                    window.location.href = '/login'
+                            });
                         }
-                        window.location.href = '/login'
+
                     } else {
                         alert(response['msg'])
                         window.location.href = '/login'
