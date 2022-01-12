@@ -39,7 +39,8 @@ def index():
 def show_all():
     test_party_doc = {
         "id": random.choice(range(1, 10000)),
-        "name": "테스트",
+        "purpose": "스터디",
+        "title": "테스트",
         "description": "테스트로 넣어본 데이터입니다",
         "max_member_num": 5,
         "favorite_mbti": "INFJ,INTJ,INTP",
@@ -56,17 +57,17 @@ def show_all():
 def detail():
     id = int(request.args.get("id"))
     detail = db.parties.find_one({'id': id})
-    name = detail['name']
+    title = detail['title']
     desc = detail['description']
     favorite_mbti = detail['favorite_mbti']
 
     max_member_num = detail['max_member_num']
     master_id = detail['master_id']
     member_ids = detail['member_ids']
-    member_roles = detail['member_roles']
+    member_roles = detail['member_mbtis']
     return render_template(
         'detail.html',
-        id=id, name=name, desc=desc, favorite_mbti=favorite_mbti,
+        id=id, title=title, desc=desc, favorite_mbti=favorite_mbti,
         max_member_num=max_member_num,
         master_id=master_id, member_ids=member_ids, member_roles=member_roles
     )
@@ -190,11 +191,18 @@ def reg_party():
     description_receive = request.form['description_give']
     max_member_num_receive = request.form['max_member_num_give']
     user_id = get_token('mytoken')
+    # user_mbti = db.users.find_one({"id": user_id},{"_id":False})["MBTI"]
+    # user_mbti : 파티 생성자 mbti
+    party_id = len(list(db.parties.find({}))) + 1
+
     if user_id is not False:
         doc = {
-            'id': user_id['id'],
+            'id': party_id,
+            'master_id': user_id['id'],
+            'member_ids': user_id['id'],
+            # 'member_mbtis': user_mbti,
             'purpose': purpose_receive,
-            'mbti': mbti_receive,
+            'favorite_mbti': mbti_receive,
             'title': title_receive,
             'description': description_receive,
             'max_member_num': max_member_num_receive
