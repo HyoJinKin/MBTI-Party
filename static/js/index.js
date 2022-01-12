@@ -10,24 +10,27 @@ function showAllParties(category) {
         success: function (response) {
             $('#party-list').empty();
 
+            let user_id = $('#user_id').val()
             let user_mbti = $('#user_mbti').val()
             let parties = response['parties']
-            for (let i = 0; i < parties.length; i++) {
-                let id = parties[i]['id']
-                let purpose = parties[i]['purpose']
-                let title = parties[i]['title']
-                let desc = parties[i]['description']
-                let favorite_mbti = parties[i]['favorite_mbti'].split(",")
 
-                if (parties.length === 0) {
-                    html = `
+            if (parties.length === 0) {
+                html = `
                             <div class="party-card card w-100">
                                 <div class="card-body">찾으시는 결과가 없습니다🤣</div>
                             </div>
-                        `
-                    $('#party-list').append(html);
-                } else {
-                    if (favorite_mbti.includes(user_mbti)) {
+                    `
+                $('#party-list').append(html);
+            } else {
+                for (let i = 0; i < parties.length; i++) {
+                    let id = parties[i]['id']
+                    let purpose = parties[i]['purpose']
+                    let title = parties[i]['title']
+                    let desc = parties[i]['description']
+                    let master_id = parties[i]['master_id']
+                    let favorite_mbti = parties[i]['favorite_mbti'].split(",")
+
+                    if (favorite_mbti.includes(user_mbti) || master_id === user_id) {
                         html = `    
                         <div class="party-card card w-100">
                             <div class="card-body">
@@ -63,24 +66,28 @@ function showSortedParties(category) {
         success: function (response) {
             $('#party-list').empty();
 
+            let user_id = $('#user_id').val()
             let user_mbti = $('#user_mbti').val()
             let parties = response['parties']
-            for (let i = 0; i < parties.length; i++) {
-                let id = parties[i]['id']
-                let purpose = parties[i]['purpose']
-                let title = parties[i]['title']
-                let desc = parties[i]['description']
-                let favorite_mbti = parties[i]['favorite_mbti'].split(",")
 
-                if (parties.length === 0) {
-                    html = `
+            if (parties.length === 0) {
+                html = `
                             <div class="party-card card w-100">
                                 <div class="card-body">찾으시는 결과가 없습니다🤣</div>
                             </div>
-                        `
-                    $('#party-list').append(html);
-                } else {
-                    if (favorite_mbti.includes(user_mbti)) {
+                    `
+                $('#party-list').append(html);
+            } else {
+                for (let i = 0; i < parties.length; i++) {
+                    let id = parties[i]['id']
+                    let purpose = parties[i]['purpose']
+                    let title = parties[i]['title']
+                    let desc = parties[i]['description']
+                    let master_id = parties[i]['master_id']
+                    let favorite_mbti = parties[i]['favorite_mbti'].split(",")
+                    let member_mbti = parties[i]['member_info'].split(",")
+
+                    if (favorite_mbti.includes(user_mbti) || master_id === user_id) {
                         html = `    
                         <div class="party-card card w-100">
                             <div class="card-body">
@@ -109,6 +116,7 @@ function showSortedParties(category) {
 }
 
 function showAllowedParties() {
+    let user_id = $('#user_id').val()
     let user_mbti = $('#user_mbti').val()
 
     $.ajax({
@@ -118,24 +126,25 @@ function showAllowedParties() {
         success: function (response) {
             $('#party-list').empty();
 
-            let user_mbti = $('#user_mbti').val()
             let parties = response['parties']
-            for (let i = 0; i < parties.length; i++) {
-                let id = parties[i]['id']
-                let purpose = parties[i]['purpose']
-                let title = parties[i]['title']
-                let desc = parties[i]['description']
-                let favorite_mbti = parties[i]['favorite_mbti'].split(",")
 
-                if (parties.length === 0) {
-                    html = `
+            if (parties.length === 0) {
+                html = `
                             <div class="party-card card w-100">
                                 <div class="card-body">찾으시는 결과가 없습니다🤣</div>
                             </div>
-                        `
-                    $('#party-list').append(html);
-                } else {
-                    if (favorite_mbti.includes(user_mbti)) {
+                    `
+                $('#party-list').append(html);
+            } else {
+                for (let i = 0; i < parties.length; i++) {
+                    let id = parties[i]['id']
+                    let purpose = parties[i]['purpose']
+                    let title = parties[i]['title']
+                    let desc = parties[i]['description']
+                    let master_id = parties[i]['master_id']
+                    let favorite_mbti = parties[i]['favorite_mbti'].split(",")
+
+                    if (favorite_mbti.includes(user_mbti) || master_id === user_id) {
                         html = `    
                         <div class="party-card card w-100">
                             <div class="card-body">
@@ -166,4 +175,18 @@ function showAllowedParties() {
 function showNotAllowedMessage() {
     alert("여기 파티에서는 당신을 원하지 않아요🤣")
 }
+
+// function calMbtiRelResult(member_info) {
+//     let user_mbti = $('#user_mbti').val()
+//
+//     let member_mbti = []
+//     if (member_info.indexOf(";") === -1) {
+//         member_mbti.push([member_info.split(",")[0]])
+//     } else {
+//         let arr = member_info.split(";")
+//         for (i=0 ; i < arr.length; i++) {
+//         }
+//     }
+//
+// }
 

@@ -49,7 +49,13 @@ def show_sorted_list():
 @app.route('/api/allowed_party_list', methods=['GET'])
 def show_allowed_list():
     mbti = request.args.get("mbti")
-    parties = list(db.parties.find({'favorite_mbti':{'$regex':mbti}},{'_id': False}))
+    user_id = get_token('mytoken')['id']
+
+    parties = list(db.parties.find({
+        '$or':[
+            {'favorite_mbti':{'$regex':mbti}},
+            {'master_info':{'$regex':user_id}}
+        ]},{'_id': False}))
     return jsonify({'parties': parties})
 
 @app.route('/detail')
@@ -266,4 +272,4 @@ def reg_party():
 
 
 if __name__ == '__main__':
-    app.run('0.0.0.0', port=5001, debug=True)
+    app.run('0.0.0.0', port=5000, debug=True)
