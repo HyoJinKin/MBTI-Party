@@ -64,7 +64,7 @@ function joinParty() {
         type: 'POST',
         url: 'api/join_party',
         data: {party_id_request: party_id, user_id_request: user_id},
-        success: function(response) {
+        success: function() {
             window.location.reload()
         }
     });

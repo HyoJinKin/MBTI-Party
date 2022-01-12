@@ -50,8 +50,8 @@ def detail():
     favorite_mbti = detail['favorite_mbti']
 
     max_member_num = detail['max_member_num']
-    master_id = detail['master_id']
-    member_ids = detail['member_ids']
+    master_name = detail['master_info'].split(",")[0]
+    master_id = detail['master_info'].split(",")[1]
     member_info = detail['member_info']
 
     user_id = get_token('mytoken')['id']
@@ -60,29 +60,18 @@ def detail():
         'detail.html',
         id=id, title=title, desc=desc, favorite_mbti=favorite_mbti,
         max_member_num=max_member_num,
-        master_id=master_id, member_ids=member_ids, member_info=member_info,
+        master_name=master_name, master_id=master_id,
+        member_info=member_info,
         user_id=user_id
     )
 
 
-@app.route('/api/join_party')
+@app.route('/api/join_party', methods=['POST'])
 def join_party():
     party_id = request.form['party_id_request']
     user_id = request.form['user_id_request']
     user_name = db.users.find_one({"id":user_id})['name']
     user_mbti = db.users.find_one({"id":user_id})['MBTI']
-
-    member_ids_query = db.parties.find({"id": party_id})['members_ids']
-    if member_ids_query == "":
-        member_ids_query.append(user_id)
-    else:
-        member_ids_query.append("," + user_id)
-
-    member_mbtis_query = db.parties.find_one({"id": party_id})['member_mbtis']
-    if member_mbtis_query == "":
-        member_mbtis_query.append(user_id + "," + user_mbti)
-    else:
-        member_mbtis_query.append(";" + user_id + "," + user_mbti)
 
     member_info_query = db.parties.find_one({"id":user_id})['member_info']
     member_info_query.append(";" + user_mbti + "," + user_name + user_id)
@@ -91,6 +80,7 @@ def join_party():
         {"id": party_id},
         {"$set": {"member_info": member_info_query}}
     )
+    return jsonify({'msg': '좋아요 완료'})
 
 
 @app.route('/register')
@@ -233,4 +223,4 @@ def reg_party():
 
 
 if __name__ == '__main__':
-    app.run('0.0.0.0', port=5000, debug=True)
+    app.run('0.0.0.0', port=5001, debug=True)
