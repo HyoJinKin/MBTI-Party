@@ -37,18 +37,6 @@ def index():
 
 @app.route('/api/party_list', methods=['GET'])
 def show_all():
-    test_party_doc = {
-        "id": random.choice(range(1, 10000)),
-        "purpose": "스터디",
-        "title": "테스트",
-        "description": "테스트로 넣어본 데이터입니다",
-        "max_member_num": 5,
-        "favorite_mbti": "INFJ,INTJ,INTP",
-        "master_id": "master@aaa.com",
-        "member_ids": "master@aaa.com",
-        "member_roles": "aaa,;bbb,master@aaa.com;ccc,;ddd,;eee,"
-    }
-    db.parties.insert_one(test_party_doc)
     parties = list(db.parties.find({}, {'_id': False}))
     return jsonify({'parties': parties})
 
@@ -64,12 +52,12 @@ def detail():
     max_member_num = detail['max_member_num']
     master_id = detail['master_id']
     member_ids = detail['member_ids']
-    member_roles = detail['member_mbtis']
+    member_mbtis = detail['member_mbtis']
     return render_template(
         'detail.html',
         id=id, title=title, desc=desc, favorite_mbti=favorite_mbti,
         max_member_num=max_member_num,
-        master_id=master_id, member_ids=member_ids, member_roles=member_roles
+        master_id=master_id, member_ids=member_ids, member_mbtis=member_mbtis
     )
 
 
@@ -77,7 +65,7 @@ def detail():
 def join_party():
     party_id = request.form['party_id_request']
     user_id = request.form['user_id_request']
-    user_role = request.form['role_request']
+    user_mbti = request.form['mbti_request']
 
     member_ids_query = db.parties.find({"id": party_id})['members_ids']
     if member_ids_query == "":
@@ -85,15 +73,15 @@ def join_party():
     else:
         member_ids_query.append("," + user_id)
 
-    member_roles_query = db.parties.find_one({"id": party_id})['member_roles']
-    if member_roles_query == "":
-        member_roles_query.append(user_id + "," + user_role)
+    member_mbtis_query = db.parties.find_one({"id": party_id})['member_mbtis']
+    if member_mbtis_query == "":
+        member_mbtis_query.append(user_id + "," + user_mbti)
     else:
-        member_roles_query.append(";" + user_id + "," + user_role)
+        member_mbtis_query.append(";" + user_id + "," + user_mbti)
 
     db.parties.find_one_and_update(
         {"id": party_id},
-        {"$set": {"member_ids": member_ids_query, "member_roles": member_roles_query}}
+        {"$set": {"member_ids": member_ids_query, "member_mbtis": member_mbtis_query}}
     )
 
 
@@ -191,8 +179,6 @@ def reg_party():
     description_receive = request.form['description_give']
     max_member_num_receive = request.form['max_member_num_give']
     user_id = get_token('mytoken')
-    #user_mbti = db.users.find_one({"id": user_id},{"_id":False})["MBTI"]
-    # user_mbti : 파티 생성자 mbti
     party_id = len(list(db.parties.find({}))) + 1
 
     if user_id is not False:
@@ -200,7 +186,7 @@ def reg_party():
             'id': party_id,
             'master_id': user_id['id'],
             'member_ids': user_id['id'],
-            'member_mbtis': db.users.find_one({'id': user_id['id']}, {'_id': False})['MBTI'],
+            'member_mbtis': db.users.find_one({'id': user_id['id']}, {'_id': False})['MBTI']+","+user_id['id'],
             'purpose': purpose_receive,
             'favorite_mbti': mbti_receive,
             'title': title_receive,
