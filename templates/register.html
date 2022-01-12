@@ -60,14 +60,13 @@
                         <h4 class="sub-title">MBTI 궁합이 맞는 친구들을 찾아보세요</h4>
                     </div>
 
+                    <!--                    이름 입력-->
                     <p>이름</p>
                     <input type="text" id="name" placeholder="예)홍길동">
 
-                    <p>주민등록번호</p>
-                    <input onkeyup="regisNumCheck()" type="text" id="regisNum" placeholder="예)111111- 1111111">
-                    <i id="regisNumCheck" class="fas fa-check-circle fasIdRed"></i>
-                    <p><span id="regisNum-help"></span></p>
 
+
+                    <!--                    아이디 입력-->
                     <p>아이디(이메일)</p>
                     <div class="id-form">
 
@@ -89,27 +88,54 @@
                                 @gmail.com
                             </option>
                         </select>
-                        <button onclick="check_dup()" class="btn btn-primary id-btn"> 사용 확인</button>
+                        <!--                        아이디 사용가능 여부 확인-->
+                        <button onclick="IdCheck()" class="btn btn-primary id-btn"> 사용 확인</button>
                     </div>
 
 
+                    <!--                    비밀번호 입력-->
                     <p>비밀번호</p>
-                    <input onkeyup="is_password_thesame(); is_password()" type="password" id="password" placeholder="예) 8자리 이상">
+                    <!--                    비밀번호 형식을 맞췄는지,일치하는지 확인-->
+                    <input onkeyup="is_password_thesame(); is_password()" type="password" id="password"
+                           placeholder="예) 8자리 이상">
                     <i id="pwNumCheck" class="fas fa-check-circle fasPwRed"></i>
                     <p><span id="password-help"></span></p>
 
 
+
+
+                    <!--                    비밀번호 확인-->
                     <p>비밀번호 확인</p>
+                    <!--                    비밀번호가 일치하는지 확인-->
                     <input onkeyup="is_password_thesame()" type="password" id="passwordCheck"
                            placeholder="예) 8자리 이상">
                     <i id="pwCheck" class="fas fa-check-circle fasred"></i>
 
 
-                    <p>MBTI</p>
-                    <input onblur="MBTICheck()" type="text" id="MBTI" placeholder="예) ENTJ">
-                    <p><span id="MBTI-help"></span></p>
 
-                    <button onclick="idCheckFirst()" class="btn btn-primary">회원가입</button>
+
+                    <!--                    MBTI 선택-->
+                    <p>MBTI</p>
+                    <ul>
+                        <li>
+                            <input type="radio" name="radioTxt" value="ENTJ" checked>ENTJ
+                        </li>
+                        <li>
+                            <input type="radio" name="radioTxt" value="ENTP">ENTP
+                        </li>
+                        <li>
+                            <input type="radio" name="radioTxt" value="ENFP">ENFP
+                        </li>
+                        <li>
+                            <input type="radio" name="radioTxt" value="ENFJ">ENFJ
+                        </li>
+                    </ul>
+
+
+
+                    <!--회원가입 입력사항을 체크 후 미입력사항 알림 혹은 회원 등록-->
+                    <button onclick="inputCheck()" class="btn btn-primary">회원가입</button>
+
 
 
                 </div>

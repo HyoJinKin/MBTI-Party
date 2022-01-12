@@ -56,34 +56,38 @@
 .join-menu-group li {
     padding-right: 20px;
 }
-.fasgreen{
-    color:green;
-}
 
-.fasred{
+
+
+/*비밀번호 입력 형식 합격*/
+.fasPwRed{
     color:red;
 }
-#regisNum-help
-{
-    color : red;
+/*비밀번호 입력 형식 불합격*/
+.fasPwGreen{
+    color:green;
 }
+/*비밀번호 안내 문구*/
 #password-help
 {
     color : red;
 }
-#MBTI-help
-{
-    color : red;
+/*비밀번호 확인 입력 합격*/
+.fasgreen{
+    color:green;
 }
-.fasIdGreen{
-    color : green;
-}
-.fasIdRed{
-    color : red;
-}
-.fasPwRed{
+/*비밀번호 확인 입력 불합격*/
+.fasred{
     color:red;
 }
-.fasPwGreen{
-    color:green;
+
+
+/*MBTI 선택 항목들*/
+.join-form ul{
+    display: flex;
+    list-style: none;
+}
+/*MBTI 선택 항목들*/
+.join-form li{
+    padding-right: 20px;
 }
