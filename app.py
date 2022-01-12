@@ -21,6 +21,7 @@ if not ("mbti" in collist):
     db.create_collection("mbti")
     db.mbti.insert_many(init_mbti_db.mbti_docs)
 
+
 @app.route('/')
 def index():
     token_recieve = request.cookies.get('mytoken')
@@ -32,6 +33,7 @@ def index():
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
         return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
+
 
 @app.route('/api/party_list', methods=['GET'])
 def show_all():
@@ -149,7 +151,7 @@ def api_login():
     if result is not None:
         payload = {
             'id': id_receive,
-            'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=10)
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=30   )
         }
 
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
@@ -166,22 +168,18 @@ def get_token(tokenName):
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         return payload
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
-        flash("다시 로그인 해주세요!")
-        return redirect('/')
+        return False
 
 
 @app.route('/build_party')
 def build_party():
-    user_id = get_token('mytoken')['id']
-    print(user_id)
-    user_mbti = db.users.find_one({'id': user_id}, {'_id': False})
-    if user_mbti is not None:
+    user_id = get_token('mytoken')
+    if user_id is not False:
+        user_mbti = db.users.find_one({'id': user_id['id']}, {'_id': False})
         return render_template('build_party.html', user_mbti=user_mbti['MBTI'])
     else:
-        # 비로그인으러 접근 경우 리다이렉트 후 alert
         flash("로그인이 필요합니다!")
-        return redirect('/')
-
+        return redirect('/login')
 
 
 @app.route('/build_party', methods=['POST'])
@@ -191,19 +189,21 @@ def reg_party():
     title_receive = request.form['title_give']
     description_receive = request.form['description_give']
     max_member_num_receive = request.form['max_member_num_give']
-    user_id = get_token('mytoken')['id']
-    print(user_id)
-    doc = {
-        'id': user_id,
-        'purpose': purpose_receive,
-        'mbti': mbti_receive,
-        'title': title_receive,
-        'description': description_receive,
-        'max_member_num': max_member_num_receive
-    }
+    user_id = get_token('mytoken')
+    if user_id is not False:
+        doc = {
+            'id': user_id['id'],
+            'purpose': purpose_receive,
+            'mbti': mbti_receive,
+            'title': title_receive,
+            'description': description_receive,
+            'max_member_num': max_member_num_receive
+        }
+        db.parties.insert_one(doc)
+        return jsonify({'msg': '생성 완료!!'})
+    else:
+        return jsonify({'msg': '다시 로그인 해주세요!'})
 
-    db.parties.insert_one(doc)
-    return jsonify({'msg': '생성 완료!!'})
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)

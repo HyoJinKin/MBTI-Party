@@ -30,6 +30,13 @@
         <script src="../static/js/build_party.js"></script>
         <link rel="stylesheet" href="../static/css/common.css">
         <link rel="stylesheet" href="../static/css/build_party.css"/>
+        {%with messages = get_flashed_messages()%}
+            {%if messages %}
+                <script type="text/javascript">
+                    alert("{{messages[0]}}");
+                </script>
+            {%endif%}
+        {%endwith%}
     </head>
 
     <body>
