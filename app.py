@@ -58,6 +58,21 @@ def show_allowed_list():
         ]},{'_id': False}))
     return jsonify({'parties': parties})
 
+@app.route('/api/mbti_rel_scores', methods=['POST'])
+def getMbtiRelScores():
+    member_mbtis = request.form['mbti_arr_request']
+    user_mbti = request.form['user_mbti_request']
+
+    score_list = []
+    for i in range(0, len(member_mbtis)):
+        score = db.mbti.find({'type':user_mbti},{'_id':False})['score'][member_mbtis[i]]
+        score_list.append(score)
+    average_score = sum(score_list) / len(score_list)
+    return jsonify({'average_score':average_score})
+
+
+
+
 @app.route('/detail')
 def detail():
     id = int(request.args.get("id"))
@@ -278,4 +293,4 @@ def reg_party():
 
 
 if __name__ == '__main__':
-    app.run('0.0.0.0', port=5000, debug=True)
+    app.run('0.0.0.0', port=5001, debug=True)

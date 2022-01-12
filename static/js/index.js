@@ -2,16 +2,16 @@ $(document).ready(function () {
     showAllParties();
 });
 
-function showAllParties(category) {
+function showAllParties() {
+    let user_id = $('#user_id').val()
+    let user_mbti = $('#user_mbti').val()
+
     $.ajax({
         type: 'GET',
-        url: '/api/party_list?cat='.concat(),
+        url: '/api/party_list',
         data: {},
         success: function (response) {
             $('#party-list').empty();
-
-            let user_id = $('#user_id').val()
-            let user_mbti = $('#user_mbti').val()
             let parties = response['parties']
 
             if (parties.length === 0) {
@@ -29,6 +29,7 @@ function showAllParties(category) {
                     let desc = parties[i]['description']
                     let master_id = parties[i]['master_id']
                     let favorite_mbti = parties[i]['favorite_mbti'].split(",")
+
 
                     if (favorite_mbti.includes(user_mbti) || master_id === user_id) {
                         html = `    
@@ -176,17 +177,27 @@ function showNotAllowedMessage() {
     alert("여기 파티에서는 당신을 원하지 않아요🤣")
 }
 
-// function calMbtiRelResult(member_info) {
-//     let user_mbti = $('#user_mbti').val()
-//
-//     let member_mbti = []
-//     if (member_info.indexOf(";") === -1) {
-//         member_mbti.push([member_info.split(",")[0]])
-//     } else {
-//         let arr = member_info.split(";")
-//         for (i=0 ; i < arr.length; i++) {
-//         }
-//     }
-//
-// }
+function calMbtiRelResult(member_info) {
+    let user_mbti = $('#user_mbti').val()
+    let member_mbti = []
+    if (member_info.indexOf(";") === -1) {
+        member_mbti.push([member_info.split(",")[0]])
+    } else {
+        let arr = member_info.split(";")
+        for (i=0 ; i < arr.length; i++) {
+            member_mbti.push(arr[i])
+        }
+    }
+
+    $.ajax({
+        type: 'POST',
+        url: '/api/allowed_party_list?mbti='.concat(user_mbti),
+        data: {'mbti_arr_request': member_mbti,'user_mbti_request':user_mbti},
+        success: function (response) {
+            average_score = response['average_score']
+        }
+    })
+
+    return average_score
+}
 
