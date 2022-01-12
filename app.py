@@ -151,7 +151,7 @@ def api_login():
     if result is not None:
         payload = {
             'id': id_receive,
-            'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=30   )
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=30)
         }
 
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
@@ -175,8 +175,8 @@ def get_token(tokenName):
 def build_party():
     user_id = get_token('mytoken')
     if user_id is not False:
-        user_mbti = db.users.find_one({'id': user_id['id']}, {'_id': False})
-        return render_template('build_party.html', user_mbti=user_mbti['MBTI'])
+        user_mbti = db.users.find_one({'id': user_id['id']}, {'_id': False})['MBTI']
+        return render_template('build_party.html', user_mbti=user_mbti)
     else:
         flash("로그인이 필요합니다!")
         return redirect('/login')
