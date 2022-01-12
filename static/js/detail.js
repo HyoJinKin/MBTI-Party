@@ -72,6 +72,18 @@ function joinParty() {
     });
 }
 
+function showMbtiRelScoreResult() {
+    $.ajax({
+        type: 'POST',
+        url: '/api/join_party',
+        data: {party_id_request: party_id, user_id_request: user_id},
+        success: function(response) {
+            alert(response['msg']);
+            window.location.reload();
+        }
+    });
+}
+
 /* util functions */
 function getMaxEntryNum() {
     return $('#max-member-num').val()

@@ -33,6 +33,7 @@
 .section--list .party-card:last-child {
     border-bottom: 1px solid #000;
 }
-.section--list .join-btn {
+.section--list .join-btn,
+.section--list .denied-btn {
     width: 200px;
 }
