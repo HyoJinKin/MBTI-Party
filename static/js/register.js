@@ -40,10 +40,15 @@ function is_password(asValue) {
 
 
 function is_password_thesame() {
-    alert('test')
-}
+    let pwd1 = $('#password').val();
+    let pwd2 = $('#passwordCheck').val();
 
-pOrF = false;
+    if (pwd1 == pwd2) {
+        $('#pwCheck').removeClass('fasred').addClass('fasgreen');
+    } else {
+        $('#pwCheck').removeClass('fasgreen').addClass('fasred');
+    }
+}
 
 function check_dup() {
     let username = $("#ID").val();
@@ -88,13 +93,20 @@ function checkID() {
 }
 
 function idCheckFirst() {
-    if ($('#ID').hasClass('is-success')) {
-        registerUser();
+    if ($('#pwCheck').hasClass('fasred')) {
+        alert('비밀번호를 일치시켜주세요.')
+        return;
     }
-    else{
+
+    if ($('#ID').hasClass('is-fail')) {
         alert('먼저 아이디 사용 가능 여부를 확인해주세요.')
         return;
     }
+    if ($('#ID').hasClass('is-success') && $('#pwCheck').hasClass('fasgreen')) {
+        registerUser();
+    }
+
+
 
 }
 
