@@ -30,8 +30,3 @@ function showAllParties() {
         }
     });
 }
-
-function switchLogout() {
-    $.removeCookie('mytoken')
-    window.location.href = '/login'
-}

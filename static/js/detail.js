@@ -70,7 +70,6 @@ function joinParty() {
     });
 }
 
-
 /* util functions */
 function getMaxEntryNum() {
     return $('#max-member-num').val()
