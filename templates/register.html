@@ -40,6 +40,10 @@
     <link rel="stylesheet" href="../static/css/common.css">
     <link rel="stylesheet" href="../static/css/register.css">
     <script src="../static/js/register.js"></script>
+
+
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <title>MBTI PARTY | 나의 MBTI에 맞는 파티 찾기</title>
 </head>
 <body>
@@ -63,7 +67,6 @@
                     <!--                    이름 입력-->
                     <p>이름</p>
                     <input type="text" id="name" placeholder="예)홍길동">
-
 
 
                     <!--                    아이디 입력-->
@@ -102,16 +105,12 @@
                     <p><span id="password-help"></span></p>
 
 
-
-
                     <!--                    비밀번호 확인-->
                     <p>비밀번호 확인</p>
                     <!--                    비밀번호가 일치하는지 확인-->
                     <input onkeyup="is_password_thesame()" type="password" id="passwordCheck"
                            placeholder="예) 8자리 이상">
                     <i id="pwCheck" class="fas fa-check-circle fasred"></i>
-
-
 
 
                     <!--                    MBTI 선택-->
@@ -132,10 +131,8 @@
                     </ul>
 
 
-
                     <!--회원가입 입력사항을 체크 후 미입력사항 알림 혹은 회원 등록-->
                     <button onclick="inputCheck()" class="btn btn-primary">회원가입</button>
-
 
 
                 </div>

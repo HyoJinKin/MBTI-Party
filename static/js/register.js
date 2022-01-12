@@ -3,14 +3,24 @@ function IdCheck() {
     let username = $("#ID").val();
     //아이디가 빈 값인지 확인
     if (username == "") {
-        alert("아이디를 입력해주세요.")
+        // alert("아이디를 입력해주세요.")
+        Swal.fire({
+            icon: 'error',
+            title: '아이디 미입력',
+            text: '아이디를 입력해주세요.'
+        });
         $("#ID").removeClass('is-success').addClass('is-fail');
         $("#ID").focus()
         return;
     }
     //아이디가 형식을 맞췄는지 확인
     if (!is_nickname(username)) {
-        alert("아이디의 형식을 확인해주세요. 영문과 숫자, 일부 특수문자(._-) 사용 가능. 2-10자 길이")
+        // alert("아이디의 형식을 확인해주세요. 영문과 숫자, 일부 특수문자(._-) 사용 가능. 2-10자 길이")
+        Swal.fire({
+            icon: 'error',
+            title: '아이디 형식 부적격',
+            text: '아이디의 형식을 확인해주세요. 영문과 숫자, 일부 특수문자(._-) 사용 가능. 2-10자 길이'
+        });
         $("#ID").removeClass('is-success').addClass('is-fail');
         $("#ID").focus()
         return;
@@ -18,11 +28,13 @@ function IdCheck() {
     //아이디가 중복되는지 확인
     Id_dup();
 }
+
 //아이디가 형식을 맞췄는지 확인
 function is_nickname(asValue) {
     var regExp = /^(?=.*[a-zA-Z])[-a-zA-Z0-9_.]{2,10}$/;
     return regExp.test(asValue);
 }
+
 //아이디가 중복되는지 확인
 function Id_dup() {
     let id = $('#ID').val();
@@ -35,11 +47,21 @@ function Id_dup() {
             console.log(response['msg'])
             let exists = response['exists']
             if (exists == true) {
-                alert('중복되는 아이디입니다. 다시 시도해주세요.')
+                // alert('중복되는 아이디입니다. 다시 시도해주세요.')
+                Swal.fire({
+                    icon: 'error',
+                    title: '아이디 중복',
+                    text: '중복되는 아이디입니다. 다시 시도해주세요.'
+                });
                 $("#ID").removeClass('is-success').addClass('is-fail')
             }
             if (exists == false) {
-                alert('사용 가능한 아이디입니다.')
+                // alert('사용 가능한 아이디입니다.')
+                Swal.fire({
+                    icon: 'success',
+                    title: '아이디 사용 가능',
+                    text: '사용 가능한 아이디입니다.'
+                });
                 $("#ID").removeClass('is-fail').addClass('is-success')
             }
         }
@@ -50,15 +72,15 @@ function Id_dup() {
 function is_password() {
     let asValue = $('#password').val();
     var regExp = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%^&*]{8,20}$/;
-    if (!regExp.test(asValue)   ) {
+    if (!regExp.test(asValue)) {
         $('#password-help').text('비밀번호의 형식을 확인해주세요. 영문과 숫자, 일부 특수문자(!@#$%^&*) 사용 가능. 8-10자 길이')
         $('#pwNumCheck').removeClass('fasPwGreen').addClass('fasPwRed');
-    }
-    else{
+    } else {
         $('#password-help').text('');
         $('#pwNumCheck').removeClass('fasPwRed').addClass('fasPwGreen');
     }
 }
+
 //비밀번호가 일치하는지 확인
 function is_password_thesame() {
     let pwd1 = $('#password').val();
@@ -74,30 +96,39 @@ function is_password_thesame() {
 //필수입력사항들을 선택하였는지 확인
 function inputCheck() {
     if ($('#name').val() == "") {
-        alert('이름을 입력해주세요.')
-        return;
-    }
-    if ($('#regisNum').val() == "") {
-        alert('주민등록번호를 입력해주세요.')
+        // alert('이름을 입력해주세요.')
+        Swal.fire({
+            icon: 'error',
+            title: '이름 미입력',
+            text: '이름을 입력해주세요.'
+        });
         return;
     }
     if ($('#ID').hasClass('is-fail')) {
-        alert('먼저 아이디 사용 가능 여부를 확인해주세요.')
+        // alert('먼저 아이디 사용 가능 여부를 확인해주세요.')
+        Swal.fire({
+            icon: 'error',
+            title: '아이디 사용 가능 여부',
+            text: '먼저 아이디 사용 가능 여부를 확인해주세요.'
+        });
         return;
     }
     if ($('#pwCheck').hasClass('fasred')) {
-        alert('비밀번호를 일치시켜주세요.')
+        // alert('비밀번호를 일치시켜주세요.')
+        Swal.fire({
+            icon: 'error',
+            title: '비밀번호 불일치',
+            text: '비밀번호를 일치시켜주세요.'
+        });
         return;
     }
 
-    if ($('#MBTI').val() == "") {
-        alert('MBTI를 입력해주세요.')
-        return;
-    }
+
     if ($('#ID').hasClass('is-success') && $('#pwCheck').hasClass('fasgreen')) {
         registerUser();
     }
 }
+
 //회원등록
 function registerUser() {
     let emailAddress = $('#ID-Address option:selected').val()
@@ -106,15 +137,23 @@ function registerUser() {
         url: "/register",
         data: {
             name_give: $('#name').val(),
-            regisNum_give: $('#regisNum').val(),
             id_give: $('#ID').val() + emailAddress,
             password_give: $('#password').val(),
             MBTI_give: $('input[name="radioTxt"]:checked').val()
 
         },
         success: function (response) {
-            alert(response['msg'])
-            window.location.reload();
+            // alert(response['msg'])
+            Swal.fire({
+                icon: 'success',
+                title: '회원가입 완료',
+                text: response['msg'],
+                confirmButtonText: "예"
+            }).then((result) => {
+                if (result.isConfirmed)
+                    window.location.reload();
+            });
+
         }
     })
 
