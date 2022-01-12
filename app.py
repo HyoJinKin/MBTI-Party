@@ -70,8 +70,8 @@ def detail():
 def join_party():
     party_id = int(request.form['party_id_request'])
     user_id = request.form['user_id_request']
-    user_name = db.users.find_one({"id":user_id})['name']
-    user_mbti = db.users.find_one({"id":user_id})['MBTI']
+    user_name = db.users.find_one({"id": user_id})['name']
+    user_mbti = db.users.find_one({"id": user_id})['MBTI']
 
     member_info = db.parties.find_one({"id": party_id})['member_info']
     if member_info.count(user_id) > 0:
@@ -94,30 +94,32 @@ def register():
 
 @app.route('/register/checkid', methods=['POST'])
 def check_dup():
+    # 넘겨받은 아이디를 변수에 담아준다
     id_receive = request.form['id_give']
+
+    # DB에 존재하는디 찾아본다
     exists = bool(db.users.find_one({"id": id_receive}))
     return jsonify({'result': 'success', 'exists': exists})
 
 
 @app.route('/register', methods=['POST'])
 def registerUser():
+    # 넘겨받은 정보들을 변수에 담아준다
     name = request.form['name_give']
-    regisNum = request.form['regisNum_give']
     id = request.form['id_give']
     password = request.form['password_give']
     # hash 기능으로 pw를 암호화한다.
     pw_hash = hashlib.sha256(password.encode('utf-8')).hexdigest()
-
-    # img = userinfo_receive['img']
     MBTI = request.form['MBTI_give']
+
+    # 정보들을 딕셔너리로 만든다
     doc = {
         'name': name,
-        'regisNum': regisNum,
         'id': id,
         'password': pw_hash,
-        # 'img': img,
         'MBTI': MBTI
     }
+    # DB에 넣어준다
     db.users.insert_one(doc)
 
     return jsonify({'msg': '회원가입이 완료되었습니다.'})
@@ -174,7 +176,8 @@ def id_check():
 
     result = db.users.find_one({'name': name_receive, 'regisNum': regisNum_receive})
     if result is not None:
-        email = list(db.users.find({'name': name_receive, 'regisNum' : regisNum_receive}, {'password':False,'_id':False,'MBTI':False}))
+        email = list(db.users.find({'name': name_receive, 'regisNum': regisNum_receive},
+                                   {'password': False, '_id': False, 'MBTI': False}))
         return jsonify({'result': 'success', 'email': email})
     else:
         return jsonify({'result': 'fail', 'msg': '입력하신 정보의 아이디가 존재하지 않습니다.'})
@@ -217,6 +220,7 @@ def build_party():
         flash("로그인이 필요합니다!")
         return redirect('/login')
 
+
 @app.route('/build_party', methods=['POST'])
 def reg_party():
     purpose_receive = request.form['purpose_give']
@@ -230,7 +234,7 @@ def reg_party():
     if user_id is not False:
         doc = {
             'id': party_id,
-            'master_name': db.users.find_one({'id': user_id['id']},{'_id': False})['name'],
+            'master_name': db.users.find_one({'id': user_id['id']}, {'_id': False})['name'],
             'master_info': ",".join([
                 db.users.find_one({'id': user_id['id']}, {'_id': False})['name'],
                 user_id['id']
@@ -250,7 +254,6 @@ def reg_party():
         return jsonify({'msg': '생성 완료!!'})
     else:
         return jsonify({'msg': '다시 로그인 해주세요!'})
-
 
 
 if __name__ == '__main__':
