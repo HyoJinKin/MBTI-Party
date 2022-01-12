@@ -53,11 +53,11 @@
                 },
                 success: function (response) {
                     if (response['result'] == 'success') {
-                        emails = response['email']
+                        let emails = response['email']
 
                         for (let i = 0; i < emails.length; i++) {
-                            name = emails[i]['name']
-                            id_email = emails[i]['id']
+                            let name = emails[i]['name']
+                            let id_email = emails[i]['id']
                             alert(name + '님의 아이디는 ' + id_email + ' 입니다.')
                         }
                         window.location.href = '/login'

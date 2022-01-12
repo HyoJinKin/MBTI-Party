@@ -144,7 +144,7 @@ def api_login():
     if result is not None:
         payload = {
             'id': id_receive,
-            'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=30)
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=2)
         }
 
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
@@ -187,27 +187,21 @@ def password_find():
     return render_template('password_find.html')
 
 @app.route('/password_find', methods=['POST'])
-def password_check():
+def password_find_change():
     name_receive = request.form['name_give']
     regisNum_receive = request.form['regisNum_give']
     id_receive = request.form['id_give']
-
-    result = db.users.find_one({'name': name_receive, 'regisNum': regisNum_receive, 'id': id_receive})
+    pw_receive = request.form['pw_give']
+    pw_ck_receive = request.form['pw_check_give']
+    if (pw_receive != pw_ck_receive):
+        return jsonify({'result': 'fault', 'msg': '비밀번호가 같지 않습니다.'})
+    result = list(db.users.find({'name': name_receive, 'regisNum': regisNum_receive, 'id': id_receive},{'_id':False}))
     if result is not None:
-        return jsonify({'result': 'success', 'msg': '회원정보가 확인되었습니다.'})
+        pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest()
+        db.users.update_one({'name': name_receive, 'regisNum': regisNum_receive, 'id': id_receive}, {'$set': {'password': pw_hash}})
+        return jsonify({'result': 'success', 'msg': '회원정보가 확인되어 비밀번호가 변경되었습니다.'})
     else:
         return jsonify({'result': 'fail', 'msg': '입력정보가 일치하지 않습니다.'})
-@app.route('/password_change')
-def password_change():
-    return render_template('password_change.html')
-
-@app.route('/password_change', methods=['POST'])
-def pw_change():
-    pw_receive = request.form['pw_give']
-    pw_ck_receive = request.form['pw_ck_give']
-    if (pw_receive != pw_ck_receive):
-        return jsonify({'result': 'fail', 'msg': '비밀번호가 서로 같지 않습니다.'})
-
 
 
 @app.route('/build_party')
