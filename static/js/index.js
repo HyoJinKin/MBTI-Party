@@ -1,6 +1,5 @@
 $(document).ready(function () {
     showAllParties();
-    switchLogout();
 });
 
 function showAllParties() {
@@ -32,5 +31,6 @@ function showAllParties() {
 }
 
 function switchLogout() {
-
+    $.removeCookie('mytoken')
+    window.location.href = '/login'
 }

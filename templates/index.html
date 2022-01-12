@@ -3,6 +3,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
     <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.css">
@@ -29,7 +30,7 @@
         <nav class="section section--nav navbar navbar-expand-lg navbar-light bg-light">
             <div class="inner">
                 <a class="navbar-brand float--left" href="/">MBTI</a>
-                <a class="navbar-menu-group float--right" href="/logout">로그아웃</a>
+                <a class="navbar-menu-group float--right" onclick="switchLogout()">로그아웃</a>
             </div>
         </nav>
 
