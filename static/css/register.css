@@ -42,6 +42,15 @@
     text-align: center;
 }
 
+.fasIdRed{
+    color : red;
+}
+.fasIdGreen{
+    color : green;
+}
+
+
+
 
 /*회원가입 버튼*/
 .join-form button {

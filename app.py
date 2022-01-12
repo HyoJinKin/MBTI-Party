@@ -126,6 +126,7 @@ def registerUser():
     # 넘겨받은 정보들을 변수에 담아준다
     name = request.form['name_give']
     id = request.form['id_give']
+    regisNum = request.form['regisNum_give']
     password = request.form['password_give']
     # hash 기능으로 pw를 암호화한다.
     pw_hash = hashlib.sha256(password.encode('utf-8')).hexdigest()
@@ -134,6 +135,7 @@ def registerUser():
     # 정보들을 딕셔너리로 만든다
     doc = {
         'name': name,
+        'regisNum': regisNum,
         'id': id,
         'password': pw_hash,
         'MBTI': MBTI

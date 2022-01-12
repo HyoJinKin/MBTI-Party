@@ -137,6 +137,7 @@ function registerUser() {
         url: "/register",
         data: {
             name_give: $('#name').val(),
+            regisNum_give: $('#regisNum').val(),
             id_give: $('#ID').val() + emailAddress,
             password_give: $('#password').val(),
             MBTI_give: $('input[name="radioTxt"]:checked').val()
@@ -161,15 +162,15 @@ function registerUser() {
 
 
 //주민등록번호 입력 형식을 맞췄는지 확인
-// function regisNumCheck(){
-//     let asValue = $('#regisNum').val();
-//     var regExp = /^(?:[0-9]{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[1,2][0-9]|3[0,1]))-[1-4][0-9]{6}$/;
-//     if (!regExp.test(asValue)   ) {
-//         $('#regisNum-help').text('주민등록번호 형식을 확인해주세요.');
-//         $('#regisNumCheck').removeClass('fasIdGreen').addClass('fasIdRed');
-//     }
-//     else{
-//         $('#regisNum-help').text('');
-//         $('#regisNumCheck').removeClass('fasIdRed').addClass('fasIdGreen');
-//     }
-// }
+function regisNumCheck(){
+    let asValue = $('#regisNum').val();
+    var regExp = /^(?:[0-9]{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[1,2][0-9]|3[0,1]))-[1-4][0-9]{6}$/;
+    if (!regExp.test(asValue)   ) {
+        $('#regisNum-help').text('주민등록번호 형식을 확인해주세요.');
+        $('#regisNumCheck').removeClass('fasIdGreen').addClass('fasIdRed');
+    }
+    else{
+        $('#regisNum-help').text('');
+        $('#regisNumCheck').removeClass('fasIdRed').addClass('fasIdGreen');
+    }
+}
