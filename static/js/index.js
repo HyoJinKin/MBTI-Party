@@ -1,6 +1,5 @@
 $(document).ready(function () {
     showAllParties();
-    showMbtiProfileMessage();
 });
 
 function showAllParties(category) {
@@ -71,6 +70,7 @@ function showSortedParties(category) {
         }
     })
 }
+
 
 
 

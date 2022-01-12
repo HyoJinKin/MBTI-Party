@@ -34,8 +34,9 @@
             <div class="navbar-menu-group float--right">
                 <div class="login-status">
                     <div class="login-status-circle"></div>
-                    <span>{{user_name}}님 반가워요!</span>
-                    <input type="hidden" id="user_name" value={{name}}>
+                    <span><span id="mbti_profile"></span> {{user_name}}님({{user_mbti}}) 반가워요!</span>
+                    <input type="hidden" id="user_name" value={{user_name}}>
+                    <input type="hidden" id="user_mbti" value={{user_mbti}}>
                 </div>
                 <div class="nav-item" style="cursor:pointer" onclick="switchLogout()">로그아웃</div>
             </div>

@@ -61,6 +61,7 @@ def detail():
 
     user_id = get_token('mytoken')['id']
     user_name = db.users.find_one({'id':user_id},{'_id':False})['name']
+    user_mbti = db.users.find_one({'id': user_id}, {'_id': False})['MBTI']
 
     return render_template(
         'detail.html',
@@ -68,7 +69,7 @@ def detail():
         max_member_num=max_member_num,
         master_name=master_name, master_id=master_id,
         member_info=member_info,
-        user_name=user_name, user_id=user_id
+        user_name=user_name, user_id=user_id, user_mbti=user_mbti
     )
 
 
