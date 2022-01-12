@@ -191,7 +191,7 @@ def reg_party():
     description_receive = request.form['description_give']
     max_member_num_receive = request.form['max_member_num_give']
     user_id = get_token('mytoken')
-    # user_mbti = db.users.find_one({"id": user_id},{"_id":False})["MBTI"]
+    #user_mbti = db.users.find_one({"id": user_id},{"_id":False})["MBTI"]
     # user_mbti : 파티 생성자 mbti
     party_id = len(list(db.parties.find({}))) + 1
 
@@ -200,7 +200,7 @@ def reg_party():
             'id': party_id,
             'master_id': user_id['id'],
             'member_ids': user_id['id'],
-            # 'member_mbtis': user_mbti,
+            'member_mbtis': db.users.find_one({'id': user_id['id']}, {'_id': False})['MBTI'],
             'purpose': purpose_receive,
             'favorite_mbti': mbti_receive,
             'title': title_receive,
