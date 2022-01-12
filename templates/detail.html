@@ -32,6 +32,11 @@
         <div class="inner">
             <a class="navbar-brand float--left" href="/">MBTI</a>
             <div class="navbar-menu-group float--right">
+                <div class="login-status">
+                    <div class="login-status-circle"></div>
+                    <span>{{user_name}}님 반가워요!</span>
+                    <input type="hidden" id="user_name" value={{name}}>
+                </div>
                 <div class="nav-item" style="cursor:pointer" onclick="switchLogout()">로그아웃</div>
             </div>
         </div>

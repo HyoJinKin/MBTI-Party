@@ -28,7 +28,7 @@ def index():
     try:
         payload = jwt.decode(token_recieve, SECRET_KEY, algorithms=['HS256'])
         user_info = db.users.find_one({'id': payload['id']})
-        return render_template('index.html', name=user_info["name"])
+        return render_template('index.html', name=user_info["name"], mbti=user_info["MBTI"])
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
@@ -40,6 +40,11 @@ def show_all():
     parties = list(db.parties.find({}, {'_id': False}))
     return jsonify({'parties': parties})
 
+@app.route('/api/sorted_party_list', methods=['GET'])
+def show_sorted_list():
+    category = request.args.get("cat")
+    parties = list(db.parties.find({'purpose': category}, {'_id': False}))
+    return jsonify({'parties': parties})
 
 @app.route('/detail')
 def detail():
@@ -55,6 +60,7 @@ def detail():
     member_info = detail['member_info']
 
     user_id = get_token('mytoken')['id']
+    user_name = db.users.find_one({'id':user_id},{'_id':False})['name']
 
     return render_template(
         'detail.html',
@@ -62,7 +68,7 @@ def detail():
         max_member_num=max_member_num,
         master_name=master_name, master_id=master_id,
         member_info=member_info,
-        user_id=user_id
+        user_name=user_name, user_id=user_id
     )
 
 
@@ -207,9 +213,11 @@ def password_find_change():
 @app.route('/build_party')
 def build_party():
     user_id = get_token('mytoken')
+
     if user_id is not False:
+        user_name= db.users.find_one({'id': user_id['id']},{'_id':False})['name']
         user_mbti = db.users.find_one({'id': user_id['id']}, {'_id': False})['MBTI']
-        return render_template('build_party.html', user_mbti=user_mbti)
+        return render_template('build_party.html', user_mbti=user_mbti, user_name=user_name)
     else:
         flash("로그인이 필요합니다!")
         return redirect('/login')

@@ -19,44 +19,65 @@
     <script src="../static/js/index.js"></script>
     <title>MBTI PARTY | 나의 MBTI에 맞는 파티 찾기</title>
     {%with messages = get_flashed_messages()%}
-        {%if messages %}
-            <script type="text/javascript">
-                alert("{{messages[0]}}");
-            </script>
-        {%endif%}
+    {%if messages %}
+    <script type="text/javascript">
+        alert("{{messages[0]}}");
+    </script>
+    {%endif%}
     {%endwith%}
 </head>
 <body>
-    <div class="body__container">
-        <nav class="section section--nav navbar navbar-expand-lg navbar-light bg-light">
-            <div class="inner">
-                <a class="navbar-brand float--left" href="/">MBTI</a>
-                <div class="navbar-menu-group float--right">
-                    <div class="nav-item" style="cursor:pointer" onclick="switchLogout()">로그아웃</div>
+<div class="body__container">
+    <nav class="section section--nav navbar navbar-expand-lg navbar-light bg-light">
+        <div class="inner">
+            <a class="navbar-brand float--left" href="/">MBTI</a>
+            <div class="navbar-menu-group float--right">
+                <div class="login-status">
+                    <div class="login-status-circle"></div>
+                    <span><div id="mbti_profile"></div>, {{name}}님({{mbti}}) 반가워요!</span>
+                    <input type="hidden" id="user_name" value={{name}}>
+                    <input type="hidden" id="user_mbti" value={{mbti}}>
                 </div>
+                <div class="nav-item" style="cursor:pointer" onclick="switchLogout()">로그아웃</div>
             </div>
-        </nav>
+        </div>
+    </nav>
 
-        <section class="section section--list">
-            <div class="inner">
-                <div class="btn-group">
-                    <button onclick="location.href='/build_party'" class="register-btn btn-primary">파티 만들기</button>
-                </div>
-
-                <div class="sort-menu-group float--right">
-                    <ul>
-                        <li class="sort-menu__purpose-category">
-                            <a href="#">스터디</a>
-                            <a href="#"></a>
-                        </li>
-                        <li class="sort-menu__available">
-                            <a href="#">입장 가능 파티만</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="list" id="party-list"></div>
+    <section class="section section--list">
+        <div class="inner">
+            <div class="btn-group">
+                <button onclick="location.href='/build_party'" class="register-btn btn-primary">파티 만들기</button>
             </div>
-        </section>
-    </div>
+
+            <div class="sort-menu-group">
+                <ul class="sort-menu__purpose-category float--left">
+                    <li>
+                        <div style="cursor:pointer" onclick="showAllParties()">전체</div>
+                    </li>
+                    <li>
+                        <div style="cursor:pointer" onclick="showSortedParties('스터디')">스터디</div>
+                    </li>
+                    <li>
+                        <div style="cursor:pointer" onclick="showSortedParties('잡담')">잡담</div>
+                    </li>
+                    <li>
+                        <div style="cursor:pointer" onclick="showSortedParties('토론')">토론</>
+                    </li>
+                    <li>
+                        <div style="cursor:pointer" onclick="showSortedParties('게임')">게임</div>
+                    </li>
+                    <li>
+                        <div style="cursor:pointer" onclick="showSortedParties('기타')">기타</div>
+                    </li>
+                </ul>
+                <ul class="sort-menu__available float--right">
+                    <a style="cursor:pointer" onclick="showAvailableParties()">입장 가능 파티</a>
+                </ul>
+            </div>
+
+            <div class="list" id="party-list"></div>
+        </div>
+    </section>
+</div>
 </body>
 </html>

@@ -41,9 +41,22 @@ a {
 }
 
 /* nav */
-nav .navbar-menu-group li {
-    padding-right: 10px;
+nav .navbar-menu-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-nav .navbar-menu-group li:last-child {
-    padding-right: 0px;
+nav .navbar-menu-group .login-status {
+    margin-right: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+nav .navbar-menu-group .login-status-circle {
+    background-color: #228b22;
+    width: 16px;
+    height: 16px;
+    border-radius: 16px;
+    margin-right: 5px;
 }

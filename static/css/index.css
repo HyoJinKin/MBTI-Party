@@ -1,7 +1,4 @@
 /* list */
-.section--list {
-    display: flex;
-}
 .section--list .btn-group {
     display: flex;
     flex-direction: row;
@@ -13,20 +10,24 @@
     height: 50px;
     border-radius: 5px;
 }
-.section--list .sort-menu-group ul {
+.section--list .sort-menu-group {
+    width: 100%;
+}
+.section--list .sort-menu__purpose-category {
     display: flex;
     flex-direction: row;
-    list-style: none;
 }
-.section--list .sort-menu-group li {
-    padding-right: 20px;
+.section--list .sort-menu__purpose-category li {
+    margin-right: 5px;
+    background-color: cornflowerblue;
+    color: #fff;
+    border-radius: 5px;
+    padding: 1px 5px;
 }
-.section--list .sort-menu-group li:last-child {
-    padding-right: 0px;
-}
+
 .section--list .party-card {
     border: none;
-    border-radius: 0px;
+    border-radius: 0;
     border-top: 1px solid #000;
 }
 .section--list .party-card:last-child {
