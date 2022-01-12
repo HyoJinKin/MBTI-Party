@@ -227,9 +227,9 @@ def password_find_change():
     regisNum_receive = request.form['regisNum_give']
     id_receive = request.form['id_give']
     pw_receive = request.form['pw_give']
-    pw_ck_receive = request.form['pw_check_give']
+
     # 유저가 입력한 정보가 저장소에 존재하는지 여부를 확인!
-    result = list(db.users.find({'name': name_receive, 'regisNum': regisNum_receive, 'id': id_receive},{'_id':False}))
+    result = db.users.find_one({'name': name_receive, 'regisNum': regisNum_receive, 'id': id_receive})
     if result is not None:
         # 비밀번호를 hash로 암호화 한다!
         pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest()
