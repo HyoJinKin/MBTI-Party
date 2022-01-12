@@ -27,7 +27,7 @@ function select_mbti(mbti, options) {
 
 function makeParty() {
     let purpose = $("#select_purpose").val();
-    let mbti = $("#mbti_list").text();
+    let mbti = $("#mbti_list").text().split(" ").join(",").slice(0,-1);
     let title = $("#title").val();
     let description = $("#description").val();
     let max_member_num = $("#max_member_num").val();

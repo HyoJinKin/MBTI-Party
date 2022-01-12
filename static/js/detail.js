@@ -5,7 +5,7 @@ $(document).ready(function () {
 });
 
 function showPartyInfo() {
-    let favorite_mbti_array = $('#favorite_mbti').val().split(",")
+    let favorite_mbti_array = $('#favorite-mbti').val().split(",").sort()
     for (i=0; i<favorite_mbti_array.length; i++) {
         let mbti = favorite_mbti_array[i]
         unit_mbti_html = `<div class="mbti-text">${mbti}</div>`
@@ -21,8 +21,6 @@ function showPartyInfo() {
         [mbti,user_name,user_id] = member_info_array[i].split(",")
         let img_num = getRandomInt(1,7).toString()
         let img_addr = "../static/assets/images/users/man"+img_num+".png"
-        console.log(img_num);
-        console.log(img_addr);
         joined_html = `
                         <div class="member-entry card">
                             <div class="member-entry__image" style="background-image: url('${img_addr}');background-size: cover"></div>
@@ -60,12 +58,16 @@ function joinParty() {
     let party_id = $('#party-id').val()
     let user_id = $('#user-id').val()
 
+    console.log(party_id)
+    console.log(user_id)
+
     $.ajax({
         type: 'POST',
-        url: 'api/join_party',
+        url: '/api/join_party',
         data: {party_id_request: party_id, user_id_request: user_id},
-        success: function() {
-            window.location.reload()
+        success: function(response) {
+            alert(response['msg']);
+            window.location.reload();
         }
     });
 }

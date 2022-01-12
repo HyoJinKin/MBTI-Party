@@ -68,19 +68,23 @@ def detail():
 
 @app.route('/api/join_party', methods=['POST'])
 def join_party():
-    party_id = request.form['party_id_request']
+    party_id = int(request.form['party_id_request'])
     user_id = request.form['user_id_request']
     user_name = db.users.find_one({"id":user_id})['name']
     user_mbti = db.users.find_one({"id":user_id})['MBTI']
 
-    member_info_query = db.parties.find_one({"id":user_id})['member_info']
-    member_info_query.append(";" + user_mbti + "," + user_name + user_id)
+    member_info = db.parties.find_one({"id": party_id})['member_info']
+    if member_info.count(user_id) > 0:
+        return jsonify({'msg': '이미 참여하셨습니다'})
+    else:
+        add_query = ";" + user_mbti + "," + user_name + "," + user_id
+        member_info += add_query
 
-    db.parties.find_one_and_update(
-        {"id": party_id},
-        {"$set": {"member_info": member_info_query}}
-    )
-    return jsonify({'msg': '좋아요 완료'})
+        db.parties.find_one_and_update(
+            {"id": party_id},
+            {"$set": {"member_info": member_info}}
+        )
+        return jsonify({'msg': '참여 완료'})
 
 
 @app.route('/register')

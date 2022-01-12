@@ -44,22 +44,22 @@
                 <div class="info">
                     <div class="info__left float--left">
                         <p class="title">{{title}}</p>
-                        <p>
+                        <div class="party-gen-info">
                             <span><i class="fas fa-crown"></i></span>
                             {{master_name}}
-                        </p>
-                        <p>{{desc}}</p>
+                            <div id="favorite-mbti-entries" class="favorite-mbti"></div>
+                        </div>
+                        <p class="description">{{desc}}</p>
                     </div>
                     <div class="info__right float--right">
                         <div id="party-size" class="party-size"></div>
-                        <div id="favorite-mbti-entries float--right"></div>
                     </div>
                 </div>
                 <div id="member-entries" class="member-entries float--right"></div>
 
                 <input type="hidden" id="party-id" value={{id}}>
                 <input type="hidden" id="user-id" value={{user_id}}>
-                <input type="hidden" id="favorite_mbti" value={{favorite_mbti}}>
+                <input type="hidden" id="favorite-mbti" value={{favorite_mbti}}>
                 <input type="hidden" id="max-member-num" value={{max_member_num}}>
                 <input type="hidden" id="member-ids" value={{member_ids}}>
                 <input type="hidden" id="member-info" value={{member_info}}>
