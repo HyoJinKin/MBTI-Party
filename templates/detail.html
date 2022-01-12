@@ -37,7 +37,7 @@
 
     <section class="section section--detail">
         <div class="inner">
-            <div class="party-box">
+            <div class="party-box" id="party-box">
                 <div class="info">
                     <div class="info__left float--left">
                         <p class="title">{{title}}</p>
@@ -55,10 +55,11 @@
                 <div id="member-entries" class="member-entries float--right"></div>
 
                 <input type="hidden" id="party-id" value={{id}}>
+                <input type="hidden" id="user-id" value={{user_id}}>
                 <input type="hidden" id="favorite_mbti" value={{favorite_mbti}}>
                 <input type="hidden" id="max-member-num" value={{max_member_num}}>
                 <input type="hidden" id="member-ids" value={{member_ids}}>
-                <input type="hidden" id="member-mbtis" value={{member_mbtis}}>
+                <input type="hidden" id="member-info" value={{member_info}}>
             </div>
         </div>
     </section>

@@ -1,11 +1,10 @@
 $(document).ready(function () {
     showPartyInfo();
-    getEmptyEntryNum();
+    showEmptyEntryNum();
+    showFullOccupiedMessage();
 });
 
 function showPartyInfo() {
-    let party_id = $('#party-id').val()
-
     let favorite_mbti_array = $('#favorite_mbti').val().split(",")
     for (i=0; i<favorite_mbti_array.length; i++) {
         let mbti = favorite_mbti_array[i]
@@ -13,16 +12,13 @@ function showPartyInfo() {
         $('#favorite-mbti-entries').append(unit_mbti_html)
     }
 
-    let max_entry_num = $('#max-member-num').val()
-    let occupied_entry_num = $('#member-ids').val().split(",").length
-    let empty_entry_num = max_entry_num - occupied_entry_num
+    let member_info = $("#member-info").val()
+    let member_info_array = getEmptyEntryNum() === 0
+        ? member_info.split(";")
+        : member_info.concat(";,,").split(";")
 
-    let member_mbtis = $("#member-mbtis").val()
-    let member_mbtis_array = member_mbtis.concat(";,".repeat(empty_entry_num)).split(";")
-
-    for (i=0; i<member_mbtis_array.length; i++) {
-        mbti = member_mbtis_array[i].split(",")[0]
-        user_id = member_mbtis_array[i].split(",")[1]
+    for (i=0; i<member_info_array.length; i++) {
+        [mbti,user_name,user_id] = member_info_array[i].split(",")
         let img_num = getRandomInt(1,7).toString()
         let img_addr = "../static/assets/images/users/man"+img_num+".png"
         console.log(img_num);
@@ -31,9 +27,9 @@ function showPartyInfo() {
                         <div class="member-entry card">
                             <div class="member-entry__image" style="background-image: url('${img_addr}');background-size: cover"></div>
                             <div class="card-body">
-                                <button onclick="joinParty()" class="btn btn-primary" ${user_id=='' ? '' : 'style="display: none"'}>참여하기</button>
+                                <button onclick="joinParty()" class="btn btn-primary" ${user_id === '' ? '' : 'style="display: none"'}>참여하기</button>
                                 <h5 class="member-entry__mbti card-title">${mbti}</h5>
-                                <p class="member-entry__id card-text">${user_id}</p> 
+                                <a href="mailto:${user_id}>"><p class="member-entry__id card-text">${user_name}</p></a> 
                             </div> 
                         </div>
                       `
@@ -41,23 +37,58 @@ function showPartyInfo() {
     }
 }
 
+function showFullOccupiedMessage() {
+    if (isFullOccupied()) {
+        blind_layer_html = `
+            <div class="blind_layer">
+                    <p class="title">모집 마감👏</p>
+                    <a href="/">돌아가기</a>
+            </div>            
+        `
+        return $('#party-box').append(blind_layer_html)
+    }
+}
+
+function showEmptyEntryNum() {
+    let max_entry_num = getMaxEntryNum()
+    let empty_entry_num = getEmptyEntryNum()
+
+    $('#party-size').append(`${empty_entry_num}/${max_entry_num}명`)
+}
+
 function joinParty() {
+    let party_id = $('#party-id').val()
+    let user_id = $('#user-id').val()
+
     $.ajax({
         type: 'POST',
         url: 'api/join_party',
-        data: {party_id_request: partyId, user_id_request: userId, role_request: role},
+        data: {party_id_request: party_id, user_id_request: user_id},
         success: function(response) {
             window.location.reload()
         }
     });
 }
 
-function getEmptyEntryNum() {
-    let max_entry_num = $('#max-member-num').val()
-    let occupied_entry_num = $('#member-ids').val().split(",").length
-    let empty_entry_num = max_entry_num - occupied_entry_num;
 
-    $('#party-size').append(`${empty_entry_num}/${max_entry_num}명`)
+/* util functions */
+function getMaxEntryNum() {
+    return $('#max-member-num').val()
+}
+
+function getOccupiedEntryNum() {
+    let member_info = $('#member-info').val()
+    return member_info.indexOf(";") === -1
+        ? 1
+        : member_info.split(";").length
+}
+
+function getEmptyEntryNum() {
+    return getMaxEntryNum() - getOccupiedEntryNum()
+}
+
+function isFullOccupied() {
+    return getEmptyEntryNum() === 0
 }
 
 function getRandomInt(min, max) {

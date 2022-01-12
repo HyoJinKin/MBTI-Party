@@ -52,12 +52,16 @@ def detail():
     max_member_num = detail['max_member_num']
     master_id = detail['master_id']
     member_ids = detail['member_ids']
-    member_mbtis = detail['member_mbtis']
+    member_info = detail['member_info']
+
+    user_id = get_token('mytoken')['id']
+
     return render_template(
         'detail.html',
         id=id, title=title, desc=desc, favorite_mbti=favorite_mbti,
         max_member_num=max_member_num,
-        master_id=master_id, member_ids=member_ids, member_mbtis=member_mbtis
+        master_id=master_id, member_ids=member_ids, member_info=member_info,
+        user_id=user_id
     )
 
 
@@ -65,7 +69,8 @@ def detail():
 def join_party():
     party_id = request.form['party_id_request']
     user_id = request.form['user_id_request']
-    user_mbti = request.form['mbti_request']
+    user_name = db.users.find_one({"id":user_id})['name']
+    user_mbti = db.users.find_one({"id":user_id})['MBTI']
 
     member_ids_query = db.parties.find({"id": party_id})['members_ids']
     if member_ids_query == "":
@@ -79,9 +84,12 @@ def join_party():
     else:
         member_mbtis_query.append(";" + user_id + "," + user_mbti)
 
+    member_info_query = db.parties.find_one({"id":user_id})['member_info']
+    member_info_query.append(";" + user_mbti + "," + user_name + user_id)
+
     db.parties.find_one_and_update(
         {"id": party_id},
-        {"$set": {"member_ids": member_ids_query, "member_mbtis": member_mbtis_query}}
+        {"$set": {"member_info": member_info_query}}
     )
 
 
@@ -201,9 +209,16 @@ def reg_party():
     if user_id is not False:
         doc = {
             'id': party_id,
-            'master_id': user_id['id'],
-            'member_ids': user_id['id'],
-            'member_mbtis': db.users.find_one({'id': user_id['id']}, {'_id': False})['MBTI']+","+user_id['id'],
+            'master_name': db.users.find_one({'id': user_id['id']},{'_id': False})['name'],
+            'master_info': ",".join([
+                db.users.find_one({'id': user_id['id']}, {'_id': False})['name'],
+                user_id['id']
+            ]),
+            'member_info': ",".join([
+                db.users.find_one({'id': user_id['id']}, {'_id': False})['MBTI'],
+                db.users.find_one({'id': user_id['id']}, {'_id': False})['name'],
+                user_id['id']
+            ]),
             'purpose': purpose_receive,
             'favorite_mbti': mbti_receive,
             'title': title_receive,
