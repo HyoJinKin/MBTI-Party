@@ -58,19 +58,15 @@ def show_allowed_list():
         ]},{'_id': False}))
     return jsonify({'parties': parties})
 
-@app.route('/api/mbti_rel_scores', methods=['POST'])
-def getMbtiRelScores():
-    member_mbtis = request.form['mbti_arr_request']
-    user_mbti = request.form['user_mbti_request']
-
-    score_list = []
-    for i in range(0, len(member_mbtis)):
-        score = db.mbti.find({'type':user_mbti},{'_id':False})['score'][member_mbtis[i]]
-        score_list.append(score)
-    average_score = sum(score_list) / len(score_list)
-    return jsonify({'average_score':average_score})
-
-
+# @app.route('/api/mbti_rel_scores', methods=['GET'])
+# def getMbtiRelScores():
+#     member_mbti = request.args.get("mbti"))
+#
+#
+#     score = db.mbti.find({'type':user_mbti},{'_id':False})['score'][member_mbtis[i]]
+#     return jsonify({'score':score})
+#
+#
 
 
 @app.route('/detail')
