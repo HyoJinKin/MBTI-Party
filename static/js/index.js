@@ -11,7 +11,6 @@ function showAllParties() {
         url: '/api/party_list',
         data: {},
         success: function (response) {
-            $('#party-list').empty();
             let parties = response['parties']
 
             if (parties.length === 0) {
@@ -29,6 +28,7 @@ function showAllParties() {
                     let desc = parties[i]['description']
                     let master_id = parties[i]['master_id']
                     let favorite_mbti = parties[i]['favorite_mbti'].split(",")
+                    let
 
 
                     if (favorite_mbti.includes(user_mbti) || master_id === user_id) {
