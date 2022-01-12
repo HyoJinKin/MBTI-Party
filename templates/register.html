@@ -91,12 +91,14 @@
                         <button onclick="check_dup()" class="btn btn-primary id-btn"> 사용 확인</button>
                     </div>
 
+
                     <p>비밀번호</p>
-                    <input type="password" id="password" placeholder="예)8자리 이상">
+                    <input type="password" id="password" placeholder="예) 8자리 이상">
 
                     <p>비밀번호 확인</p>
-                    <input onchange="is_password_thesame()" type="password" id="passwordCheck" placeholder="예)8자리 이상">
-
+                    <input onkeyup="is_password_thesame()" type="password" id="passwordCheck"
+                           placeholder="예) 8자리 이상">
+                    <i id="pwCheck" class="fas fa-check-circle"></i>
                     <p>MBTI</p>
                     <input type="text" id="MBTI" placeholder="예) ENTJ">
 
