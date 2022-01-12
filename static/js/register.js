@@ -93,19 +93,32 @@ function checkID() {
 }
 
 function idCheckFirst() {
+    if ($('#name').val() == "") {
+        alert('이름을 입력해주세요.')
+        return;
+    }
+    if ($('#regisNum').val() == "") {
+        alert('주민등록번호를 입력해주세요.')
+        return;
+    }
+    if ($('#ID').hasClass('is-fail')) {
+        alert('먼저 아이디 사용 가능 여부를 확인해주세요.')
+        return;
+    }
+
     if ($('#pwCheck').hasClass('fasred')) {
         alert('비밀번호를 일치시켜주세요.')
         return;
     }
 
-    if ($('#ID').hasClass('is-fail')) {
-        alert('먼저 아이디 사용 가능 여부를 확인해주세요.')
+
+    if ($('#MBTI').val() == "") {
+        alert('MBTI를 입력해주세요.')
         return;
     }
     if ($('#ID').hasClass('is-success') && $('#pwCheck').hasClass('fasgreen')) {
         registerUser();
     }
-
 
 
 }
