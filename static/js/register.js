@@ -121,7 +121,7 @@ function registerUser() {
 }
 
 
-//주민등록번호 형식을 맞췄는지 확인
+//주민등록번호 입력 형식을 맞췄는지 확인
 // function regisNumCheck(){
 //     let asValue = $('#regisNum').val();
 //     var regExp = /^(?:[0-9]{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[1,2][0-9]|3[0,1]))-[1-4][0-9]{6}$/;

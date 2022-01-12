@@ -5,6 +5,8 @@
     width: 50%;
     font-size: 14px;
 }
+
+/*사용자 입력칸*/
 .join-form input {
     width: 80%;
     height: 25px;
@@ -13,21 +15,26 @@
     border-radius: 0px;
     border-bottom: 1px solid #000;
 }
+
+
+
+/*사용자 아이디 폼*/
 .join-form .id-form{
     display: flex;
     align-items: flex-start;
 }
+/*사용자 아이디 입력칸*/
 .join-form .id-input {
     width: 35%;
-
 }
+/*사용자 아이디 이메일 선택칸*/
 .join-form .id-select{
     width: 25%;
     height: 25px;
     border: none;
     border-bottom: 1px solid #000;
 }
-
+/*사용자 아이디 사용가능여부 버튼*/
 .join-form .id-btn {
     font-size: 12px;
     width: 20%;
@@ -35,18 +42,24 @@
     text-align: center;
 }
 
+
+/*회원가입 버튼*/
 .join-form button {
     width: 80%;
     margin-bottom: 20px;
 }
+/*화면 출력 이미지*/
 .join-image {
     width: 50%;
     box-sizing: border-box;
     background-image: url("../assets/images/icons/join.png");
     background-repeat: no-repeat;
 }
+
+
+
 .join-menu-group {
-    width: 80;
+    width: 80%;
     position: relative;
 }
 .join-menu-group ul{
