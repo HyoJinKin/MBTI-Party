@@ -179,6 +179,33 @@ def id_check():
     else:
         return jsonify({'result': 'fail', 'msg': '입력하신 정보의 아이디가 존재하지 않습니다.'})
 
+@app.route('/password_find')
+def password_find():
+    return render_template('password_find.html')
+
+@app.route('/password_find', methods=['POST'])
+def password_check():
+    name_receive = request.form['name_give']
+    regisNum_receive = request.form['regisNum_give']
+    id_receive = request.form['id_give']
+
+    result = db.users.find_one({'name': name_receive, 'regisNum': regisNum_receive, 'id': id_receive})
+    if result is not None:
+        return jsonify({'result': 'success', 'msg': '회원정보가 확인되었습니다.'})
+    else:
+        return jsonify({'result': 'fail', 'msg': '입력정보가 일치하지 않습니다.'})
+@app.route('/password_change')
+def password_change():
+    return render_template('password_change.html')
+
+@app.route('/password_change', methods=['POST'])
+def pw_change():
+    pw_receive = request.form['pw_give']
+    pw_ck_receive = request.form['pw_ck_give']
+    if (pw_receive != pw_ck_receive):
+        return jsonify({'result': 'fail', 'msg': '비밀번호가 서로 같지 않습니다.'})
+
+
 
 @app.route('/build_party')
 def build_party():
