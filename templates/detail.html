@@ -3,6 +3,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
     <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.css">
@@ -16,6 +17,13 @@
     <script defer src="../static/js/common.js"></script>
     <script defer src="../static/js/detail.js"></script>
     <title>MBTI PARTY | 나의 MBTI에 맞는 파티 찾기</title>
+    {%with messages = get_flashed_messages()%}
+        {%if messages %}
+            <script type="text/javascript">
+                alert("{{messages[0]}}");
+            </script>
+        {%endif%}
+    {%endwith%}
 </head>
 <body>
 <div class="body__container">
@@ -23,12 +31,8 @@
     <nav class="section section--nav navbar navbar-expand-lg navbar-light bg-light">
         <div class="inner">
             <a class="navbar-brand float--left" href="/">MBTI</a>
-            <div class="navbar-menu-group collapse navbar-collapse float--right">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a style="cursor:pointer" onclick="switchLogout()">로그아웃</a>
-                    </li>
-                </ul>
+            <div class="navbar-menu-group float--right">
+                <div class="nav-item" style="cursor:pointer" onclick="switchLogout()">로그아웃</div>
             </div>
         </div>
     </nav>
