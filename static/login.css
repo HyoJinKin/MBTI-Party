@@ -1,4 +1,3 @@
-
 .login-box {
     display: flex;
 }
@@ -21,10 +20,12 @@
     box-sizing: border-box;
     background-image: url("../static/assets/images/icons/login.png");
     background-size: cover;
+    background-repeat: no-repeat;
 }
 .login-menu-group {
-    width: 80;
+    width: 80%;
     position: relative;
+    margin: auto;
 }
 .login-menu-group ul{
     display: flex;
