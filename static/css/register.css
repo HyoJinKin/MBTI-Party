@@ -42,7 +42,7 @@
 .join-image {
     width: 50%;
     box-sizing: border-box;
-    background-image: url("../static/assets/images/icons/join.png");
+    background-image: url("../assets/images/icons/join.png");
     background-repeat: no-repeat;
 }
 .join-menu-group {

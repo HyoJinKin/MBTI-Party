@@ -5,27 +5,29 @@
     width: 50%;
 }
 .login-form input {
-    width: 80%;
+    width: 100%;
     margin-bottom: 30px;
     border: none;
     border-radius: 0px;
     border-bottom: 1px solid #000;
 }
 .login-form button {
-    width: 80%;
+    width: 100%;
     margin-bottom: 20px;
 }
 .login-image {
     width: 50%;
     box-sizing: border-box;
-    background-image: url("../static/assets/images/icons/login.png");
+    background-image: url("../assets/images/icons/login.png");
     background-size: cover;
     background-repeat: no-repeat;
 }
 .login-menu-group {
-    width: 80%;
+    width: 100%;
     position: relative;
-    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .login-menu-group ul{
     display: flex;
