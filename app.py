@@ -193,8 +193,10 @@ def id_check():
     name_receive = request.form['name_give']
     regisNum_receive = request.form['regisNum_give']
 
+    # mongodb에서 유저정보를 찾는다.
     result = db.users.find_one({'name': name_receive, 'regisNum': regisNum_receive})
     if result is not None:
+        # 유저정보가 있을 시 (이름과 주민등록번호와 아이디(이메일))을 찾아서 보내준다.
         email = list(db.users.find({'name': name_receive, 'regisNum': regisNum_receive},
                                    {'password': False, '_id': False, 'MBTI': False}))
         return jsonify({'result': 'success', 'email': email})
@@ -212,11 +214,14 @@ def password_find_change():
     id_receive = request.form['id_give']
     pw_receive = request.form['pw_give']
     pw_ck_receive = request.form['pw_check_give']
+    # 비밀번호와 비밀번호 확인이 같지 않을 시 에러메세지를 띄운다.
     if (pw_receive != pw_ck_receive):
         return jsonify({'result': 'fault', 'msg': '비밀번호가 같지 않습니다.'})
     result = list(db.users.find({'name': name_receive, 'regisNum': regisNum_receive, 'id': id_receive},{'_id':False}))
     if result is not None:
+        print(result)
         pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest()
+        print(pw_hash)
         db.users.update_one({'name': name_receive, 'regisNum': regisNum_receive, 'id': id_receive}, {'$set': {'password': pw_hash}})
         return jsonify({'result': 'success', 'msg': '회원정보가 확인되어 비밀번호가 변경되었습니다.'})
     else:

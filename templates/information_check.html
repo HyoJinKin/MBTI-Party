@@ -38,6 +38,7 @@
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script>
+        // 엔터 키를 누를 시 동작!
         function enterkey() {
             if (window.event.keyCode == 13) {
                 id_check();
@@ -52,6 +53,7 @@
                     regisNum_give: $('#regisNum').val()
                 },
                 success: function (response) {
+                    // 유저정보가 있을 시 아이디(이메일) 정보를 알러트 해준다!
                     if (response['result'] == 'success') {
                         let emails = response['email']
 

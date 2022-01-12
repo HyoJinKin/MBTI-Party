@@ -40,17 +40,20 @@
                 url: "/api/login",
                 data: {id_give: id, pw_give: password},
                 success: function (response) {
+                    // 유저정보가 일치 시 토큰을 쿠키로 저장한다.
                     if (response['result'] == 'success') {
-                        {#$.cookie('mytoken', response['token']);#}
                         $.cookie("mytoken", response['token'])
                         alert('로그인 완료!');
                         window.location.href = '/';
+                        // 아이디창이 공백일 때 알러트!
                     } else if (!id) {
                         alert('아이디를 입력해주세요');
                         window.location.reload();
+                        // 아이디창이 이메일 형식이 아닐 때 알러트!
                     } else if (!(id.includes('@'))) {
                         alert('이메일형식으로 입력해주세요');
                         window.location.reload();
+                        // 비밀번호창이 공백일 때 알러트!
                     } else if (!password) {
                         alert('비밀번호를 입력해주세요');
                         window.location.reload();
