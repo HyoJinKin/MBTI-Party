@@ -15,8 +15,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
             crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <link rel="stylesheet" href="../static/css/common.css">
     <link rel="stylesheet" href="../static/css/login.css">
@@ -68,31 +70,32 @@
     {%endwith%}
 </head>
 <body>
-    <div class="body__container">
-        <nav class="section section--nav navbar navbar-expand-lg navbar-light bg-light">
-            <div class="inner">
-                <a class="navbar-brand float--left" href="/">MBTI</a>
-            </div>
-        </nav>
+<div class="body__container">
+    <nav class="section section--nav navbar navbar-expand-lg navbar-light bg-light">
+        <div class="inner">
+            <a class="navbar-brand float--left" href="/">MBTI</a>
+        </div>
+    </nav>
 
 
-        <section class="section section--login-form">
-            <div class="inner">
-                <div class="login-box">
-                    <div class="login-form">
-                        <div class="title">
-                            <h1>MBTI PARTY</h1>
-                            <h4 class="sub-title">MBTI 궁합이 맞는 친구들을 찾아보세요</h4>
-                        </div>
-
-                    <p>
-                        아이디
-                        <input onkeyup="enterkey()" type="text" class="form-control" id="id">
-                    </p>
-                    <p>
-                        비밀번호
-                        <input onkeyup="enterkey()" type="password" class="form-control" id="password">
-                    </p>
+    <section class="section section--login-form">
+        <div class="inner">
+            <div class="login-box">
+                <div class="login-form">
+                    <div class="title">
+                        <h1>MBTI PARTY</h1>
+                        <h4 class="sub-title">MBTI 궁합이 맞는 친구들을 찾아보세요</h4>
+                    </div>
+                    <div class="input_box">
+                        <p>
+                            아이디
+                            <input onkeyup="enterkey()" type="text" class="form-control" id="id">
+                        </p>
+                        <p>
+                            비밀번호
+                            <input onkeyup="enterkey()" type="password" class="form-control" id="password">
+                        </p>
+                    </div>
                     <button type="button" onclick="login()" class="btn btn-primary">로그인</button>
                     <div class="login-menu-group">
                         <ul>
@@ -100,7 +103,7 @@
                                 <a href="#">비밀번호 찾기</a>
                             </li>
                             <li>
-                                <a href="#">아이디 찾기</a>
+                                <a href="/information_check">아이디 찾기</a>
                             </li>
                             <li>
                                 <a href="/register">회원가입</a>

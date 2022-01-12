@@ -160,6 +160,24 @@ def get_token(tokenName):
         return False
 
 
+@app.route('/information_check')
+def information_check():
+    return render_template('information_check.html')
+
+
+@app.route('/information_check', methods=['POST'])
+def id_check():
+    name_receive = request.form['name_give']
+    regisNum_receive = request.form['regisNum_give']
+
+    result = db.users.find_one({'name': name_receive, 'regisNum': regisNum_receive})
+    if result is not None:
+        email = list(db.users.find({'name': name_receive, 'regisNum' : regisNum_receive}, {'password':False,'_id':False,'MBTI':False}))
+        return jsonify({'result': 'success', 'email': email})
+    else:
+        return jsonify({'result': 'fail', 'msg': '입력하신 정보의 아이디가 존재하지 않습니다.'})
+
+
 @app.route('/build_party')
 def build_party():
     user_id = get_token('mytoken')
@@ -169,7 +187,6 @@ def build_party():
     else:
         flash("로그인이 필요합니다!")
         return redirect('/login')
-
 
 @app.route('/build_party', methods=['POST'])
 def reg_party():
@@ -197,6 +214,7 @@ def reg_party():
         return jsonify({'msg': '생성 완료!!'})
     else:
         return jsonify({'msg': '다시 로그인 해주세요!'})
+
 
 
 if __name__ == '__main__':
