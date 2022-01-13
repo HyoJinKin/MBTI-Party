@@ -240,15 +240,26 @@ def password_find_change():
         return jsonify({'result': 'fail', 'msg': '입력정보가 일치하지 않습니다.'})
 
 
+#토큰 가져오기
+def get_token(tokenName):
+    token_receive = request.cookies.get(tokenName)
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        return payload
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return False
+
+
 @app.route('/build_party')
 def build_party():
+    # get_token으로 토큰의 이름을 보내서 해당하는 토큰값 가져오기
     user_id = get_token('mytoken')
 
     if user_id is not False:
         user_name = db.users.find_one({'id': user_id['id']}, {'_id': False})['name']
         user_mbti = db.users.find_one({'id': user_id['id']}, {'_id': False})['MBTI']
         return render_template('build_party.html', user_mbti=user_mbti, user_name=user_name)
-    else:
+    else: # 토큰값이 만료되었거나 없으면 비로그인 유저이므로 로그인 페이지로 이동
         flash("로그인이 필요합니다!")
         return redirect('/login')
 
@@ -261,7 +272,9 @@ def reg_party():
     description_receive = request.form['description_give']
     max_member_num_receive = request.form['max_member_num_give']
     user_id = get_token('mytoken')
+    # 파티 아이디값 자동 생성
     party_id = len(list(db.parties.find({}))) + 1
+    # 채팅방 아이디 설정
     chat_room_id = "room" + str(party_id)
 
     if user_id is not False:
@@ -302,28 +315,30 @@ def chat():
     else:
         flash("로그인이 필요합니다!")
         return redirect('/login')
+    # 아이디와 채팅방 아이디 보냄
     return render_template('chat.html', user_id=user_id, room=room_id)
 
 
 @socketio.on('message')
 def message(data):
     print('room(message): ' + str(data))
-    send({'msg': data['msg'], 'user_id': data['user_id'], 'user_name': data['user_name'],
+    # 클라이언트 보낸 데이터 받고 그 데이터를 해당 채팅방으로 시간이랑 같이 다시 보냄
+    send({'msg': data['msg'], 'user_id': data['user_id'], 'user_name' : data['user_name'],
           'time_stamp': strftime('%I:%M%p', localtime())}, broadcast=True, room=data['room'])
 
 
 @socketio.on('join')
 def join(data):
     print('room(join): ' + str(data))
-    join_room(data['room'])
-    send({'msg': data['user_name'] + "님이" + data['room'] + "방에 입장했습니다!"}, room=data['room'])
+    join_room(data['room']) # 해당 채팅방에 조인
+    send({'msg': data['user_id'] + "님이 방에 입장했습니다!"}, room=data['room'])
 
 
 @socketio.on('leave')
 def leave(data):
     print('room(leave): ' + str(data))
-    leave_room(data['room'])
-    send({'msg': data['user_name'] + "님이" + data['room'] + "방에서 나갔습니다..."}, room=data['room'])
+    leave_room(data['room']) # 해당 채팅방에서 떠남
+    send({'msg': data['user_id'] + "님이 방에서 나갔습니다..."}, room=data['room'])
 
 
 if __name__ == '__main__':

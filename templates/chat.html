@@ -23,8 +23,8 @@
     <script>
         let socket = io.connect("http://" + document.domain + ":" + location.port, {transports: ['websocket']});
         //let socket = io.connect("http://localhost:5000", {transports: ['websocket']});
-        let user_id = `{{user_id}}`;
-        let room = `{{room}}`;
+        let user_id = `{{user_id}}`; //넘어온 변수 저장
+        let room = `{{room}}`;       //넘어온 변수 저장
         joinRoom(room);
 
         socket.on('connect', () => {

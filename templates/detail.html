@@ -98,7 +98,7 @@
                         <input type="text" class="message float--left" placeholder="Messages"/>
                         <input type="submit" class="send-btn float--right" value="send"/>
                     </form>
-                    <button onclick="closeChatRoom()" class="close-btn btn btn-primary float--right">닫기</button>
+                    <button onclick="leaveRoom(`{{room}}`, `{{user_id}}`)" class="close-btn btn btn-primary float--right">닫기</button>
                 </div>
             </div>
     </section>
