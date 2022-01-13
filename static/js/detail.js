@@ -2,6 +2,7 @@ $(document).ready(function () {
     showPartyInfo();
     showEmptyEntryNum();
     showFullOccupiedMessage();
+    $('input.message').focus();
 });
 
 function showPartyInfo() {
@@ -26,7 +27,7 @@ function showPartyInfo() {
                             <div class="member-entry__image" style="background-image: url('${img_addr}');background-size: cover"></div>
                             <div class="card-body">
                                 <button onclick="joinParty()" class="btn btn-primary" ${user_id === '' ? '' : 'style="display: none"'}>참여하기</button>
-                                <button onclick="openChatRoom()" class="btn btn-primary" ${user_id === '' ? 'style="display:none"' : ''}>채팅</button>
+                                <button href="" onclick="openChatRoom()" class="btn btn-primary" ${user_id === '' ? 'style="display:none"' : ''}>채팅</button>
                                 <h5 class="member-entry__mbti card-title">${mbti}</h5>
                                 <a href="mailto:${user_id}>"><p class="member-entry__id card-text">${user_name}</p></a> 
                             </div> 
@@ -76,6 +77,7 @@ function joinParty() {
 function openChatRoom() {
     const chat_modal = document.querySelector('.chat-modal-wrapper')
     chat_modal.style.display = "flex"
+
     let socket = io.connect("http://" + document.domain + ":" + location.port + "/chat?room_id={{room_id}}", {transports: ['websocket']});
     let user_id = `{{user_id}}`;
     let room = `{{room}}`;
@@ -100,25 +102,25 @@ function openChatRoom() {
             printSysMsg(data.msg);
         }
     });
-
-    $(document).ready(function () {
-        $('input.message').focus();
-        // document.querySelectorAll('.select-room').forEach(p => {
-        //     p.onclick = () => {
-        //         console.log('asdasd');
-        //         let newRoom = p.innerHTML;
-        //         if(newRoom === room) {
-        //             let msg = `이미 ${room}방에 있습니다.`;
-        //             printSysMsg(msg);
-        //         }
-        //         else {
-        //             leaveRoom(room);
-        //             joinRoom(newRoom);
-        //             room = newRoom;
-        //         }
-        //     };
-        // });
-    });
+    //
+    // $(document).ready(function () {
+    //     $('input.message').focus();
+    //     // document.querySelectorAll('.select-room').forEach(p => {
+    //     //     p.onclick = () => {
+    //     //         console.log('asdasd');
+    //     //         let newRoom = p.innerHTML;
+    //     //         if(newRoom === room) {
+    //     //             let msg = `이미 ${room}방에 있습니다.`;
+    //     //             printSysMsg(msg);
+    //     //         }
+    //     //         else {
+    //     //             leaveRoom(room);
+    //     //             joinRoom(newRoom);
+    //     //             room = newRoom;
+    //     //         }
+    //     //     };
+    //     // });
+    // });
 
     function leaveRoom(room) {
         socket.emit('leave', {'user_id': user_id, 'room': room});
