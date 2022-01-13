@@ -79,26 +79,20 @@
         <div class="chat-modal-wrapper">
             <div class="chat-modal">
                 <h1 class="modal-title">채팅</h1>
+                <div class="user-profile">
+                    <div class="connect-circle"></div>
+                    <div>{{user_name}}님</div>
+                </div>
                 <nav id="sidebar">
                     <h4>{{room}}</h4>
                 </nav>
 
-                <h3 style='color: #ccc;font-size: 30px;'>No message yet..</h3>
                 <div class="message_holder"></div>
 
-                <form action="">
-                    <p class="user_id">아이디: {{user_id}}</p>
+                <form action="" class="message-box">
                     <input type="text" class="message" placeholder="Messages"/>
                     <input type="submit" value="send"/>
                 </form>
-                <button onclick="leaveRoom(`{{room}}`)">나기기</button>
-
-                <!--                <div class="user-profile">-->
-                <!--                    <div>유저1</div>-->
-                <!--                    <div>유저2</div>-->
-                <!--                </div>-->
-                <!--                <div class="chat-box"></div>-->
-                <!--                <input type="text" class="text-form"/>-->
                 <button onclick="closeChatRoom()" class="close-btn btn btn-primary float--right">닫기</button>
             </div>
         </div>

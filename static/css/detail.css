@@ -116,6 +116,7 @@
 .chat-modal .modal-title {
     font-size: 30px;
     font-weight: bold;
+    margin-bottom: 10px;
 }
 .chat-modal .user-profile {
     display: inline-block;
@@ -125,13 +126,23 @@
     position: relative;
     height: 260px;
 }
-.chat-modal .text-form input {
-    height: 35px;
+.chat-modal .user-profile {
     width: 100%;
-    box-sizing: border-box;
-    border: none;
-    border-bottom: 1px solid #000;
+    font-weight: bold;
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
 
+}
+.chat-modal .connect-circle {
+    width: 10px;
+    height: 10px;
+    background-color: forestgreen;
+    border-radius: 10px;
+    margin-right: 5px;
+}
+.chat-modal .message-box {
+    width: 100%;
 }
 .chat-modal .close-btn {
     position: relative;

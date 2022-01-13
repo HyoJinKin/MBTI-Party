@@ -4,8 +4,8 @@ $(document).ready(function () {
     showFullOccupiedMessage();
 });
 
-$(document).on(function(event) {
-    socket.emit('message', {id:event.target})
+$(document).on(function (event) {
+    socket.emit('message', {id: event.target})
 })
 
 function showPartyInfo() {
@@ -82,69 +82,62 @@ function openChatRoom() {
     chat_modal.style.display = "flex"
 
     let socket = io.connect("http://" + document.domain + ":" + location.port, {transports: ['websocket']});
-        //let socket = io.connect("http://localhost:5000", {transports: ['websocket']});
-        let user_id = $('#user-id').val()
-        let room = $('#chat-room-id').val()
-        joinRoom(room);
-        console.log(user_id, room)
+    //let socket = io.connect("http://localhost:5000", {transports: ['websocket']});
+    let user_id = $('#user-id').val()
+    let room = $('#chat-room-id').val()
+    joinRoom(room);
+    console.log(user_id, room)
 
-        socket.on('connect', () => {
-            let form = $('form').on('submit', e => {
-                e.preventDefault();
-                let user_input = $('input.message').val();
-                if(user_input !== '') {
-                    socket.send({'msg': user_input, 'user_id': user_id, 'room': room});
-                }
-                $('input.message').val('').focus();
-            });
-        });
-
-        socket.on('message', data => {
-            console.log(data);
-            if(data.user_id) {
-                $('h3').remove();
-                $('div.message_holder').append(`<div><b style="color: #000">${data.user_id}</b><br>${data.msg} (${data.time_stamp})<br></div>`);
+    socket.on('connect', () => {
+        let form = $('form').on('submit', e => {
+            e.preventDefault();
+            let user_input = $('input.message').val();
+            if (user_input !== '') {
+                socket.send({'msg': user_input, 'user_id': user_id, 'room': room});
             }
-            else {
-                printSysMsg(data.msg);
-            }
+            $('input.message').val('').focus();
         });
+    });
 
-        $(document).ready(function (){
-            $('input.message').focus();
-            // document.querySelectorAll('.select-room').forEach(p => {
-            //     p.onclick = () => {
-            //         console.log('asdasd');
-            //         let newRoom = p.innerHTML;
-            //         if(newRoom === room) {
-            //             let msg = `이미 ${room}방에 있습니다.`;
-            //             printSysMsg(msg);
-            //         }
-            //         else {
-            //             leaveRoom(room);
-            //             joinRoom(newRoom);
-            //             room = newRoom;
-            //         }
-            //     };
-            // });
-        });
-
-        function leaveRoom(room) {
-            console.log('leaveRoom');
-            socket.emit('leave', {'user_id' : user_id, 'room' : room});
-            window.history.back();
+    socket.on('message', data => {
+        console.log(data);
+        if (data.user_id) {
+            $('h3').remove();
+            $('div.message_holder').append(`<div><b style="color: #000">${data.user_id}</b><br>${data.msg} (${data.time_stamp})<br></div>`);
+        } else {
+            printSysMsg(data.msg);
         }
+    });
 
-        function joinRoom(room) {
-            console.log('joinRoom');
-            socket.emit('join', {'user_id' : user_id, 'room' : room});
-            //채팅창 클리어
-            $('div.message_holder').val('');
-        }
+    $(document).ready(function () {
+        $('input.message').focus();
+        // document.querySelectorAll('.select-room').forEach(p => {
+        //     p.onclick = () => {
+        //         console.log('asdasd');
+        //         let newRoom = p.innerHTML;
+        //         if(newRoom === room) {
+        //             let msg = `이미 ${room}방에 있습니다.`;
+        //             printSysMsg(msg);
+        //         }
+        //         else {
+        //             leaveRoom(room);
+        //             joinRoom(newRoom);
+        //             room = newRoom;
+        //         }
+        //     };
+        // });
+    });
 
-        function printSysMsg(msg) {
-            $('div.message_holder').append(msg + "<br>");
-        }
+    function joinRoom(room) {
+        console.log('joinRoom');
+        socket.emit('join', {'user_id': user_id, 'room': room});
+        //채팅창 클리어
+        $('div.message_holder').val('');
+    }
+
+    function printSysMsg(msg) {
+        $('div.message_holder').append(msg + "<br>");
+    }
 }
 
 function closeChatRoom() {
