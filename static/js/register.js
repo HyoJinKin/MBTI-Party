@@ -104,12 +104,32 @@ function inputCheck() {
         });
         return;
     }
+
+    if ($('#regisNumCheck').hasClass('fasIdRed')) {
+        // alert('이름을 입력해주세요.')
+        Swal.fire({
+            icon: 'error',
+            title: '주민번호 부적격',
+            text: '주민등록번호 형식을 맞춰주세요.'
+        });
+        return;
+    }
     if ($('#ID').hasClass('is-fail')) {
         // alert('먼저 아이디 사용 가능 여부를 확인해주세요.')
         Swal.fire({
             icon: 'error',
             title: '아이디 사용 가능 여부',
             text: '먼저 아이디 사용 가능 여부를 확인해주세요.'
+        });
+        return;
+    }
+
+    if ($('#pwNumCheck').hasClass('fasPwRed')) {
+        // alert('비밀번호를 일치시켜주세요.')
+        Swal.fire({
+            icon: 'error',
+            title: '비밀번호 부적격',
+            text: '비밀번호 형식을 지켜주세요.'
         });
         return;
     }
@@ -123,8 +143,7 @@ function inputCheck() {
         return;
     }
 
-
-    if ($('#ID').hasClass('is-success') && $('#pwCheck').hasClass('fasgreen')) {
+    if ($('#ID').hasClass('is-success') && $('#pwNumCheck').hasClass('fasPwGreen') && $('#regisNumCheck').hasClass('fasIdGreen') && $('#pwCheck').hasClass('fasgreen')) {
         registerUser();
     }
 }
@@ -162,14 +181,13 @@ function registerUser() {
 
 
 //주민등록번호 입력 형식을 맞췄는지 확인
-function regisNumCheck(){
+function regisNumCheck() {
     let asValue = $('#regisNum').val();
     var regExp = /^(?:[0-9]{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[1,2][0-9]|3[0,1]))-[1-4][0-9]{6}$/;
-    if (!regExp.test(asValue)   ) {
+    if (!regExp.test(asValue)) {
         $('#regisNum-help').text('주민등록번호 형식을 확인해주세요.');
         $('#regisNumCheck').removeClass('fasIdGreen').addClass('fasIdRed');
-    }
-    else{
+    } else {
         $('#regisNum-help').text('');
         $('#regisNumCheck').removeClass('fasIdRed').addClass('fasIdGreen');
     }
