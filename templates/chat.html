@@ -84,19 +84,19 @@
 
 </head>
 <body>
-    <nav id="sidebar">
-        <h4>{{room}}</h4>
-    </nav>
+<nav id="sidebar">
+    <h4>{{room}}</h4>
+</nav>
 
-    <h3 style='color: #ccc;font-size: 30px;'>No message yet..</h3>
-    <div class="message_holder"></div>
+<h3 style='color: #ccc;font-size: 30px;'>No message yet..</h3>
+<div class="message_holder"></div>
 
-    <form action="" method="POST">
-        <p class="user_id">아이디: {{user_id}}</p>
-        <input type="text" class="message" placeholder="Messages"/>
-        <input type="submit" value="send"/>
-    </form>
-    <button onclick="leaveRoom(`{{room}}`)">나기기</button>
+<form action="" method="POST">
+    <p class="user_id">아이디: {{user_id}}</p>
+    <input type="text" class="message" placeholder="Messages"/>
+    <input type="submit" value="send"/>
+</form>
+<button onclick="leaveRoom(`{{room}}`)">나기기</button>
 
 </body>
 </html>
