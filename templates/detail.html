@@ -4,7 +4,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.min.js"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.min.js"></script>
 
     <link
             rel="stylesheet"
@@ -83,9 +84,9 @@
                 </nav>
 
                 <h3 style='color: #ccc;font-size: 30px;'>No message yet..</h3>
-                <div id="message_holder"></div>
+                <div class="message_holder"></div>
 
-                <form action="" method="POST">
+                <form action="">
                     <p class="user_id">아이디: {{user_id}}</p>
                     <input type="text" class="message" placeholder="Messages"/>
                     <input type="submit" value="send"/>

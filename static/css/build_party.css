@@ -10,12 +10,31 @@
 }
 .input-form select {
     border: none;
-    border-bottom: 1px solid #000;
+    border-bottom: 1px solid #696969;
+    padding-top: 5px;
 }
 .input-form button {
     width: 100%;
     margin-top: 10px;
 }
-.input-form .select__category {
-    display: inline-block;
+.input-form .label {
+    margin-right: 10px;
+    margin-bottom: 10px;
 }
+.input-form .select__category {
+    display: flex;
+    flex-direction: row;
+}
+.input-form .inline-box {
+    margin-right: 20px;
+}
+.input-form .form-control {
+    height: 30px;
+    border-radius: 0;
+    border: none;
+    border-bottom: 1px solid #696969;
+}
+.input-form .form {
+    margin-bottom: 20px;
+}
+

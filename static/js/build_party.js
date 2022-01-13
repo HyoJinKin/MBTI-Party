@@ -47,3 +47,10 @@ function makeParty() {
                         });
 }
 
+function showMbtiRel() {
+    modal_html = `
+        <div class="mbti-rel-img" style="background-image: url("static/assets/images/mbti_rels/mbtirelation.png");background-size: cover"></div>
+    `
+    
+}
+

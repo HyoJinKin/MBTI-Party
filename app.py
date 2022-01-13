@@ -302,7 +302,7 @@ def chat():
     else:
         flash("로그인이 필요합니다!")
         return redirect('/login')
-    return render_template('chat.html', user_id=user_id, room=room_id)
+    return render_template('chat.html', user_id=user_id, room_id=room_id)
 
 
 @socketio.on('message')
@@ -328,4 +328,4 @@ def leave(data):
 
 if __name__ == '__main__':
     # app.run('0.0.0.0', port=5001, debug=True)
-    socketio.run(app, host='0.0.0.0', port='5000', debug=True)
+    socketio.run(app, host='0.0.0.0', port='5001', debug=True)

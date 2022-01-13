@@ -18,6 +18,8 @@
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           crossorigin="anonymous">
 
+    <script src="https://kit.fontawesome.com/0aeb562407.js" crossorigin="anonymous"></script>
+
     <!-- JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
@@ -66,12 +68,12 @@
                 </div>
 
                 <div class="input-form select__category">
-                    <div>
+                    <div class="form inline-box">
                         <span class="label">인원수</span>
                         <select name="max_member_num" id="max_member_num" class="input select"></select>
                     </div>
 
-                    <div>
+                    <div class="form">
                         <span class="label">파티 목적</span>
                         <select name="purpose" id="select_purpose" class="input select">
                             <option value="">선택해주세요.</option>
@@ -84,7 +86,7 @@
                     </div>
                 </div>
 
-                <div>
+                <div class="form">
                     <span class="label">원하는 MBTI</span>
                     <select name="mbti" id="select_mbti" class="select"
                             onchange="select_mbti($(this).val(), $(this).find('option').map(function() {return $(this).val();}).get())">
@@ -107,20 +109,18 @@
                         <option value="ENFJ">ENFJ</option>
                         <option value="ENTJ">ENTJ</option>
                     </select>
-                    <span class="help">나의 MBTI<strong style="color: red;">({{user_mbti}})</strong>와 잘 맞는 MBTI 유형: qwee, sdsd ... <a
-                            href="#" style="color: deepskyblue" onclick="$('#layer').show();">더 알아보기!</a></span>
-
+                    <a style="cursor:pointer" onclick="showMbtiRel()"><i class="far fa-question-circle"></i></a>
                     <div>
                         <span id="mbti_list" class="form-control"></span>
                     </div>
                 </div>
 
-                <div>
+                <div class="form">
                     <span class="label">파티 제목</span>
                     <input type="text" class="form-control" id="title">
                 </div>
 
-                <div>
+                <div class="form">
                     <span class="label">파티 설명</span>
                     <textarea class="form-control" id="description"
                               cols="30"
