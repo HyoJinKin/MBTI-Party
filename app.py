@@ -292,13 +292,14 @@ def reg_party():
 
 @app.route('/chat')
 def chat():
+    #room_id = room_id
     user_token = get_token('mytoken')
     if user_token is not False:
         user_id = user_token['id']
     else:
         flash("로그인이 필요합니다!")
         return redirect('/login')
-    return render_template('chat.html', user_id=user_id, rooms=ROOMS)
+    return render_template('chat.html', user_id=user_id, room='room_id')
 
 
 @socketio.on('message')
