@@ -1,5 +1,7 @@
 from flask import Flask, render_template, jsonify, request, redirect, flash, url_for
 from pymongo import MongoClient
+from flask_socketio import SocketIO, send, emit, join_room, leave_room
+from time import localtime, strftime
 import random  # 테스트용 id random 생성
 import jwt
 import datetime
@@ -9,7 +11,8 @@ import init_mbti_db
 SECRET_KEY = 'MBTI'
 
 app = Flask(__name__)
-app.secret_key = "mf";
+app.secret_key = "mf"
+socketio = SocketIO(app)
 client = MongoClient('localhost', 27017)
 db = client.dbmbti
 collist = db.list_collection_names()
@@ -57,17 +60,6 @@ def show_allowed_list():
             {'master_info':{'$regex':user_id}}
         ]},{'_id': False}))
     return jsonify({'parties': parties})
-
-# @app.route('/api/mbti_rel_scores', methods=['GET'])
-# def getMbtiRelScores():
-#     member_mbti = request.args.get("mbti"))
-#
-#
-#     score = db.mbti.find({'type':user_mbti},{'_id':False})['score'][member_mbtis[i]]
-#     return jsonify({'score':score})
-#
-#
-
 
 @app.route('/detail')
 def detail():
@@ -171,13 +163,12 @@ def api_login():
     pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest()
 
     # id, 암호화된 pw 가지고 있는 유저 찾기.
-    # result = db.users.find_one({'id': id_receive, 'password': pw_hash})
     result = db.users.find_one({'id': id_receive, 'password': pw_hash})
     # 찾으면 JWT 토큰 발급.
     if result is not None:
         payload = {
             'id': id_receive,
-            'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=2)
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=100)
         }
 
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
@@ -217,9 +208,11 @@ def id_check():
     else:
         return jsonify({'result': 'fail', 'msg': '입력하신 정보의 아이디가 존재하지 않습니다.'})
 
+
 @app.route('/password_find')
 def password_find():
     return render_template('password_find.html')
+
 
 @app.route('/password_find', methods=['POST'])
 def password_find_change():
@@ -227,14 +220,17 @@ def password_find_change():
     regisNum_receive = request.form['regisNum_give']
     id_receive = request.form['id_give']
     pw_receive = request.form['pw_give']
-
-    # 유저가 입력한 정보가 저장소에 존재하는지 여부를 확인!
-    result = db.users.find_one({'name': name_receive, 'regisNum': regisNum_receive, 'id': id_receive})
+    pw_ck_receive = request.form['pw_check_give']
+    # 비밀번호와 비밀번호 확인이 같지 않을 시 에러메세지를 띄운다.
+    if (pw_receive != pw_ck_receive):
+        return jsonify({'result': 'fault', 'msg': '비밀번호가 같지 않습니다.'})
+    result = list(db.users.find({'name': name_receive, 'regisNum': regisNum_receive, 'id': id_receive}, {'_id': False}))
     if result is not None:
-        # 비밀번호를 hash로 암호화 한다!
+        print(result)
         pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest()
-        # 찾은 유저정보를 유저가 원하는 비밀번호를 변경해준다.
-        db.users.update_one({'name': name_receive, 'regisNum': regisNum_receive, 'id': id_receive}, {'$set': {'password': pw_hash}})
+        print(pw_hash)
+        db.users.update_one({'name': name_receive, 'regisNum': regisNum_receive, 'id': id_receive},
+                            {'$set': {'password': pw_hash}})
         return jsonify({'result': 'success', 'msg': '회원정보가 확인되어 비밀번호가 변경되었습니다.'})
     else:
         return jsonify({'result': 'fail', 'msg': '입력정보가 일치하지 않습니다.'})
@@ -288,5 +284,40 @@ def reg_party():
         return jsonify({'msg': '다시 로그인 해주세요!'})
 
 
+ROOMS = ["전체방", "방1", "방2", "방3"]
+
+@app.route('/chat')
+def chat():
+    user_token = get_token('mytoken')
+    if user_token is not False:
+        user_id = user_token['id']
+    else:
+        flash("로그인이 필요합니다!")
+        return redirect('/login')
+    return render_template('chat.html', user_id=user_id, rooms=ROOMS)
+
+
+@socketio.on('message')
+def message(data):
+    print('room(message): ' + str(data['room']))
+    send({'msg': data['msg'], 'user_id': data['user_id'],
+          'time_stamp': strftime('%I:%M%p', localtime())}, broadcast=True, room=data['room'])
+
+
+@socketio.on('join')
+def join(data):
+    print('room(join): ' + str(data['room']))
+    join_room(data['room'])
+    send({'msg': data['user_id'] + "님이" + data['room'] + "방에 입장했습니다!"}, room=data['room'])
+
+
+@socketio.on('leave')
+def leave(data):
+    print('room(leave): ' + str(data['room']))
+    leave_room(data['room'])
+    send({'msg': data['user_id'] + "님이" + data['room'] + "방에서 나갔습니다..."}, room=data['room'])
+
+
 if __name__ == '__main__':
-    app.run('0.0.0.0', port=5000, debug=True)
+    # app.run('0.0.0.0', port=5000, debug=True)
+    socketio.run(app, host='0.0.0.0', port='5000', debug=True)
