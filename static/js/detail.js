@@ -97,7 +97,7 @@ function openChatRoom() {
     socket.on('message', data => {
         if (data.user_id) {
             $('h3').remove();
-            $('div.message_holder').append(`<div><b style="color: #000">${data.user_id}</b><br>${data.msg} (${data.time_stamp})<br></div>`);
+            $('#message_holder').append(`<div><b style="color: #000">${data.user_id}</b><br>${data.msg} (${data.time_stamp})<br></div>`);
         } else {
             printSysMsg(data.msg);
         }
