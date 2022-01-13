@@ -74,12 +74,12 @@ function joinParty() {
     });
 }
 
-
-
 function openChatRoom() {
-    let socket = io.connect("http://" + document.domain + ":" + location.port, {transports: ['websocket']});
     const chat_modal = document.querySelector('.chat-modal-wrapper')
     chat_modal.style.display = "flex"
+
+    let socket = io.connect("http://" + document.domain + ":" + location.port, {transports: ['websocket']});
+    //let socket = io.connect("http://localhost:5000", {transports: ['websocket']});
     let user_id = $('#user-id').val()
     let user_name = $('#user-name').val()
     let room = $('#chat-room-id').val()
@@ -136,25 +136,25 @@ function openChatRoom() {
     function printSysMsg(msg) {
         $('div.message_holder').append(msg + "<br>");
     }
-
 }
-let socket = io.connect("http://" + document.domain + ":" + location.port, {transports: ['websocket']});
-function leaveRoom(room, user_id) {
+
+function closeChatRoom() {
+    let socket = io.connect("http://" + document.domain + ":" + location.port, {transports: ['websocket']});
+
+    let user_id = $('#user-id').val()
+    let user_name = $('#user-name').val()
+    let room = $('#chat-room-id').val()
+
+    function leaveRoom(room) {
+            console.log('leaveRoom');
+            socket.emit('leave', {'user_id' : user_id, 'user_name': user_name, 'room' : room});
+            window.location.reload()
+    }
+    leaveRoom(room)
+
     const chat_modal = document.querySelector('.chat-modal-wrapper')
-    console.log('leaveRoom');
-    socket.emit('leave', {'user_id' : user_id, 'room' : room});
-    $('div.message_holder').val('');
     chat_modal.style.display = "none"
 }
-
-
-
-
-
-// function closeChatRoom() {
-//     const chat_modal = document.querySelector('.chat-modal-wrapper')
-//     chat_modal.style.display = "none"
-// }
 
 
 function showMbtiRelScoreResult() {
