@@ -10,8 +10,8 @@ MBTI가 같은 분들끼리 뭉칠 수 있는 사이트가 나왔어요.
    
   
   
-## 1. 제작 기간 & 팀원 소개
-2022년 1월 10일 ~ 2022년 1월 13일
+## 1. 제작 기간 & 팀원 소개 :busts_in_silhouette: 
+2022년 1월 10일 ~ 2022년 1월 13일 :fire:
 4인 1조 팀 프로젝트
 * 김효진 : 로그인 , 회원정보 확인 및 변경
 * 김윤민 : 회원가입
@@ -21,7 +21,7 @@ MBTI가 같은 분들끼리 뭉칠 수 있는 사이트가 나왔어요.
 
 
 
-## 2. 사용 기술
+## 2. 사용 기술 :technologist:
 
 ### Back-end
 
@@ -50,17 +50,17 @@ MBTI가 같은 분들끼리 뭉칠 수 있는 사이트가 나왔어요.
 
 
 
-## 3. 실행화면
+## 3. 실행화면 :sparkles:
 
 
 https://user-images.githubusercontent.com/66665210/149276019-2669d68f-b181-4bb0-a605-c07ed0382b3f.mov
 
 
+:mag: [전체 영상 보러가기]()
 
 
 
-
-## 4. 핵심기능
+## 4. 핵심기능 :sparkles:
 * 로그인
 * 아이디, 비밀번호 찾기
 * 회원가입
@@ -72,5 +72,5 @@ https://user-images.githubusercontent.com/66665210/149276019-2669d68f-b181-4bb0-
 
 
 
-## 5. 프로젝트 기록
+## 5. 프로젝트 기록 :page_facing_up:
 [보러가기](https://maya-yu.notion.site/Starting-Assignment-7560ead6700e45718d26499e31b1397a)
