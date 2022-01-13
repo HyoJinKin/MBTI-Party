@@ -21,7 +21,8 @@
     <title>Chat_App</title>
 
     <script>
-        let socket = io.connect("http://" + document.domain + ":" + location.port + "/chat?room_id={{room_id}}",  {transports: ['websocket']});
+        let socket = io.connect("http://" + document.domain + ":" + location.port, {transports: ['websocket']});
+        //let socket = io.connect("http://localhost:5000", {transports: ['websocket']});
         let user_id = `{{user_id}}`;
         let room = `{{room}}`;
         joinRoom(room);
@@ -38,6 +39,7 @@
         });
 
         socket.on('message', data => {
+            console.log(data);
             if(data.user_id) {
                 $('h3').remove();
                 $('div.message_holder').append(`<div><b style="color: #000">${data.user_id}</b><br>${data.msg} (${data.time_stamp})<br></div>`);
@@ -67,11 +69,13 @@
         });
 
         function leaveRoom(room) {
+            console.log('leaveRoom');
             socket.emit('leave', {'user_id' : user_id, 'room' : room});
             window.history.back();
         }
 
         function joinRoom(room) {
+            console.log('joinRoom');
             socket.emit('join', {'user_id' : user_id, 'room' : room});
             //채팅창 클리어
             $('div.message_holder').val('');
@@ -91,7 +95,7 @@
 <h3 style='color: #ccc;font-size: 30px;'>No message yet..</h3>
 <div class="message_holder"></div>
 
-<form action="" method="POST">
+<form action="">
     <p class="user_id">아이디: {{user_id}}</p>
     <input type="text" class="message" placeholder="Messages"/>
     <input type="submit" value="send"/>

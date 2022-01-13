@@ -290,8 +290,7 @@ def reg_party():
         return jsonify({'msg': '다시 로그인 해주세요!'})
 
 
-
-ROOMS = ["전체방", "방1", "방2", "방3"]
+# ROOMS = ["전체방", "방1", "방2", "방3"]
 
 
 @app.route('/chat')
@@ -308,24 +307,25 @@ def chat():
 
 @socketio.on('message')
 def message(data):
-    print('room(message): ' + str(data['room']))
+    print('room(message): ' + str(data))
     send({'msg': data['msg'], 'user_id': data['user_id'],
           'time_stamp': strftime('%I:%M%p', localtime())}, broadcast=True, room=data['room'])
 
 
-@socketio.on('join_room')
+@socketio.on('join')
 def join(data):
-    print('room(join): ' + str(data['room']))
-    join(data['room'])
+    print('room(join): ' + str(data))
+    join_room(data['room'])
     send({'msg': data['user_id'] + "님이" + data['room'] + "방에 입장했습니다!"}, room=data['room'])
 
 
 @socketio.on('leave')
 def leave(data):
-    print('room(leave): ' + str(data['room']))
+    print('room(leave): ' + str(data))
     leave_room(data['room'])
     send({'msg': data['user_id'] + "님이" + data['room'] + "방에서 나갔습니다..."}, room=data['room'])
 
+
 if __name__ == '__main__':
     # app.run('0.0.0.0', port=5001, debug=True)
-    socketio.run(app, host='0.0.0.0', port='5001', debug=True)
+    socketio.run(app, host='0.0.0.0', port='5000', debug=True)

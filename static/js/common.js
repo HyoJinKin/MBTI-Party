@@ -10,7 +10,6 @@ function switchLogout() {
 
 function showMbtiProfileMessage() {
     let user_mbti = $('#user_mbti').val()
-    console.log(user_mbti)
     switch (user_mbti) {
         case 'INTJ':
             html = `<span>전략가</span>`;
