@@ -139,6 +139,19 @@ function openChatRoom() {
 }
 
 function closeChatRoom() {
+    let socket = io.connect("http://" + document.domain + ":" + location.port, {transports: ['websocket']});
+
+    let user_id = $('#user-id').val()
+    let user_name = $('#user-name').val()
+    let room = $('#chat-room-id').val()
+
+    function leaveRoom(room) {
+        console.log('leaveRoom');
+        socket.emit('leave', {'user_id' : user_id, 'user_name': user_name, 'room' : room});
+        window.location.reload()
+    }
+    leaveRoom(room)
+
     const chat_modal = document.querySelector('.chat-modal-wrapper')
     chat_modal.style.display = "none"
 }
