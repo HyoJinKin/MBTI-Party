@@ -1,11 +1,12 @@
-from flask import Flask, render_template, jsonify, request, redirect, flash, url_for
-from pymongo import MongoClient
-from flask_socketio import SocketIO, send, emit, join_room, leave_room
-from time import localtime, strftime
-import random  # 테스트용 id random 생성
-import jwt
 import datetime
 import hashlib
+from time import localtime, strftime
+
+import jwt
+from flask import Flask, render_template, jsonify, request, redirect, flash, url_for
+from flask_socketio import send, leave_room, emit, join_room, SocketIO
+from pymongo import MongoClient
+
 import init_mbti_db
 
 SECRET_KEY = 'MBTI'
@@ -43,11 +44,13 @@ def show_all():
     parties = list(db.parties.find({}, {'_id': False}))
     return jsonify({'parties': parties})
 
+
 @app.route('/api/sorted_party_list', methods=['GET'])
 def show_sorted_list():
     category = request.args.get("cat")
     parties = list(db.parties.find({'purpose': category}, {'_id': False}))
     return jsonify({'parties': parties})
+
 
 @app.route('/api/allowed_party_list', methods=['GET'])
 def show_allowed_list():
@@ -55,11 +58,12 @@ def show_allowed_list():
     user_id = get_token('mytoken')['id']
 
     parties = list(db.parties.find({
-        '$or':[
-            {'favorite_mbti':{'$regex':mbti}},
-            {'master_info':{'$regex':user_id}}
-        ]},{'_id': False}))
+        '$or': [
+            {'favorite_mbti': {'$regex': mbti}},
+            {'master_info': {'$regex': user_id}}
+        ]}, {'_id': False}))
     return jsonify({'parties': parties})
+
 
 @app.route('/detail')
 def detail():
@@ -69,14 +73,13 @@ def detail():
     title = detail['title']
     desc = detail['description']
     favorite_mbti = detail['favorite_mbti']
-    print(room_id)
     max_member_num = detail['max_member_num']
     master_name = detail['master_info'].split(",")[0]
     master_id = detail['master_info'].split(",")[1]
     member_info = detail['member_info']
 
     user_id = get_token('mytoken')['id']
-    user_name = db.users.find_one({'id':user_id},{'_id':False})['name']
+    user_name = db.users.find_one({'id': user_id}, {'_id': False})['name']
     user_mbti = db.users.find_one({'id': user_id}, {'_id': False})['MBTI']
 
     return render_template(
@@ -85,7 +88,7 @@ def detail():
         max_member_num=max_member_num,
         master_name=master_name, master_id=master_id,
         member_info=member_info,
-        user_name=user_name, user_id=user_id, user_mbti=user_mbti
+        user_name=user_name, user_id=user_id, user_mbti=user_mbti,
     )
 
 
@@ -242,7 +245,7 @@ def build_party():
     user_id = get_token('mytoken')
 
     if user_id is not False:
-        user_name= db.users.find_one({'id': user_id['id']},{'_id':False})['name']
+        user_name = db.users.find_one({'id': user_id['id']}, {'_id': False})['name']
         user_mbti = db.users.find_one({'id': user_id['id']}, {'_id': False})['MBTI']
         return render_template('build_party.html', user_mbti=user_mbti, user_name=user_name)
     else:
@@ -264,7 +267,7 @@ def reg_party():
     if user_id is not False:
         doc = {
             'id': party_id,
-            'chat_room_id' : chat_room_id,
+            'chat_room_id': chat_room_id,
             'master_name': db.users.find_one({'id': user_id['id']}, {'_id': False})['name'],
             'master_info': ",".join([
                 db.users.find_one({'id': user_id['id']}, {'_id': False})['name'],
@@ -287,7 +290,8 @@ def reg_party():
         return jsonify({'msg': '다시 로그인 해주세요!'})
 
 
-# ROOMS = ["전체방", "방1", "방2", "방3"]
+
+ROOMS = ["전체방", "방1", "방2", "방3"]
 
 
 @app.route('/chat')
@@ -309,10 +313,10 @@ def message(data):
           'time_stamp': strftime('%I:%M%p', localtime())}, broadcast=True, room=data['room'])
 
 
-@socketio.on('join')
+@socketio.on('join_room')
 def join(data):
     print('room(join): ' + str(data['room']))
-    join_room(data['room'])
+    join(data['room'])
     send({'msg': data['user_id'] + "님이" + data['room'] + "방에 입장했습니다!"}, room=data['room'])
 
 
@@ -322,7 +326,6 @@ def leave(data):
     leave_room(data['room'])
     send({'msg': data['user_id'] + "님이" + data['room'] + "방에서 나갔습니다..."}, room=data['room'])
 
-
 if __name__ == '__main__':
-    # app.run('0.0.0.0', port=5000, debug=True)
-    socketio.run(app, host='0.0.0.0', port='5000', debug=True)
+    # app.run('0.0.0.0', port=5001, debug=True)
+    socketio.run(app, host='0.0.0.0', port='5001', debug=True)

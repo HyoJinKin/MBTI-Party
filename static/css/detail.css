@@ -86,3 +86,55 @@
     color: #fff;
     font-size: 24px;
 }
+.member-entry__mbti {
+    margin-top: 20px;
+}
+.chat-modal-wrapper {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+.chat-modal {
+    position: absolute;
+    top: 30px;
+    margin: auto;
+    background: #fff;
+    padding: 24px 16px;
+    border-radius: 10px;
+    width: 400px;
+    height: 500px;
+    border: 1px solid #808080;
+
+    display: flex;
+    flex-direction: column;
+}
+.chat-modal .modal-title {
+    font-size: 30px;
+    font-weight: bold;
+}
+.chat-modal .user-profile {
+    display: inline-block;
+    width: 50px;
+}
+.chat-modal .chat-box {
+    position: relative;
+    height: 260px;
+}
+.chat-modal .text-form input {
+    height: 35px;
+    width: 100%;
+    box-sizing: border-box;
+    border: none;
+    border-bottom: 1px solid #000;
+
+}
+.chat-modal .close-btn {
+    position: relative;
+    bottom: 0; right: 0;
+    margin-top: 10px
+}

@@ -32,6 +32,8 @@ a {
     box-sizing: border-box;
     padding: 30px 30px;
     overflow-x: hidden;
+    overflow-y: auto;
+    height: 100%;
 }
 .section .title {
     margin-bottom: 50px;

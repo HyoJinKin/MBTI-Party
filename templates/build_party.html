@@ -41,37 +41,39 @@
 </head>
 
 <body>
-    <div class="body__container">
-        <nav class="section section--nav navbar navbar-expand-lg navbar-light bg-light">
-            <div class="inner">
-                <a class="navbar-brand float--left" href="/">MBTI</a>
-                <div class="navbar-menu-group float--right">
-                    <div class="login-status">
-                        <div class="login-status-circle"></div>
-                        <span><span id="mbti_profile"></span> {{user_name}}님({{user_mbti}}) 반가워요!</span>
-                        <input type="hidden" id="user_name" value={{user_name}}>
-                        <input type="hidden" id="user_mbti" value={{user_mbti}}>
-                    </div>
-                    <div class="nav-item" style="cursor:pointer" onclick="switchLogout()">로그아웃</div>
+<div class="body__container">
+    <nav class="section section--nav navbar navbar-expand-lg navbar-light bg-light">
+        <div class="inner">
+            <a class="navbar-brand float--left" href="/">MBTI</a>
+            <div class="navbar-menu-group float--right">
+                <div class="login-status">
+                    <div class="login-status-circle"></div>
+                    <span><span id="mbti_profile"></span> {{user_name}}님({{user_mbti}}) 반가워요!</span>
+                    <input type="hidden" id="user_name" value={{user_name}}>
+                    <input type="hidden" id="user_mbti" value={{user_mbti}}>
                 </div>
+                <div class="nav-item" style="cursor:pointer" onclick="switchLogout()">로그아웃</div>
             </div>
-        </nav>
+        </div>
+    </nav>
 
-        <section class="section section--info">
-            <div class="inner">
-                <h1>만드실 파티에 대해 간략하게 설명해주세요.</h1>
-                <p>원하는 MBTI를 선택해 자신과 잘 맞는 파티원을 모집해 보세요!</p>
-
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">인원수</span>
-                        <select name="max_member_num" id="max_member_num" class="select"></select>
-                    </div>
+    <section class="section section--info">
+        <div class="inner">
+            <div class="input-form">
+                <div class="title">
+                    <h1>만드실 파티에 대해 간략하게 설명해주세요.</h1>
+                    <h4>원하는 MBTI를 선택해 자신과 잘 맞는 파티원을 모집해 보세요!</h4>
                 </div>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">파티 목적</span>
-                        <select name="purpose" id="select_purpose" class="select">
+
+                <div class="input-form select__category">
+                    <div>
+                        <span class="label">인원수</span>
+                        <select name="max_member_num" id="max_member_num" class="input select"></select>
+                    </div>
+
+                    <div>
+                        <span class="label">파티 목적</span>
+                        <select name="purpose" id="select_purpose" class="input select">
                             <option value="">선택해주세요.</option>
                             <option value="스터디">스터디</option>
                             <option value="잡담">잡답</option>
@@ -81,69 +83,64 @@
                         </select>
                     </div>
                 </div>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">원하는 MBTI</span>
-                        <select name="mbti" id="select_mbti" class="select"
-                                onchange="select_mbti($(this).val(), $(this).find('option').map(function() {return $(this).val();}).get())">
-                            <option value="">선택해주세요. (다중 선택 가능)</option>
-                            <option value="0">모두 선택</option>
-                            <option value="ISTJ">ISTJ</option>
-                            <option value="ISFJ">ISFJ</option>
-                            <option value="INFJ">INFJ</option>
-                            <option value="INTP">INTP</option>
-                            <option value="ISTP">ISTP</option>
-                            <option value="ISFP">ISFP</option>
-                            <option value="INFP">INFP</option>
-                            <option value="INTP">INTP</option>
-                            <option value="ESTP">ESTP</option>
-                            <option value="ESFP">ESFP</option>
-                            <option value="ENFP">ENFP</option>
-                            <option value="ENTP">ENTP</option>
-                            <option value="ESTJ">ESTJ</option>
-                            <option value="ESFJ">ESFJ</option>
-                            <option value="ENFJ">ENFJ</option>
-                            <option value="ENTJ">ENTJ</option>
-                        </select>
-                        <span class="mbti_info">나의 MBTI<strong style="color: red;">({{user_mbti}})</strong>와 잘 맞는 MBTI 유형: qwee, sdsd ... <a
-                                href="#" style="color: deepskyblue" onclick="$('#layer').show();">더 알아보기!</a></span>
+
+                <div>
+                    <span class="label">원하는 MBTI</span>
+                    <select name="mbti" id="select_mbti" class="select"
+                            onchange="select_mbti($(this).val(), $(this).find('option').map(function() {return $(this).val();}).get())">
+                        <option value="">선택해주세요. (다중 선택 가능)</option>
+                        <option value="0">모두 선택</option>
+                        <option value="ISTJ">ISTJ</option>
+                        <option value="ISFJ">ISFJ</option>
+                        <option value="INFJ">INFJ</option>
+                        <option value="INTP">INTP</option>
+                        <option value="ISTP">ISTP</option>
+                        <option value="ISFP">ISFP</option>
+                        <option value="INFP">INFP</option>
+                        <option value="INTP">INTP</option>
+                        <option value="ESTP">ESTP</option>
+                        <option value="ESFP">ESFP</option>
+                        <option value="ENFP">ENFP</option>
+                        <option value="ENTP">ENTP</option>
+                        <option value="ESTJ">ESTJ</option>
+                        <option value="ESFJ">ESFJ</option>
+                        <option value="ENFJ">ENFJ</option>
+                        <option value="ENTJ">ENTJ</option>
+                    </select>
+                    <span class="help">나의 MBTI<strong style="color: red;">({{user_mbti}})</strong>와 잘 맞는 MBTI 유형: qwee, sdsd ... <a
+                            href="#" style="color: deepskyblue" onclick="$('#layer').show();">더 알아보기!</a></span>
+
+                    <div>
+                        <span id="mbti_list" class="form-control"></span>
                     </div>
                 </div>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">원하는 MBTI</span>
-                    </div>
-                    <span id="mbti_list" class="form-control"></span>
-                </div>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">파티 제목</span>
-                    </div>
+
+                <div>
+                    <span class="label">파티 제목</span>
                     <input type="text" class="form-control" id="title">
                 </div>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">파티 설명</span>
-                    </div>
+
+                <div>
+                    <span class="label">파티 설명</span>
                     <textarea class="form-control" id="description"
                               cols="30"
                               rows="5" placeholder="140자까지 입력할 수 있습니다."></textarea>
                 </div>
-                <div class="button">
-                    <button onclick="makeParty()" type="button" class="btn btn-primary">파티 만들기</button>
-                </div>
-            </div>
-        </section>
-    </div>
 
-    <div id="layer" style="display: none;">
-        <div class="bg" onclick="$('#layer').hide();"></div>
-        <div class="layer">
-            <div class="inner_layer">
-                <img src="https://images.ctfassets.net/ut8ny7d4czxh/1gdcD5vHxyVMB3tLxaaX46/857296015430c98aec65460267b65782/img__5_.jpg?w=944&q=100"
-                     alt="mbti 이미지">
+                <button onclick="makeParty()" type="button" class="btn btn-primary">파티 만들기</button>
             </div>
         </div>
+    </section>
+</div>
+
+<div id="layer" style="display: none;">
+    <div class="bg" onclick="$('#layer').hide();"></div>
+    <div class="layer">
+        <div class="inner_layer">
+            <img src="https://images.ctfassets.net/ut8ny7d4czxh/1gdcD5vHxyVMB3tLxaaX46/857296015430c98aec65460267b65782/img__5_.jpg?w=944&q=100"
+                 alt="mbti 이미지">
+        </div>
     </div>
+</div>
 </body>
 </html>

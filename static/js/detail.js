@@ -6,7 +6,7 @@ $(document).ready(function () {
 
 function showPartyInfo() {
     let favorite_mbti_array = $('#favorite-mbti').val().split(",").sort()
-    for (i=0; i<favorite_mbti_array.length; i++) {
+    for (i = 0; i < favorite_mbti_array.length; i++) {
         let mbti = favorite_mbti_array[i]
         unit_mbti_html = `<div class="mbti-text">${mbti}</div>`
         $('#favorite-mbti-entries').append(unit_mbti_html)
@@ -17,15 +17,16 @@ function showPartyInfo() {
         ? member_info.split(";")
         : member_info.concat(";,,").split(";")
 
-    for (i=0; i<member_info_array.length; i++) {
-        [mbti,user_name,user_id] = member_info_array[i].split(",")
-        let img_num = getRandomInt(1,7).toString()
-        let img_addr = "../static/assets/images/users/man"+img_num+".png"
+    for (i = 0; i < member_info_array.length; i++) {
+        [mbti, user_name, user_id] = member_info_array[i].split(",")
+        let img_num = getRandomInt(1, 7).toString()
+        let img_addr = "../static/assets/images/users/man" + img_num + ".png"
         joined_html = `
                         <div class="member-entry card">
                             <div class="member-entry__image" style="background-image: url('${img_addr}');background-size: cover"></div>
                             <div class="card-body">
                                 <button onclick="joinParty()" class="btn btn-primary" ${user_id === '' ? '' : 'style="display: none"'}>참여하기</button>
+                                <button onclick="openChatRoom()" class="btn btn-primary" ${user_id === '' ? 'style="display:none"' : ''}>채팅</button>
                                 <h5 class="member-entry__mbti card-title">${mbti}</h5>
                                 <a href="mailto:${user_id}>"><p class="member-entry__id card-text">${user_name}</p></a> 
                             </div> 
@@ -65,11 +66,82 @@ function joinParty() {
         type: 'POST',
         url: '/api/join_party',
         data: {party_id_request: party_id, user_id_request: user_id},
-        success: function(response) {
+        success: function (response) {
             alert(response['msg']);
             window.location.reload();
         }
     });
+}
+
+function openChatRoom() {
+    const chat_modal = document.querySelector('.chat-modal-wrapper')
+    chat_modal.style.display = "flex"
+
+    let socket = io.connect("http://" + document.domain + ":" + location.port + "/chat?room_id={{room_id}}",  {transports: ['websocket']});
+        let user_id = `{{user_id}}`;
+        let room = `{{room}}`;
+        joinRoom(room);
+
+        socket.on('connect', () => {
+            let form = $('form').on('submit', e => {
+                e.preventDefault();
+                let user_input = $('input.message').val();
+                if(user_input !== '') {
+                    socket.send({'msg': user_input, 'user_id': user_id, 'room': room});
+                }
+                $('input.message').val('').focus();
+            });
+        });
+
+        socket.on('message', data => {
+            if(data.user_id) {
+                // $('h3').remove();
+                $('div.message_holder').append(`<div><b style="color: #000">${data.user_id}</b><br>${data.msg} (${data.time_stamp})<br></div>`);
+            }
+            else {
+                printSysMsg(data.msg);
+            }
+        });
+
+        $(document).ready(function (){
+            $('input.message').focus();
+            // document.querySelectorAll('.select-room').forEach(p => {
+            //     p.onclick = () => {
+            //         console.log('asdasd');
+            //         let newRoom = p.innerHTML;
+            //         if(newRoom === room) {
+            //             let msg = `이미 ${room}방에 있습니다.`;
+            //             printSysMsg(msg);
+            //         }
+            //         else {
+            //             leaveRoom(room);
+            //             joinRoom(newRoom);
+            //             room = newRoom;
+            //         }
+            //     };
+            // });
+        });
+
+        function leaveRoom(room) {
+            socket.emit('leave', {'user_id' : user_id, 'room' : room});
+            window.history.back();
+        }
+
+        function joinRoom(room) {
+            socket.emit('join', {'user_id' : user_id, 'room' : room});
+            //채팅창 클리어
+            $('div.message_holder').val('');
+        }
+
+        function printSysMsg(msg) {
+            $('div.message_holder').append(msg + "<br>");
+        }
+
+}
+
+function closeChatRoom() {
+    const chat_modal = document.querySelector('.chat-modal-wrapper')
+    chat_modal.style.display = "none"
 }
 
 function showMbtiRelScoreResult() {
@@ -77,7 +149,7 @@ function showMbtiRelScoreResult() {
         type: 'POST',
         url: '/api/join_party',
         data: {party_id_request: party_id, user_id_request: user_id},
-        success: function(response) {
+        success: function (response) {
             alert(response['msg']);
             window.location.reload();
         }
@@ -107,6 +179,6 @@ function isFullOccupied() {
 function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
-    return Math.floor(Math.random() * (max-min) + min);
+    return Math.floor(Math.random() * (max - min) + min);
 }
 
