@@ -65,10 +65,11 @@ def show_allowed_list():
 def detail():
     id = int(request.args.get("id"))
     detail = db.parties.find_one({'id': id})
+    room_id = detail['chat_room_id']
     title = detail['title']
     desc = detail['description']
     favorite_mbti = detail['favorite_mbti']
-
+    print(room_id)
     max_member_num = detail['max_member_num']
     master_name = detail['master_info'].split(",")[0]
     master_id = detail['master_info'].split(",")[1]
@@ -80,7 +81,7 @@ def detail():
 
     return render_template(
         'detail.html',
-        id=id, title=title, desc=desc, favorite_mbti=favorite_mbti,
+        id=id, room_id=room_id, title=title, desc=desc, favorite_mbti=favorite_mbti,
         max_member_num=max_member_num,
         master_name=master_name, master_id=master_id,
         member_info=member_info,
@@ -258,10 +259,12 @@ def reg_party():
     max_member_num_receive = request.form['max_member_num_give']
     user_id = get_token('mytoken')
     party_id = len(list(db.parties.find({}))) + 1
+    chat_room_id = "room" + str(party_id)
 
     if user_id is not False:
         doc = {
             'id': party_id,
+            'chat_room_id' : chat_room_id,
             'master_name': db.users.find_one({'id': user_id['id']}, {'_id': False})['name'],
             'master_info': ",".join([
                 db.users.find_one({'id': user_id['id']}, {'_id': False})['name'],
@@ -284,7 +287,8 @@ def reg_party():
         return jsonify({'msg': '다시 로그인 해주세요!'})
 
 
-ROOMS = ["전체방", "방1", "방2", "방3"]
+# ROOMS = ["전체방", "방1", "방2", "방3"]
+
 
 @app.route('/chat')
 def chat():
