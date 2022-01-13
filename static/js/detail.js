@@ -28,12 +28,9 @@ function showPartyInfo() {
         joined_html = `
                         <div class="member-entry card">
                             <div class="member-entry__image" style="background-image: url('${img_addr}');background-size: cover"></div>
-                            <div class="card-body">
-                                <button onclick="joinParty()" class="btn btn-primary" ${user_id === '' ? '' : 'style="display: none"'}>참여하기</button>
-                                <button href="" onclick="openChatRoom()" class="btn btn-primary" ${user_id === '' ? 'style="display:none"' : ''}>채팅</button>
                                 <h5 class="member-entry__mbti card-title">${mbti}</h5>
+                                <button onclick="joinParty()" class="btn btn-primary" ${user_id === '' ? '' : 'style="display: none"'}>참여하기</button>
                                 <a href="mailto:${user_id}>"><p class="member-entry__id card-text">${user_name}</p></a> 
-                            </div> 
                         </div>
                       `
         $('#member-entries').append(joined_html)
@@ -84,16 +81,17 @@ function openChatRoom() {
     let socket = io.connect("http://" + document.domain + ":" + location.port, {transports: ['websocket']});
     //let socket = io.connect("http://localhost:5000", {transports: ['websocket']});
     let user_id = $('#user-id').val()
+    let user_name = $('#user-name').val()
     let room = $('#chat-room-id').val()
     joinRoom(room);
-    console.log(user_id, room)
+    console.log(user_name, room)
 
     socket.on('connect', () => {
         let form = $('form').on('submit', e => {
             e.preventDefault();
             let user_input = $('input.message').val();
             if (user_input !== '') {
-                socket.send({'msg': user_input, 'user_id': user_id, 'room': room});
+                socket.send({'msg': user_input, 'user_id': user_id, 'user_name': user_name, 'room': room});
             }
             $('input.message').val('').focus();
         });
@@ -103,7 +101,7 @@ function openChatRoom() {
         console.log(data);
         if (data.user_id) {
             $('h3').remove();
-            $('div.message_holder').append(`<div><b style="color: #000">${data.user_id}</b><br>${data.msg} (${data.time_stamp})<br></div>`);
+            $('div.message_holder').append(`<p><span style="font-weight: bold">${data.user_name}</span><span>     </span>${data.msg} (${data.time_stamp})</p>`);
         } else {
             printSysMsg(data.msg);
         }
@@ -144,6 +142,7 @@ function closeChatRoom() {
     const chat_modal = document.querySelector('.chat-modal-wrapper')
     chat_modal.style.display = "none"
 }
+
 
 function showMbtiRelScoreResult() {
     $.ajax({

@@ -52,18 +52,12 @@
     text-align: center;
     align-items: center;
     border: none;
-}
-.member-entry img {
-    height: 150px;
+    margin-bottom: 50px;
 }
 .member-entry .member-entry__image {
     width: 100px;
     height: 100px;
     border-radius: 50px;
-}
-.member-entry .member-entry__role,
-.member-entry .member-entry__id {
-    height: 20px;
 }
 .blind_layer {
     position: absolute;
@@ -89,20 +83,23 @@
 .member-entry__mbti {
     margin-top: 20px;
 }
+.chat-btn {
+    width: 100%;
+}
 .chat-modal-wrapper {
     position: absolute;
     top: 0; left: 0;
     width: 100%;
-    height: 100%;
+    height: 818px;
     background: rgba(0,0,0,.5);
     display: none;
     align-items: center;
     justify-content: center;
+    overflow-y: auto;
 }
 .chat-modal {
     position: absolute;
     top: 30px;
-    margin: auto;
     background: #fff;
     padding: 24px 16px;
     border-radius: 10px;
@@ -141,11 +138,28 @@
     border-radius: 10px;
     margin-right: 5px;
 }
-.chat-modal .message-box {
+.chat-modal .message_holder {
+    position: relative;
     width: 100%;
+    height: 280px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.chat-modal .message_holder p {
+    margin-bottom: 0;
+}
+.chat-modal .message-box {
+    position: relative;
+    width: 100%;
+}
+.chat-modal .message-box .message {
+    width: 83%;
+    border: none;
+    border-bottom: 1px solid #000;
 }
 .chat-modal .close-btn {
     position: relative;
-    bottom: 0; right: 0;
+    width: 100%;
     margin-top: 10px
 }

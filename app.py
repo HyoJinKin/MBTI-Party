@@ -308,7 +308,7 @@ def chat():
 @socketio.on('message')
 def message(data):
     print('room(message): ' + str(data))
-    send({'msg': data['msg'], 'user_id': data['user_id'],
+    send({'msg': data['msg'], 'user_id': data['user_id'], 'user_name': data['user_name'],
           'time_stamp': strftime('%I:%M%p', localtime())}, broadcast=True, room=data['room'])
 
 
@@ -316,16 +316,16 @@ def message(data):
 def join(data):
     print('room(join): ' + str(data))
     join_room(data['room'])
-    send({'msg': data['user_id'] + "님이" + data['room'] + "방에 입장했습니다!"}, room=data['room'])
+    send({'msg': data['user_name'] + "님이" + data['room'] + "방에 입장했습니다!"}, room=data['room'])
 
 
 @socketio.on('leave')
 def leave(data):
     print('room(leave): ' + str(data))
     leave_room(data['room'])
-    send({'msg': data['user_id'] + "님이" + data['room'] + "방에서 나갔습니다..."}, room=data['room'])
+    send({'msg': data['user_name'] + "님이" + data['room'] + "방에서 나갔습니다..."}, room=data['room'])
 
 
 if __name__ == '__main__':
     # app.run('0.0.0.0', port=5001, debug=True)
-    socketio.run(app, host='0.0.0.0', port='5000', debug=True)
+    socketio.run(app, host='0.0.0.0', port='5001', debug=True)

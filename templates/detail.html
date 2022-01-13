@@ -65,39 +65,46 @@
                     </div>
                 </div>
                 <div id="member-entries" class="member-entries float--right"></div>
+                <button onclick="openChatRoom()" class="chat-btn btn btn-primary">채팅</button>
 
-                <input type="hidden" id="party-id" value={{id}}>
-                <input type="hidden" id="user-id" value={{user_id}}>
-                <input type="hidden" id="favorite-mbti" value={{favorite_mbti}}>
-                <input type="hidden" id="max-member-num" value={{max_member_num}}>
-                <input type="hidden" id="member-ids" value={{member_ids}}>
-                <input type="hidden" id="member-info" value={{member_info}}>
-                <input type="hidden" id="chat-room-id" value={{room_id}}>
+
             </div>
+
+            <input type="hidden" id="party-id" value={{id}}>
+            <input type="hidden" id="user-id" value={{user_id}}>
+            <input type="hidden" id="user-name" value={{user_name}}>
+            <input type="hidden" id="favorite-mbti" value={{favorite_mbti}}>
+            <input type="hidden" id="max-member-num" value={{max_member_num}}>
+            <input type="hidden" id="member-ids" value={{member_ids}}>
+            <input type="hidden" id="member-info" value={{member_info}}>
+            <input type="hidden" id="chat-room-id" value={{room_id}}>
+
         </div>
 
         <div class="chat-modal-wrapper">
-            <div class="chat-modal">
-                <h1 class="modal-title">채팅</h1>
-                <div class="user-profile">
-                    <div class="connect-circle"></div>
-                    <div>{{user_name}}님</div>
+                <div class="chat-modal">
+                    <h1 class="modal-title">채팅</h1>
+                    <div class="user-profile">
+                        <div class="connect-circle"></div>
+                        <div>{{user_name}}님</div>
+                    </div>
+                    <nav id="sidebar">
+                        <h4>{{room}}</h4>
+                    </nav>
+
+                    <div class="message_holder"></div>
+
+                    <form action="" class="message-box">
+                        <input type="text" class="message float--left" placeholder="Messages"/>
+                        <input type="submit" class="send-btn float--right" value="send"/>
+                    </form>
+                    <button onclick="closeChatRoom()" class="close-btn btn btn-primary float--right">닫기</button>
                 </div>
-                <nav id="sidebar">
-                    <h4>{{room}}</h4>
-                </nav>
-
-                <div class="message_holder"></div>
-
-                <form action="" class="message-box">
-                    <input type="text" class="message" placeholder="Messages"/>
-                    <input type="submit" value="send"/>
-                </form>
-                <button onclick="closeChatRoom()" class="close-btn btn btn-primary float--right">닫기</button>
             </div>
-        </div>
     </section>
+
+
 </div>
-<a href="/chat?room_id={{room_id}}">채팅방 참여</a>
+<!--<a href="/chat?room_id={{room_id}}">채팅방 참여</a>-->
 </body>
 </html>
