@@ -96,7 +96,6 @@ function is_password_thesame() {
 //필수입력사항들을 선택하였는지 확인
 function inputCheck() {
     if ($('#name').val() == "") {
-        // alert('이름을 입력해주세요.')
         Swal.fire({
             icon: 'error',
             title: '이름 미입력',
@@ -106,7 +105,6 @@ function inputCheck() {
     }
 
     if ($('#regisNumCheck').hasClass('fasIdRed')) {
-        // alert('이름을 입력해주세요.')
         Swal.fire({
             icon: 'error',
             title: '주민번호 부적격',
@@ -115,7 +113,6 @@ function inputCheck() {
         return;
     }
     if ($('#ID').hasClass('is-fail')) {
-        // alert('먼저 아이디 사용 가능 여부를 확인해주세요.')
         Swal.fire({
             icon: 'error',
             title: '아이디 사용 가능 여부',
@@ -125,7 +122,6 @@ function inputCheck() {
     }
 
     if ($('#pwNumCheck').hasClass('fasPwRed')) {
-        // alert('비밀번호를 일치시켜주세요.')
         Swal.fire({
             icon: 'error',
             title: '비밀번호 부적격',
@@ -134,7 +130,6 @@ function inputCheck() {
         return;
     }
     if ($('#pwCheck').hasClass('fasred')) {
-        // alert('비밀번호를 일치시켜주세요.')
         Swal.fire({
             icon: 'error',
             title: '비밀번호 불일치',

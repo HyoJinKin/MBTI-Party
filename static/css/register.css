@@ -15,6 +15,33 @@
     border-radius: 0px;
     border-bottom: 1px solid #000;
 }
+.join-menu-group {
+    width: 80%;
+    position: relative;
+}
+.join-menu-group ul{
+    display: flex;
+    list-style: none;
+}
+.join-menu-group li {
+    padding-right: 20px;
+}
+
+
+
+/*주민등록번호 입력 형식 불합격*/
+.fasIdRed{
+    color : red;
+}
+/*주민등록번호 입력 형식 합격*/
+.fasIdGreen{
+    color : green;
+}
+/*주민등록번호 입력 형식 불합격 안내 텍스트*/
+#regisNum-help{
+    color : red;
+}
+
 
 
 
@@ -42,45 +69,7 @@
     text-align: center;
 }
 
-.fasIdRed{
-    color : red;
-}
-.fasIdGreen{
-    color : green;
-}
-#regisNum-help{
-    color : red;
-}
 
-
-
-
-/*회원가입 버튼*/
-.join-form button {
-    width: 80%;
-    margin-bottom: 20px;
-}
-/*화면 출력 이미지*/
-.join-image {
-    width: 50%;
-    box-sizing: border-box;
-    background-image: url("../assets/images/icons/join.png");
-    background-repeat: no-repeat;
-}
-
-
-
-.join-menu-group {
-    width: 80%;
-    position: relative;
-}
-.join-menu-group ul{
-    display: flex;
-    list-style: none;
-}
-.join-menu-group li {
-    padding-right: 20px;
-}
 
 
 
@@ -107,6 +96,7 @@
 }
 
 
+
 /*MBTI 선택 항목들*/
 .join-form ul{
     display: flex;
@@ -115,4 +105,19 @@
 /*MBTI 선택 항목들*/
 .join-form li{
     padding-right: 20px;
+}
+
+
+
+/*회원가입 버튼*/
+.join-form button {
+    width: 80%;
+    margin-bottom: 20px;
+}
+/*화면 출력 이미지*/
+.join-image {
+    width: 50%;
+    box-sizing: border-box;
+    background-image: url("../assets/images/icons/join.png");
+    background-repeat: no-repeat;
 }
